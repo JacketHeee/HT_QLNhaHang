@@ -104,7 +104,7 @@ restaurant-pos/
 ### 1. Clone dự án
 
 ```bash
-git clone https://github.com/your-username/restaurant-pos.git
+git clone https://github.com/JacketHeee/HT_QLNhaHang.git
 cd restaurant-pos
 ```
 
