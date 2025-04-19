@@ -3,30 +3,30 @@
 Hệ thống POS giúp các nhà hàng/quán ăn quản lý hiệu quả quy trình gọi món, thanh toán, quản lý thực đơn, bàn ăn và doanh thu.  
 Ứng dụng được chia thành hai phần chính:
 
-- **Frontend**: ReactJS (Vite) – dành cho nhân viên, quản lý sử dụng giao diện người dùng.
+- **Frontend**: ReactJS (Vite) – dành cho nhân viên, quản lý và khách hàng.
 - **Backend**: NestJS – cung cấp API cho hệ thống, kết nối với cơ sở dữ liệu.
 
----
 
-## 🚀 Công nghệ sử dụng
 
-### Frontend (client)
+## I. Công nghệ sử dụng
+
+### 1. Frontend (client)
 - ⚛️ ReactJS
 - ⚡ Vite
-- 🎨 CSS Modules / TailwindCSS
+- 🎨 CSS Modules
 - 🔄 React Router
 - 🌐 Axios
 
-### Backend (server)
+### 2. Backend (server)
 - 🐱 NestJS
 - 🐘 PostgreSQL / MongoDB (tùy chọn)
 - 🔐 JWT Auth
 - 🧠 TypeORM / Prisma
 - 📈 Swagger (tài liệu API)
 
----
 
-## 🏗️ Cấu trúc thư mục dự án
+
+## II. Cấu trúc thư mục dự án
 
 ```bash
 restaurant-pos/
@@ -96,16 +96,17 @@ restaurant-pos/
 ├── .gitignore
 ├── README.md
 └── package.json              # 📦 Monorepo (nếu dùng workspace)
+```
 
----
 
-## 🧪 Cài đặt và chạy thử
+## III. Cài đặt và chạy thử
 
 ### 1. Clone dự án
 
 ```bash
-git clone https://github.com/your-username/restaurant-pos.git
+git clone https://github.com/JacketHeee/HT_QLNhaHang.git
 cd restaurant-pos
+```
 
 ### 2. Cài đặt dependencies
 
@@ -137,9 +138,9 @@ npm run dev
 npm run start:dev
 ```
 
----
 
-## ✅ Tính năng chính
+
+## IV. Tính năng chính
 
 - 🧑‍🍳 Quản lý món ăn, thực đơn
 - 📋 Tạo đơn hàng tại bàn, in hóa đơn
@@ -148,44 +149,44 @@ npm run start:dev
 - 👥 Quản lý nhân viên, phân quyền
 - 🔐 Đăng nhập, bảo mật JWT
 
----
 
-## 📚 Ghi chú
+
+## V. Ghi chú
 
 - Có thể dùng `Docker` để deploy production
 - Database đề xuất: PostgreSQL
 
----
 
-## 💡 Đóng góp
+
+## VI. Đóng góp
 
 Hãy thoải mái tạo pull request hoặc mở issue nếu bạn có ý tưởng mới hoặc phát hiện lỗi 💬
+```bash 
 
----
+```
 
-## 📝 License
+
+
+## VII. License
 
 This project is licensed under the MIT License.
+```bash 
 
----
+```
 
-## 📋 Thành viên dự án
 
-- **Lê Hoàng Sơn** 
-- **Nguyễn Dương**
-- **Nguyễn Ngọc Thiên Ân** 
-- **Lê Hữu Thành Vinh**
-- **Lê Quang Hoàng** 
-- **Nguyễn Hùng Mạnh** 
+## VIII. Thành viên dự án
 
----
+- Lê Hoàng Sơn
+- Nguyễn Dương
+- Nguyễn Ngọc Thiên Ân 
+- Lê Hữu Thành Vinh
+- Lê Quang Hoàng
+- Nguyễn Hùng Mạnh
 
-## 📐 Figma thiết kế
 
-[Link Figma thiết kế giao diện](https://www.figma.com/design/EfNYOadn5pLvgAbuYcpkir/Untitled?node-id=0-1&p=f&t=q8WdLEiVJLjfKfV2-0)
+## IX. Tài nguyên
 
----
+- **Figma**: [Xem chi tiết](https://www.figma.com/design/EfNYOadn5pLvgAbuYcpkir/Untitled?node-id=0-1&p=f&t=q8WdLEiVJLjfKfV2-0)
 
-## 📂 Github
-
-[Link Github dự án](https://github.com/JacketHeee/HT_QLNhaHang)
+- **Github**: [Xem chi tiết](https://github.com/JacketHeee/HT_QLNhaHang)
