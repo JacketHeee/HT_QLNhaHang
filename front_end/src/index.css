@@ -1,3 +1,11 @@
+:root {
+  /* 🌈 Màu sắc chủ đạo */
+  --color-primary: #00713F;
+  --color-bg: #F3F3F3;
+  --color-text: #1B1B1B;
+  --border: #EAEAEA;
+  --color-phu: #ED0101;
+}
 
 /* Thiết lập nền cho toàn bộ trang */
 html {
@@ -15,20 +23,21 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #F3F3F3;
-  color: #1B1B1B;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   font-family: 'Roboto', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 body {
   font-family: 'Arial', sans-serif;
-  font-size: 1.6rem;
-  background-color: #F3F3F3;
-  color: #1B1B1B;
+  font-size: 1.5rem;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   padding: 0;
   margin: 0;
 }
+
 
 
 /* Quản lý các phần tử không cần viền, không cần định dạng */
@@ -39,7 +48,7 @@ a {
 
 /* Thiết lập các button */
 button {
-  border: 1px solid #EAEAEA;
+  border: 1px solid var(--border);
   background-color: white;
   padding: 0.5em 1em;
   cursor: pointer;
@@ -58,7 +67,7 @@ button:focus {
 
 /* Thiết lập các form inputs */
 input, textarea, select {
-  border: 1px solid #EAEAEA;
+  border: 1px solid var(--border);
   background-color: white;
   padding: 0.5em;
   border-radius: 4px;
@@ -68,6 +77,30 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Tạo bóng mờ xung quanh */
+}
+
+h1 {
+  font-size: 3.2rem; /* 32px cho màn hình di động */
+}
+
+h2 {
+  font-size: 2.8rem; /* 28px cho màn hình di động */
+}
+
+h3 {
+  font-size: 2.4rem; /* 24px cho màn hình di động */
+}
+
+h4 {
+  font-size: 2rem; /* 20px cho màn hình di động */
+}
+
+h5 {
+  font-size: 1.6rem; /* 16px cho màn hình di động */
+}
+
+h6 {
+  font-size: 1.4rem; /* 14px cho màn hình di động */
 }
 
 /* Quản lý các layout với flexbox */
@@ -87,10 +120,101 @@ input:focus, textarea:focus, select:focus {
   flex-direction: column;
 }
 
+.container {
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scroll-box::-webkit-scrollbar {
+  width: 8px;             /* Chiều rộng thanh cuộn dọc */
+  height: 8px;            /* Chiều cao thanh cuộn ngang */
+}
+
+.scroll-box::-webkit-scrollbar-track {
+  /* background: var(--border); */
+  border-radius: 10px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary); /* Phần thanh kéo */
+  border-radius: 10px;
+  border: 2px solid var(--border); /* Viền tạo hiệu ứng đẹp */
+}
+
+.scroll-box::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
+hr {
+  flex-grow: 1;
+  border: none;
+  height: 2px;
+  background-color: #e2e2e2; /* Màu xám nhẹ nhàng */
+  width: 100%;  
+}
 
 
-.thongbao {
-  color: red;
-  font-size: 50px;
-  font-weight: bold;
+/* Tablet (≥768px): 1rem = 11px */
+@media (min-width: 768px) {
+  html {
+    font-size: 68.75%;
+  }
+
+  h1 {
+    font-size: 4.2rem; /* 42px cho tablet */
+  }
+
+  h2 {
+    font-size: 3.8rem; /* 38px cho tablet */
+  }
+
+  h3 {
+    font-size: 3.4rem; /* 34px cho tablet */
+  }
+
+  h4 {
+    font-size: 3rem; /* 30px cho tablet */
+  }
+
+  h5 {
+    font-size: 2.6rem; /* 26px cho tablet */
+  }
+
+  h6 {
+    font-size: 2.2rem; /* 22px cho tablet */
+  }
+}
+
+/* Desktop (≥1024px): 1rem = 12px */
+@media (min-width: 1024px) {
+  html {
+    font-size: 75%;
+  }
+
+  h1 {
+    font-size: 5rem; /* 50px cho desktop */
+  }
+
+  h2 {
+    font-size: 4.6rem; /* 46px cho desktop */
+  }
+
+  h3 {
+    font-size: 4.2rem; /* 42px cho desktop */
+  }
+
+  h4 {
+    font-size: 3.8rem; /* 38px cho desktop */
+  }
+
+  h5 {
+    font-size: 3.4rem; /* 34px cho desktop */
+  }
+
+  h6 {
+    font-size: 3rem; /* 30px cho desktop */
+  }
 }

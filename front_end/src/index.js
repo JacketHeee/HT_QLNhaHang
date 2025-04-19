@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
+import * as serviceWorkerRegistration from "./services/serviceWorkerRegistration";
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <div className="thongbao">
-      BÂY giờ tao sẽ thiết kế 1 trang web siêu xịn nè!
-    </div>
   </React.StrictMode>
 );
+
+console.log(window.matchMedia('(display-mode: standalone)').matches);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// 👇 GỌI ĐĂNG KÝ SERVICE WORKER TẠI ĐÂY
+// serviceWorkerRegistration.register();

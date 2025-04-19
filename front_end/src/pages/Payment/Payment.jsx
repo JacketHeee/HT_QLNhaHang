@@ -1,0 +1,1 @@
+import "./pages/Payment/Payment.module.css";

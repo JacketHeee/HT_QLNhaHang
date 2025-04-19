@@ -1,0 +1,1 @@
+//  Layout chung cho các trang admin
