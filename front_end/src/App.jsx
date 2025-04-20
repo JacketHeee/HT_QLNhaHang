@@ -6,7 +6,7 @@ import Product from "./components/Product/Product";
 import Payment from "./components/Payment/Payment";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import YourCart from "./components/YourCart/YourCart"
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null)
