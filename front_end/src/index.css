@@ -61,8 +61,12 @@ button:hover {
   /* background-color: #f0f0f0; */
 }
 
-button:focus {
+button:focus,button:active{
   outline: none; /* Xóa viền khi nút được chọn */
+  background: none;         /* Bỏ viền xanh khi focus */
+  box-shadow: none;          /* Nếu button dùng màu nền */
+  border: none;              /* Nếu muốn bỏ luôn viền */
+  transition: none;    
 }
 
 /* Thiết lập các form inputs */
@@ -74,10 +78,18 @@ input, textarea, select {
 }
 
 
-input:focus, textarea:focus, select:focus {
+input:focus, textarea:focus, select:focus,input:active, textarea:active, select:active{
   outline: none;
+  background: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Tạo bóng mờ xung quanh */
 }
+
+
+input[type="checkbox"]:checked {
+  accent-color: var(--color-phu);
+}
+
+
 
 h1 {
   font-size: 3.2rem; /* 32px cho màn hình di động */

@@ -4,8 +4,19 @@ import burger from "./assets/img/products/burger/cheesedlx_bb.png"
 import cart_red from "./assets/icon/cart_red.svg"
 import Product from "./components/Product/Product";
 import Payment from "./components/Payment/Payment";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
+import { useState } from "react";
 
 function App() {
+  const [selectedProduct, setSelectedProduct] = useState({conbo: 5})
+
+  const handelProductClick = (product) => {
+    setSelectedProduct(product)
+  }
+
+  const handleProductClose = () => {
+    setSelectedProduct(null)
+  }
 
 
   return (
@@ -55,24 +66,29 @@ function App() {
             </div>
 
             <div className="areShowProduct flex-column"> 
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
-              <Product/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
+              <Product onClick={handelProductClick}/>
             </div>
+            <ProductDetail product={selectedProduct} onClose={handleProductClose}/>
           </div>                              
         </div>
       </div>
-      <Payment/>
+      <Payment text="Thanh toán"/>
     </div>
   );
 }

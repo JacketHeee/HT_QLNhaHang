@@ -20,6 +20,13 @@
 .product>img {
     height: 140px;
     width: auto;
+    background: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.1),
+        transparent
+    );
+    border-radius: 10px 0 0 10px;
 }
 .product>div {
     background-color: white;

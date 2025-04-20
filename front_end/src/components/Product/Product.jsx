@@ -2,10 +2,10 @@ import cart from "../../assets/icon/cart.svg"
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import style from  "./Product.module.css"
 
-export default function Product() {
+export default function Product({onClick}) {
     let value = 100000; 
     return (
-      <div className={style.product}>
+      <div className={style.product} onClick={onClick}>
         <img src={burger} alt=""/>
         <div>
           <div className={style.productName}>1. <span>Hamburger</span>

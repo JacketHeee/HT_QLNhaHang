@@ -1,0 +1,163 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00713F;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+}
+.productDetail {
+    inset: 0;
+    z-index: 50;
+    position: fixed;
+    display: flex;
+}
+
+.productDetail>button {
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 40px;
+    padding: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+}
+.thongTinProduct * {
+    background-color: white;
+}
+.thongTinProduct {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.thongTinProduct>div:first-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+     /* Gradient background */
+    background: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.3),
+        transparent
+    );
+
+    /* Optional: blur effect behind modal */
+    /* backdrop-filter: blur(4px); */
+}
+
+
+.thongTinProduct>div>img {
+    height: 250px;
+    width:  250px;
+    background: transparent;
+
+}
+
+.thongTinProduct span {
+    font-weight: bold;
+}
+
+/* ----------------------- */
+
+
+.chitietProduct {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+    position: relative;
+}
+
+.loai_gia_product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.giaProduct {
+    color: var(--color-phu);
+}
+
+.soluongProduct {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.soluongProduct button {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.soluongProduct button:last-child {
+    color: var(--color-phu);
+    border: 1px solid var(--color-phu);
+}
+
+.soluongProduct>div {
+    display: flex;
+}
+
+.soluongProduct>div>span {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sideDishes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-grow: 1;
+    align-content: start;
+}
+.sideDishes>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.thongTinProduct h4>span {
+    color: var(--color-phu);
+}
+.thongTinProduct h4 {
+    margin-top: 10px;
+}
+.thongTinProduct h4>i{
+    font-weight: normal;
+    color: gray;
+}
+
+.muahang {
+    display: flex;
+    background-color: var(--color-phu);
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.muahang * {
+    background: transparent;
+    color: white;
+}
+
+.muahang>img {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+
