@@ -93,26 +93,11 @@
     border-bottom: 1px solid var(--border);
 }
 
-.soluongProduct button {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.soluongProduct button:last-child {
-    color: var(--color-phu);
-    border: 1px solid var(--color-phu);
-}
-
 .soluongProduct>div {
     display: flex;
 }
 
-.soluongProduct>div>span {
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .sideDishes {
     display: flex;

@@ -5,10 +5,11 @@ import cart_red from "./assets/icon/cart_red.svg"
 import Product from "./components/Product/Product";
 import Payment from "./components/Payment/Payment";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import YourCart from "./components/YourCart/YourCart"
 import { useState } from "react";
 
 function App() {
-  const [selectedProduct, setSelectedProduct] = useState({conbo: 5})
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
   const handelProductClick = (product) => {
     setSelectedProduct(product)
@@ -18,6 +19,16 @@ function App() {
     setSelectedProduct(null)
   }
 
+  
+  const [clickedPayment, setClickedPayment] = useState(true)
+
+  const handlePaymentClick = () => {
+    setClickedPayment(true)
+  }
+
+  const handlePaymentClose = () => {
+    setClickedPayment(false)
+  }
 
   return (
     <div className="app">
@@ -88,7 +99,8 @@ function App() {
           </div>                              
         </div>
       </div>
-      <Payment text="Thanh toán"/>
+      <Payment text="Thanh toán" onClick={handlePaymentClick}/>
+      <YourCart clickedPayment={clickedPayment} onClose={handlePaymentClose}/>
     </div>
   );
 }

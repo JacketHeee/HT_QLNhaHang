@@ -2,7 +2,7 @@ import style from  "./Payment.module.css"
 import cart from "../../assets/icon/cart_red.svg"
 import { formatCurrency } from "../../utils/format";
 
-export default function Payment({text}) {
+export default function Payment({text,onClick}) {
     let count = 1
     let tongtien = 10000000000;
     return (
@@ -14,7 +14,7 @@ export default function Payment({text}) {
           </div>
           <div className={style.thanhtoan}>
             <span>{formatCurrency(tongtien)}đ</span>
-            <button>{text}</button>
+            <button onClick={onClick}>{text}</button>
           </div>
       </div>
     )

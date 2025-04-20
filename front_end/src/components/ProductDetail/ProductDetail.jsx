@@ -5,6 +5,7 @@ import cart from "../../assets/icon/cart.svg"
 import { formatCurrency } from "../../utils/format";
 import { useState } from "react";
 import Payment from "../Payment/Payment";
+import CounterModel from "../CounterModel/CounterModel";
 
 export default function ProductDetail({product,onClose}) {
     const [quantity,setQuantity] = useState(1)
@@ -28,11 +29,12 @@ export default function ProductDetail({product,onClose}) {
                     </div>
                     <div className={style.soluongProduct}>
                         <span>Số lượng:</span>
-                        <div>
+                        {/* <div>
                             <button onClick={() => {setQuantity(quantity+1)}}>-</button>
                             <span>{quantity}</span>
                             <button onClick={() => {setQuantity(quantity+1)}}>+</button>
-                        </div>
+                        </div> */}
+                        <CounterModel/>
                     </div>
 
                     <div>
@@ -48,7 +50,7 @@ export default function ProductDetail({product,onClose}) {
                         <Properties name="Vegetebale"/>
                         <Properties name="Vegetebale"/>
                         <Properties name="Vegetebale"/>
-                        <Properties name="Vegetebale"/> 
+                        <Properties name="Vegetebale"/>
                     </div>
 
                     <Payment text="Thêm vào giỏ hàng"/>

@@ -61,11 +61,10 @@ button:hover {
   /* background-color: #f0f0f0; */
 }
 
-button:focus,button:active{
+button:focus{
   outline: none; /* Xóa viền khi nút được chọn */
   background: none;         /* Bỏ viền xanh khi focus */
   box-shadow: none;          /* Nếu button dùng màu nền */
-  border: none;              /* Nếu muốn bỏ luôn viền */
   transition: none;    
 }
 
