@@ -3,74 +3,36 @@
 Hệ thống POS giúp các nhà hàng/quán ăn quản lý hiệu quả quy trình gọi món, thanh toán, quản lý thực đơn, bàn ăn và doanh thu.  
 Ứng dụng được chia thành hai phần chính:
 
-- **Frontend**: ReactJS (Vite) – dành cho nhân viên, quản lý và khách hàng.
+- **Frontend**: ReactJS – dành cho nhân viên, quản lý và khách hàng.
 - **Backend**: NestJS – cung cấp API cho hệ thống, kết nối với cơ sở dữ liệu.
-
-
 
 ## I. Công nghệ sử dụng
 
 ### 1. Frontend (client)
 - ⚛️ ReactJS
-- ⚡ Vite
-- 🎨 CSS Modules
+- 🎨 CSS
 - 🔄 React Router
 - 🌐 Axios
 
 ### 2. Backend (server)
 - 🐱 NestJS
-- 🐘 PostgreSQL / MongoDB (tùy chọn)
+- 🐘 PostgreSQL
 - 🔐 JWT Auth
-- 🧠 TypeORM / Prisma
-- 📈 Swagger (tài liệu API)
-
-
+- 🧠 TypeORM
 
 ## II. Cấu trúc thư mục dự án
 
 ```bash
 restaurant-pos/
-├── client/                   # 🌐 React frontend
+├── frontend_test/                   # 🌐 React frontend
 │   ├── public/
 │   │   ├── index.html
 │   │   └── favicon.ico
 │   │
 │   ├── src/
-│   │   ├── assets/              # 📸 Hình ảnh, icon, fonts,...
-│   │   │   ├── images/
-│   │   │   └── icons/
-│   │
 │   │   ├── components/          # 🧩 Component dùng lại nhiều nơi
-│   │   │   ├── Button/
-│   │   │   │   ├── Button.js
-│   │   │   │   └── Button.module.css
-│   │   │   └── ...
-│   │
-│   │   ├── pages/               # 📄 Các trang chính (Home, Login,...)
-│   │   │   ├── Home/
-│   │   │   │   ├── Home.js
-│   │   │   │   └── Home.module.css
-│   │   │   └── ...
-│   │
-│   │   ├── layouts/             # 🧱 Layout chung (Header, Footer,...)
-│   │   │   ├── MainLayout.js
-│   │   │   └── AdminLayout.js
-│   │
-│   │   ├── routes/              # 🗺️ Định tuyến react-router-dom
-│   │   │   └── index.js
-│   │
+│   │   ├── pages/               # 📄 Các trang chính
 │   │   ├── services/            # 🌐 Gọi API (axios)
-│   │   │   └── userService.js
-│   │
-│   │   ├── hooks/               # 🪝 Custom hooks
-│   │   │   └── useAuth.js
-│   │
-│   │   ├── contexts/            # 🌍 React context (Auth, Theme,...)
-│   │   │   └── AuthContext.js
-│   │
-│   │   ├── utils/               # 🧠 Hàm tiện ích (format, validate,...)
-│   │   │   └── validators.js
-│   │
 │   │   ├── App.js               # 📦 App chính
 │   │   ├── index.js             # 🚪 Điểm khởi đầu
 │   │   └── index.css            # 🎨 Style chung
@@ -79,14 +41,9 @@ restaurant-pos/
 │   ├── package.json
 │   └── vite.config.js
 │
-├── server/                   # 🚀 NestJS backend
+├── backend/                   # 🚀 NestJS backend
 │   ├── src/
 │   │   ├── modules/
-│   │   │   ├── auth/           # 🔐 Xác thực người dùng
-│   │   │   ├── orders/         # 📝 Quản lý đơn hàng
-│   │   │   ├── tables/         # 🍽️ Quản lý bàn
-│   │   │   ├── menu/           # 📋 Thực đơn món ăn
-│   │   │   └── revenue/        # 📊 Thống kê doanh thu
 │   │   └── main.ts             # 🚪 Điểm khởi động ứng dụng
 │   │
 │   ├── .env
@@ -97,7 +54,6 @@ restaurant-pos/
 ├── README.md
 └── package.json              # 📦 Monorepo (nếu dùng workspace)
 ```
-
 
 ## III. Cài đặt và chạy thử
 
@@ -113,14 +69,14 @@ cd restaurant-pos
 **Frontend:**
 
 ```bash
-cd client
+cd frontend_test
 npm install
 ```
 
 **Backend:**
 
 ```bash
-cd ../server
+cd ../backend
 npm install
 ```
 
@@ -129,16 +85,14 @@ npm install
 **Frontend (React):**
 
 ```bash
-npm run dev
+npm start
 ```
 
 **Backend (NestJS):**
 
 ```bash
-npm run start:dev
+npm run start
 ```
-
-
 
 ## IV. Tính năng chính
 
@@ -149,31 +103,18 @@ npm run start:dev
 - 👥 Quản lý nhân viên, phân quyền
 - 🔐 Đăng nhập, bảo mật JWT
 
-
-
 ## V. Ghi chú
 
 - Có thể dùng `Docker` để deploy production
 - Database đề xuất: PostgreSQL
 
-
-
 ## VI. Đóng góp
 
 Hãy thoải mái tạo pull request hoặc mở issue nếu bạn có ý tưởng mới hoặc phát hiện lỗi 💬
-```bash 
-
-```
-
-
 
 ## VII. License
 
 This project is licensed under the MIT License.
-```bash 
-
-```
-
 
 ## VIII. Thành viên dự án
 
@@ -183,7 +124,6 @@ This project is licensed under the MIT License.
 - Lê Hữu Thành Vinh
 - Lê Quang Hoàng
 - Nguyễn Hùng Mạnh
-
 
 ## IX. Tài nguyên
 

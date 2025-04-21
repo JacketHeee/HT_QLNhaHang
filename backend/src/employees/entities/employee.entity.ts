@@ -9,7 +9,7 @@ export class Employee {
     name: string;
 
     @Column()
-    role: string; // clerk, kitchen, admin
+    role: string; // e.g., 'admin', 'kitchen', 'clerk'
 
     @Column()
     username: string;

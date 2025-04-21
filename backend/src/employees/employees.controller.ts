@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Employee } from './entities/employee.entity';
+import { RolesGuard } from '../guards/roles.guard';
 
+@UseGuards(RolesGuard)
 @Controller('employees')
 export class EmployeesController {
     constructor(private readonly employeesService: EmployeesService) {}
