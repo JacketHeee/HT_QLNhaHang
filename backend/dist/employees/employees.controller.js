@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmployeesController = void 0;
 const common_1 = require("@nestjs/common");
 const employees_service_1 = require("./employees.service");
+const roles_guard_1 = require("../guards/roles.guard");
 let EmployeesController = class EmployeesController {
     employeesService;
     constructor(employeesService) {
@@ -84,6 +85,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EmployeesController.prototype, "remove", null);
 exports.EmployeesController = EmployeesController = __decorate([
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, common_1.Controller)('employees'),
     __metadata("design:paramtypes", [employees_service_1.EmployeesService])
 ], EmployeesController);

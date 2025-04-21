@@ -15,8 +15,12 @@ import { Employee } from './employees/entities/employee.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'pos.sqlite',
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'hoangson',
+      password: 'Hoangson2005@',
+      database: 'ht_qlnhahang',
       entities: [Product, Order, OrderItem, Customer, Employee],
       synchronize: true,
     }),

@@ -4,7 +4,7 @@ import QRCodeScanner from './components/QRCodeScanner';
 import MenuPage from './components/MenuPage';
 import ProductDetailPage from './components/ProductDetailPage';
 import CartPage from './components/CartPage';
-
+import './components/Menu.css';
 function App() {
   const [cart, setCart] = useState([]);
 
