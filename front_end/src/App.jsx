@@ -7,6 +7,7 @@ import Payment from "./components/Payment/Payment";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import YourCart from "./components/YourCart/YourCart"
 import { useState,useEffect } from "react";
+import PopupThanhToanQR from "./components/PopupThanhToanQR/PopupThanhToanQR";
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -101,6 +102,7 @@ function App() {
       </div>
       <Payment text="Thanh toán" onClick={handlePaymentClick}/>
       <YourCart clickedPayment={clickedPayment} onClose={handlePaymentClose}/>
+      {/* <PopupThanhToanQR isShow={true} onClose={()=>{}}/> */}
     </div>
   );
 }

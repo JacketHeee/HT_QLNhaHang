@@ -125,7 +125,7 @@
     gap: 10px;
 }
 
-.yourCartPayment>div {
+.yourCartPayment>div:first-child{
     display: flex;
     justify-content: space-between;
 }
@@ -144,3 +144,38 @@
     border-radius: 10px;
 }
 
+
+.choosedPayment {
+    display: flex;
+    gap: 3px;
+}
+
+.choosedItem {
+    flex: 1;
+    display: flex;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.choosedItem.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+}
+
+.choosedPayment button {
+    flex-grow: 1;
+    border: none;
+    border-radius: 20px 0 0 0;
+    padding: 10px 0px;
+    background-color:white;
+}
+
+.choosedPayment span {
+    position: absolute;
+    background: transparent;
+    color: white;
+    top: 0;
+    left: 0;
+    font-size: 7px;
+    font-weight: bold;
+}

@@ -5,6 +5,8 @@ import cart from "../../assets/icon/cart_red.svg"
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import ButtonClose from "../ButtonClose/ButtonClose";
 import CounterModel from "../CounterModel/CounterModel";
+import classNames from "classnames";
+import PopupThanhToanQR from "../PopupThanhToanQR/PopupThanhToanQR";
 
 export default function YourCart({onClose,clickedPayment}) {
     const [count, setCount] = useState(6)
@@ -31,9 +33,7 @@ export default function YourCart({onClose,clickedPayment}) {
                 <ProductItem/>
             </div>
 
-            <Payment/>
-            
-
+            <Payment onClose={onClose}/>
         </div>
     )
 }
@@ -73,7 +73,20 @@ function SideDishes({title,des}) {
     )
 }
 
-function Payment() {
+function Payment({onClose}) {
+    const [paymentMethod, setPaymentMethod] = useState('qr');
+
+    const [isShowPopupThanhToan,setIsShowPopupThanhToan] = useState(false)
+
+    const handleClosePopup = () => {
+        setIsShowPopupThanhToan(false)
+    }
+
+    const handleClickPopup = () => {
+        console.log(isShowPopupThanhToan)
+        setIsShowPopupThanhToan(true)
+    }
+
     return (
         <div className={style.yourCartPayment}>
             <div>
@@ -83,7 +96,47 @@ function Payment() {
                     <span>(Tip 5%, VAT 10%)</span>
                 </div>
             </div>
-            <button>PAYMENT</button>
+            {/* <div className={style.choosedPayment}>
+                <div className={classNames(style.choosedItem)}>
+                    <span>✓</span>
+                    <button>Thanh toán tại quầy</button>
+                </div>
+                <div className={classNames(style.choosedItem,style.active)}>
+                    <span>✓</span>
+                    <button>TT qua QR CODE</button>
+                </div>
+            </div> */}
+            <div className={style.choosedPayment}>
+                <PaymentOption
+                    label="Thanh toán tại quầy"
+                    value="counter"
+                    isActive={paymentMethod === 'counter'}
+                    onChoose={() => setPaymentMethod('counter')}
+                />
+                <PaymentOption
+                    label="TT qua QR CODE"
+                    value="qr"
+                    isActive={paymentMethod === 'qr'}
+                    onChoose={() => setPaymentMethod('qr')}
+                />
+            </div>
+            <button onClick={() => {setIsShowPopupThanhToan(true)}}>THANH TOÁN</button>
+            <PopupThanhToanQR isShow={isShowPopupThanhToan} onClose={handleClosePopup}/>
         </div>
     )
 }
+
+// Component con
+function PaymentOption({ label, isActive, onChoose }) {
+    return (
+      <div
+        className={classNames(style.choosedItem, {
+          [style.active]: isActive,
+        })}
+        onClick={onChoose}
+      >
+        <span>✓</span>
+        <button>{label}</button>
+      </div>
+    );
+  }
