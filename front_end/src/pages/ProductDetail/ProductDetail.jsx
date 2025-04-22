@@ -1,20 +1,23 @@
-import Overlay from "../Overlay/Overlay";
+import Overlay from "../../components/Overlay/Overlay";
 import style from "./ProductDetail.module.css"; 
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import cart from "../../assets/icon/cart.svg"
 import { formatCurrency } from "../../utils/format";
 import { useState } from "react";
-import Payment from "../Payment/Payment";
-import CounterModel from "../CounterModel/CounterModel";
+import Payment from "../../components/Payment/Payment";
+import CounterModel from "../../components/CounterModel/CounterModel";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductDetail({product,onClose}) {
-    const [quantity,setQuantity] = useState(1)
+export default function ProductDetail() {
+    const nav = useNavigate()
 
-    if (!product) return null; //điều kiện để ẩn hiện popup
+    const handleProductClose = () => {
+        nav(-1)
+    }
 
     return (
         <div className={style.productDetail}>
-            <button onClick={onClose}>x</button>
+            <button onClick={handleProductClose}>x</button>
             <div className={style.thongTinProduct}>
                 <div><img src={burger} alt="" /></div>
                 <div style={{padding: "10px"}} className={style.chitietProduct}>
@@ -29,15 +32,10 @@ export default function ProductDetail({product,onClose}) {
                     </div>
                     <div className={style.soluongProduct}>
                         <span>Số lượng:</span>
-                        {/* <div>
-                            <button onClick={() => {setQuantity(quantity+1)}}>-</button>
-                            <span>{quantity}</span>
-                            <button onClick={() => {setQuantity(quantity+1)}}>+</button>
-                        </div> */}
                         <CounterModel/>
                     </div>
 
-                    <div>
+                    <div onClick={() => {nav("/conbobietbay")}}>
                         <span>Mô tả:</span>
                         <p>Sản phẩm bao gồm: 1g bò, 300g hơi nước, hết!</p>
                     </div>

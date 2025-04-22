@@ -1,28 +1,25 @@
 import { formatCurrency } from "../../utils/format";
-import ButtonClose from "../ButtonClose/ButtonClose";
+import ButtonClose from "../../components/ButtonClose/ButtonClose";
 import table from "../../assets/icon/table.svg";
 import checkbox from "../../assets/icon/checkbox.svg";
 import clock from "../../assets/icon/clock.svg";
 
 import qr from "../../assets/img/QR_Web.png"
 
-import Overlay from "../Overlay/Overlay";
-
 import style from "./PopupThanhToanQR.module.css"
-import {createPortal} from "react-dom"
+import { useNavigate } from "react-router-dom";
 
 
+export default function PopupThanhToanQR() {
 
-export default function PopupThanhToanQR({ isShow, onClose }) {
-    if (!isShow) return null;
 
-    console.log("con bo biet bay")
+    const nav = useNavigate()
 
     return (
         <div className={style.overLay}
         style={{ zIndex: 100 }}>
             <div className={style.mainContentContainer}>
-                <ButtonClose onClick={onClose} />
+                <ButtonClose onClick={() => {nav(-1)}} />
                 <div>
                     <h4>Thông tin thanh toán</h4>
                     <div className={style.thongtinchung}>

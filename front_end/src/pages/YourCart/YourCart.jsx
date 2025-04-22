@@ -3,19 +3,19 @@ import style from "./YourCart.module.css"
 import { formatCurrency } from "../../utils/format"
 import cart from "../../assets/icon/cart_red.svg"
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
-import ButtonClose from "../ButtonClose/ButtonClose";
-import CounterModel from "../CounterModel/CounterModel";
+import ButtonClose from "../../components/ButtonClose/ButtonClose";
+import CounterModel from "../../components/CounterModel/CounterModel";
 import classNames from "classnames";
-import PopupThanhToanQR from "../PopupThanhToanQR/PopupThanhToanQR";
+import { Outlet, useNavigate } from "react-router-dom";
 
-export default function YourCart({onClose,clickedPayment}) {
+export default function YourCart() {
     const [count, setCount] = useState(6)
 
-    if (!clickedPayment) return null;
+    const nav = useNavigate();
 
     return (
         <div className={style.yourCart}>
-            <ButtonClose onClick={onClose}/>
+            <ButtonClose onClick={() => {nav(-1)}}/>
             <div className={style.header}>
                 <img src={cart} alt="" />
                 <h4>Giỏ hàng của bạn ({count})</h4>
@@ -32,15 +32,13 @@ export default function YourCart({onClose,clickedPayment}) {
                 <ProductItem/>
                 <ProductItem/>
             </div>
-
-            <Payment onClose={onClose}/>
+            <Payment/>
+            <Outlet/>
         </div>
     )
 }
 
 function ProductItem() {
-    const [quantity, setQuantity] = useState(1); 
-
     return (
         <div className={style.productItem}>
             <img src={burger} alt="" />
@@ -73,18 +71,16 @@ function SideDishes({title,des}) {
     )
 }
 
-function Payment({onClose}) {
+function Payment() {
     const [paymentMethod, setPaymentMethod] = useState('qr');
 
-    const [isShowPopupThanhToan,setIsShowPopupThanhToan] = useState(false)
+    const nav = useNavigate();
 
-    const handleClosePopup = () => {
-        setIsShowPopupThanhToan(false)
-    }
-
-    const handleClickPopup = () => {
-        console.log(isShowPopupThanhToan)
-        setIsShowPopupThanhToan(true)
+    const handleThanhToan = () => {
+        if (paymentMethod === "qr") 
+            nav("ThanhToanQR")
+        else 
+            alert("Thanh toan tien mat")
     }
 
     return (
@@ -96,6 +92,7 @@ function Payment({onClose}) {
                     <span>(Tip 5%, VAT 10%)</span>
                 </div>
             </div>
+
             {/* <div className={style.choosedPayment}>
                 <div className={classNames(style.choosedItem)}>
                     <span>✓</span>
@@ -120,8 +117,7 @@ function Payment({onClose}) {
                     onChoose={() => setPaymentMethod('qr')}
                 />
             </div>
-            <button onClick={() => {setIsShowPopupThanhToan(true)}}>THANH TOÁN</button>
-            <PopupThanhToanQR isShow={isShowPopupThanhToan} onClose={handleClosePopup}/>
+            <button onClick={handleThanhToan}>THANH TOÁN</button>
         </div>
     )
 }
