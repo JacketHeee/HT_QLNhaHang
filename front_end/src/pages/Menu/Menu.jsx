@@ -8,15 +8,19 @@ import "../../index.css"
 import Payment from "../../components/Payment/Payment";
 import YourCart from "../YourCart/YourCart";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../../contexts/LoadingContext";
 
 export default function Menu() {
 
     const nav = useNavigate()
+    const {simulateLoading} = useLoading();
     
       const handelProductClick = (product) => {
         // setSelectedProduct(product)
         const spID = product?.id || "sp01"; 
-        nav( `${spID}/Detail`)
+        simulateLoading(500,() => {
+          nav( `${spID}/Detail`)
+        })
       }
 
     return (
@@ -80,7 +84,7 @@ export default function Menu() {
             </div>
             {/* <ProductDetail product={selectedProduct} onClose={handleProductClose}/> */}
           </div>    
-          <Payment text="Thanh toán" onClick={() => {nav("YourCart")}}/>                        
+          <Payment text="Thanh toán" onClick={() => {simulateLoading(500,() => {nav("YourCart")})}}/>                        
         </div>
     )
 }

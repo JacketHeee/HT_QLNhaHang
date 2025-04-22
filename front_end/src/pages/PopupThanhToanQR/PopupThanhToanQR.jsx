@@ -8,12 +8,26 @@ import qr from "../../assets/img/QR_Web.png"
 
 import style from "./PopupThanhToanQR.module.css"
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+import { useLoading } from "../../contexts/LoadingContext";
 
 
 export default function PopupThanhToanQR() {
 
 
     const nav = useNavigate()
+    const { simulateLoading } = useLoading();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            simulateLoading(2000,() => {
+                nav("/ban/05/OrderSuccess"); 
+            })
+        }, 3000); // 4 giây
+    
+        return () => clearTimeout(timer);
+      }, [nav]);
 
     return (
         <div className={style.overLay}

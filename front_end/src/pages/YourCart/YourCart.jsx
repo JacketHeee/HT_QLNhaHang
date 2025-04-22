@@ -7,6 +7,7 @@ import ButtonClose from "../../components/ButtonClose/ButtonClose";
 import CounterModel from "../../components/CounterModel/CounterModel";
 import classNames from "classnames";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useLoading } from "../../contexts/LoadingContext";
 
 export default function YourCart() {
     const [count, setCount] = useState(6)
@@ -75,12 +76,13 @@ function Payment() {
     const [paymentMethod, setPaymentMethod] = useState('qr');
 
     const nav = useNavigate();
+    const {simulateLoading} = useLoading()
 
     const handleThanhToan = () => {
         if (paymentMethod === "qr") 
-            nav("ThanhToanQR")
+            simulateLoading(1500,() => {nav("ThanhToanQR")})
         else 
-            alert("Thanh toan tien mat")
+            simulateLoading(4000,() => {nav("/ban/05/OrderSuccess")})
     }
 
     return (
