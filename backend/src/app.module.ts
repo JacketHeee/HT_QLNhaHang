@@ -6,12 +6,7 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { CustomersModule } from './customers/customers.module';
 import { EmployeesModule } from './employees/employees.module';
-import { Product } from './products/entities/product.entity';
-import { Order } from './orders/entities/order.entity';
-import { OrderItem } from './orders/entities/order-item.entity';
-import { Customer } from './customers/entities/customer.entity';
-import { Employee } from './employees/entities/employee.entity';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -19,23 +14,23 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
 
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-
-      // host: 'localhost',
-      // port: 5432,
-      // username: 'hoangson',
-      // password: 'Hoangson2005@',
-      // database: 'ht_qlnhahang',
-
-      host: process.env.DATABASE_HOST,
-      port: Number(process.env.DATABASE_PORT),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_DATABASE,
-
-      entities: [Product, Order, OrderItem, Customer, Employee],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: configService.get<number>('DATABASE_PORT') || 5432,
+        username: configService.get<string>('DATABASE_USER'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        database: configService.get<string>('DATABASE_NAME'),
+        autoLoadEntities: true,
+        synchronize: false, // Không tự động tạo schema trong production
+        ssl: {
+          rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
+        },
+        logging: true, // Bật log để debug
+      }),
+      inject: [ConfigService],
     }),
     ProductsModule,
     OrdersModule,
