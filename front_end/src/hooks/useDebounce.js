@@ -1,0 +1,1 @@
+// # Hook chờ người dùng gõ xong rồi mới search

@@ -1,0 +1,76 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00713F;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+}
+
+.product {
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.product * {
+    background: transparent;
+}
+
+.product>img {
+    height: 140px;
+    width: auto;
+    background: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.1),
+        transparent
+    );
+    border-radius: 10px 0 0 10px;
+}
+.product>div {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.productAction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.productAction>img {
+    background-color: var(--color-phu);
+    height: 40px;
+    width: auto;
+    padding: 10px;
+    border-radius: 15px;
+}
+.productAction>h4 {
+    color: var(--color-phu);
+}
+
+.productName {
+    font-size: 2rem;
+    color: var(--color-phu);
+    font-weight: bold;
+}
+
+.productName>span{
+    font-size: 2rem;
+}
+
+.productName>div {
+    margin-top: 5px;
+}
+.productName>div>span {
+    font-weight: normal;
+}
+

@@ -1,0 +1,181 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00713F;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+  }
+
+.yourCart {
+    inset: 0;
+    z-index: 50;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+.yourCart * {
+    background-color: white;
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.header>img {
+    height: 40px;
+    padding: 5px;
+}
+
+.header h4 {
+    color: var(--color-phu);
+    flex-grow: 1;
+}
+
+.header span {
+    background-color: rgba(0, 231, 146, 0.2);
+    padding: 8px;
+    border-radius: 10px;
+}
+
+/* ----------- */
+.itemShow {
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.productItem {
+    display: flex;
+    padding: 10px ;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    align-items: center;
+    gap: 10px;
+}
+.productItem>img {
+    height: 60px;
+}
+
+.productItem>div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.productNameAndSideDishes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.productNameAndSideDishes>div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sideDihes {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.sideDihes h6 {
+    color: var(--color-phu);
+}
+
+
+.quantityAndPrice {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.quantityAndPrice>div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+/* -------------- */
+.quantityAndPrice>div:last-child{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.quantityAndPrice>div:last-child h5 {
+    color: var(--color-phu);
+}
+
+/* -----------------------*/
+
+.yourCartPayment {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    gap: 10px;
+}
+
+.yourCartPayment>div:first-child{
+    display: flex;
+    justify-content: space-between;
+}
+
+.yourCartPayment h3 {
+    color: var(--color-phu);
+}
+
+.yourCartPayment>button {
+    background-color: var(--color-phu);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+
+.choosedPayment {
+    display: flex;
+    gap: 3px;
+}
+
+.choosedItem {
+    flex: 1;
+    display: flex;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.choosedItem.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+}
+
+.choosedPayment button {
+    flex-grow: 1;
+    border: none;
+    border-radius: 20px 0 0 0;
+    padding: 10px 0px;
+    background-color:white;
+}
+
+.choosedPayment span {
+    position: absolute;
+    background: transparent;
+    color: white;
+    top: 0;
+    left: 0;
+    font-size: 7px;
+    font-weight: bold;
+}

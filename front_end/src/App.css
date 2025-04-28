@@ -1,0 +1,27 @@
+.app {
+    height: 100dvh; 
+    min-height: 100dvh; 
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app,.app * {
+    /* border: 1px dashed; */
+    border-color: black;
+    animation: colorChange 2s infinite alternate;
+}
+
+/* ----------------------------- */
+.main {
+    background-color: gray;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ------------------- */
+
+/* ---------------------Cart---------------------- */
+
