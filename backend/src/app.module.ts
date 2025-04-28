@@ -24,7 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, //Tự động load tất cả entity
-        synchronize: true, // Tự động tạo schema trong production
+        synchronize: true, // Tự động tạo schema trong production ??
         ssl: {
           rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
         },

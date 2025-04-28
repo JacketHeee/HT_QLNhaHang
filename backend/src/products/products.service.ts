@@ -2,79 +2,63 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
+import { ProductResponseDto } from './dto/response-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
-export class ProductsService implements OnModuleInit {
+export class ProductsService{ //implements OnModuleInit {
     constructor(
         @InjectRepository(Product)
         private productsRepository: Repository<Product>,
     ) {}
 
-    async onModuleInit() {
-        const count = await this.productsRepository.count();
-        if (count === 0) {
-            const sampleProducts = [
-                {
-                    name: 'Hamburger',
-                    description: 'Burger with beef patty, lettuce, tomato, and cheese',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/hamburger.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 122.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 122.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-            ];
-            await this.productsRepository.save(sampleProducts);
-        }
+    async findAll(): Promise<ProductResponseDto[]> {
+        const products = await this.productsRepository.find({
+            where: { isDelete: false }, // Lọc sản phẩm chưa bị xóa
+        });
+        return products.map(product => {
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh};
+        });
     }
 
-    async findAll(): Promise<Product[]> {
-        return this.productsRepository.find();
-    }
-
-    async findOne(id: number): Promise<Product> {
-        const product = await this.productsRepository.findOneBy({ id });
+    async findOne(ID: number): Promise<ProductResponseDto> {
+        const product = await this.productsRepository.findOneBy({ ID });
         if (!product) {
             throw new Error('Product not found');
         }
-        return product;
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = product;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
     }
 
-    async create(newProduct: Partial<Product>): Promise<Product> {
+    async create(newProduct: CreateProductDto): Promise<ProductResponseDto> {
         const product = this.productsRepository.create(newProduct);
-        return this.productsRepository.save(product);
+        const savedProduct = await this.productsRepository.save(product);
+
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = savedProduct;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
+    }
+
+    async update(ID: number, updateProductDto: UpdateProductDto): Promise<ProductResponseDto>{
+        const product = await this.productsRepository.findOneBy({ID});
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        Object.assign(product, updateProductDto) // chép các thuộc tính từ nguồn -> đích
+
+        const updatedProductDto = await this.productsRepository.save(product);
+
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = updatedProductDto;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
+    }
+
+    async delete(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isDelete = true;
+        await this.productsRepository.save(product);
     }
 }

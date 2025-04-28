@@ -3,20 +3,27 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity() 
 export class Product {
     @PrimaryGeneratedColumn()
-    id: number;
+    ID: number;
 
     @Column()
-    name: string;
+    tenMonAn: string;
 
     @Column()
-    description: string;
+    moTa: string;
+
+    @Column({
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
+    })
+    giaBan: number;
 
     @Column()
-    price: number;
+    tenHinhAnh: string;
 
-    @Column()
-    imageUrl: string;
-
-    @Column()
-    category: string;
+    @Column({
+        type: 'boolean',
+        default: false, // Đặt giá trị mặc định là false
+    })
+    isDelete: boolean;
 }
