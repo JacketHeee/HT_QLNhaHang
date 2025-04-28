@@ -11,16 +11,29 @@ import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
 import { Customer } from './customers/entities/customer.entity';
 import { Employee } from './employees/entities/employee.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'hoangson',
-      password: 'Hoangson2005@',
-      database: 'ht_qlnhahang',
+
+      // host: 'localhost',
+      // port: 5432,
+      // username: 'hoangson',
+      // password: 'Hoangson2005@',
+      // database: 'ht_qlnhahang',
+
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+
       entities: [Product, Order, OrderItem, Customer, Employee],
       synchronize: true,
     }),
