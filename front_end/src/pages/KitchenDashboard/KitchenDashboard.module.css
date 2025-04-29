@@ -1,80 +1,250 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+    --darkMainColor: #00713F;
+}
+
+
 .container {
-    padding: 1.5rem;
-    background-color: #f0f2f5;
-    min-height: 100vh;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px; 
+}
+/* ----------------------- */
+
+.container * {
+    /* border: 1px dashed black; */
 }
 
-.title {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+.body {
+    flex-grow: 1;
 }
 
-.orderList {
-    display: grid;
-    gap: 1rem;
+/* ------------------------- */
+
+.header {
+    display: flex;
+    background-color: #00000090;
+    gap: 30px;
+    padding: 10px 20px;
 }
 
-.orderCard {
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.header * {
+    background: transparent;
+    color: var(--color-primary) !important;
 }
 
-.orderTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+.header>div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.orderInfo {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.25rem;
+/* ------------------ */
+
+.body {
+    display: flex;
+    gap: 6px;
+    flex-direction: column;
+    flex-wrap:wrap ;
+    max-height: 100vh;
+    padding: 0 6px;
+    align-content: start;
+    overflow-x: auto;
+}
+.body>.order {
+    /* flex: 1; */
 }
 
-.orderItems {
-    margin-top: 0.75rem;
+/* ------------------------------------------ */
+.order {
+    background-color: #00713F80;
+    min-width: 250px;
+    max-width: 250px;
+    height: calc(50% - 3px);
+    border-radius: 10px;
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    gap: 5px;
 }
 
-.itemsTitle {
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+.order.red {
+    background-color: #96000090;
 }
 
-.item {
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
+.order.yellow {
+    background-color: #8d780090;
 }
 
-.actions {
-    margin-top: 1rem;
+
+.order * {
+    background: transparent;
 }
 
-.startButton {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: #ffffff;
+.doneDish {
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 120%;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    /* background-color: white; */
 }
 
-.startButton:hover {
-    background-color: #0056b3;
+.orderDetail {
+    background-color: var(--color-bg);
+    flex-grow: 1;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+ /* Scrollbar only visible when needed */
+ scrollbar-width: thin; /* Firefox */
+ scrollbar-color: #999 transparent; /* Firefox */
 }
 
-.completeButton {
-    padding: 0.5rem 1rem;
-    background-color: #28a745;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* Webkit (Chrome, Safari, Edge) */
+.orderDetail::-webkit-scrollbar {
+ width: 6px;
 }
 
-.completeButton:hover {
-    background-color: #218838;
+.orderDetail::-webkit-scrollbar-track {
+ background: transparent;
+ border-radius: 10px;
 }
+
+.orderDetail::-webkit-scrollbar-thumb {
+ background-color: #999;
+ border-radius: 10px;
+ border: 1px solid #ccc;
+}
+
+.orderDetail::-webkit-scrollbar-thumb:hover {
+ background-color: #777;
+}
+
+.orderDetail>div {
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+}
+
+.orderDetail>div>span {
+    margin-left: 10px;
+    color: var(--darkMainColor);
+}
+
+.time {
+    width: 100%;
+    padding-right: 10px;
+    text-align: end;
+}
+.sothutu {
+    position: absolute;
+    top: 5px; 
+    right: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    color: white !important;
+    width: 25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer {
+    padding: 10px;
+    width: 100%;
+    background-color: #00000090;
+}
+
+.logoutButton {
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    border-radius: 10px;
+}
+
+.logoutButton * {
+    background: transparent;
+}
+
+.logoutButton>img {
+    width: 25px;
+    height: 25px;
+}
+
+/* --------------------------- */

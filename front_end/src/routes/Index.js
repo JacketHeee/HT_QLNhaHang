@@ -19,8 +19,8 @@ export default function AppRoutes() {
     const nav = useNavigate()
     useEffect(() => {
         // nav("/ban/06")
-        // nav("/admin/kitchen")
-        nav("/admin/login")
+        nav("/admin/kitchen")
+        // nav("/admin/login")
         // nav("/admin/orders/06/Detail")
     },[])
 
