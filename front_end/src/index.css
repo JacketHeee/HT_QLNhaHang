@@ -1,8 +1,8 @@
 :root {
   /* 🌈 Màu sắc chủ đạo */
-  --color-primary: #00713F;
+  --color-primary: #00b67a;
   --color-bg: #F3F3F3;
-  --color-text: #1B1B1B;
+  --color-text: #212121;
   --border: #EAEAEA;
   --color-phu: #ED0101;
 }
@@ -17,9 +17,9 @@ html, body {
 }
 
 
-*,
-*::before,
-*::after {
+body *,
+body *::before,
+body *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -29,8 +29,9 @@ html, body {
   font-size: 1.5rem;
 }
 
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.5rem;
   background-color: var(--color-bg);
   color: var(--color-text);
@@ -79,7 +80,7 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus,input:active, textarea:active, select:active{
   outline: none;
   background: none;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Tạo bóng mờ xung quanh */
+  /* box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); */
 }
 
 
@@ -169,62 +170,33 @@ hr {
 
 /* Tablet (≥768px): 1rem = 11px */
 @media (min-width: 768px) {
-  html {
-    font-size: 68.75%;
-  }
-
-  h1 {
-    font-size: 4.2rem; /* 42px cho tablet */
-  }
-
-  h2 {
-    font-size: 3.8rem; /* 38px cho tablet */
-  }
-
-  h3 {
-    font-size: 3.4rem; /* 34px cho tablet */
-  }
-
-  h4 {
-    font-size: 3rem; /* 30px cho tablet */
-  }
-
-  h5 {
-    font-size: 2.6rem; /* 26px cho tablet */
-  }
-
-  h6 {
-    font-size: 2.2rem; /* 22px cho tablet */
-  }
+  
 }
 
 /* Desktop (≥1024px): 1rem = 12px */
+/* Responsive cho màn hình laptop trở lên */
 @media (min-width: 1024px) {
-  html {
-    font-size: 75%;
-  }
-
   h1 {
-    font-size: 5rem; /* 50px cho desktop */
+    font-size: 4rem; /* 40px */
   }
 
   h2 {
-    font-size: 4.6rem; /* 46px cho desktop */
+    font-size: 3.6rem; /* 36px */
   }
 
   h3 {
-    font-size: 4.2rem; /* 42px cho desktop */
+    font-size: 3rem; /* 30px */
   }
 
   h4 {
-    font-size: 3.8rem; /* 38px cho desktop */
+    font-size: 2.4rem; /* 24px */
   }
 
   h5 {
-    font-size: 3.4rem; /* 34px cho desktop */
+    font-size: 2rem; /* 20px */
   }
 
   h6 {
-    font-size: 3rem; /* 30px cho desktop */
+    font-size: 1.6rem; /* 16px */
   }
 }

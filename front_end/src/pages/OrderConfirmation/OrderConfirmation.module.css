@@ -1,0 +1,62 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+}
+
+.container {
+    padding:10px 10px 0 10px;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+
+    display:  flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 10px;
+}
+
+/* .title {
+    display: flex;
+    justify-content: center;
+} */
+
+.search_select {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* padding: 0 20px; */
+}
+
+.search_select select {
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.search_select>select:active, .search_select>select:focus{
+    border: none;
+    background-color: white;
+}
+
+
+
+.actions {
+    background-color: var(--blue);
+    color: white !important; 
+    padding: 3px 10px;   
+    font-size: 80%;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}

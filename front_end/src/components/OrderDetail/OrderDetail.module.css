@@ -1,0 +1,88 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    gap: 10px;
+}
+
+.container h6,.container h3, .container span {
+    background-color: white;
+}
+
+.thongtinchung {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.thongtinchung * {
+    background: transparent;
+}
+
+.thongtinchung>div {
+    display: flex;
+    gap: 5px;
+}
+
+/* ------------------- */
+
+.chitiet {
+    background: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: end;
+    max-height: 300px;
+}
+
+.chitiet>h6>span {
+    font-weight: normal;
+}
+
+/* -------------- */
+
+.ghichu {
+    background: transparent;
+    width: 100%;
+}
+
+.ghichu>textarea {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%; 
+}
+
+/* -------------- */
+
+.actions {
+    background: transparent;
+    display: flex;
+    gap: 10px;
+}
+
+.actions>button {
+    width: 100px;
+}
+
+.actions>button:first-child {
+    background-color: var(--blue);
+    color: white;
+}

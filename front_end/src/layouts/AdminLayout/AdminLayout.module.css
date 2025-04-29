@@ -1,0 +1,131 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #2d2d2d;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+}
+
+.container {
+    display: flex;
+    max-height: 100vh;
+}
+
+.container * {
+    color: var(--color-text);
+}
+
+.container * {
+    /* border: 1px solid black; */
+}
+
+.sideBar {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    flex-grow: 1;
+}
+
+.mainContent {
+    flex-grow: 1;
+}
+
+/* ---------------------- */
+
+.header {
+    display: flex;
+    padding: 10px;
+    gap: 5px;
+    align-items: center;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.header>img {
+    width: 60px;
+    height: 60px;
+}
+.header>div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ---------------- */
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 10px;
+    overflow: auto;
+    gap: 5px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.nav img {
+    width: 35px;
+    height: 35px;
+}
+
+.navlink {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.navlink * {
+    background: transparent;
+}
+
+.navlink>p {
+    font-size: 1.5rem;
+}
+
+.navlink:hover {
+    background-color: var(--selected);
+}
+
+.navlink.active {
+    background-color: var(--selected);
+}
+
+
+/* --------------------- */
+
+.classNameButLog {
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoutButton {
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    border-radius: 10px;
+
+}
+
+.logoutButton * {
+    background: transparent;
+}
+
+.logoutButton>img {
+    width: 30px;
+    height: 30px;
+}
+
+
+
