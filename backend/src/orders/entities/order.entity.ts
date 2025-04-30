@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
-import { OrderItem } from './order-item.entity';
+import { Order_Product } from '../../orders_products/entities/order_product.entity';
 import { Customer } from '../../customers/entities/customer.entity';
 
 @Entity()
@@ -7,28 +7,37 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Customer, customer => customer.orders)
-    @JoinColumn({ name: 'customerId' })
-    customer: Customer;
+    // @ManyToOne(() => Customer, customer => customer.orders)
+    // @JoinColumn({ name: 'customerId' })
+    // customer: Customer;
 
     @Column()
     customerId: number;
 
-    @Column({ default: 'pending' })
-    status: string;
+    @Column()
+    tableId: number;
 
-    @Column('decimal', { default: 0 })
-    totalPrice: number;
-
-    @Column({ default: false })
-    isTakeAway: boolean;
+    @Column({default: ""})
+    note: string;
 
     @CreateDateColumn()
     createdAt: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @Column({ default: 'pending' })
+    status: string;
 
-    @OneToMany(() => OrderItem, orderItem => orderItem.order, { cascade: true })
-    orderItems: OrderItem[];
+    @Column('decimal')
+    totalPrice: number;
+
+    @Column({default: false})
+    isDeleted: boolean;
+
+    // @Column({ default: false })
+    // isTakeAway: boolean;
+
+    // @UpdateDateColumn()
+    // updatedAt: Date;
+
+    // @OneToMany(() => OrderItem, orderItem => orderItem.order, { cascade: true })
+    // orderItems: OrderItem[];
 }

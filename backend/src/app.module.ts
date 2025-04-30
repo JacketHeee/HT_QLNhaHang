@@ -11,7 +11,7 @@ import { CategoryModule } from './categories/category.module';
 import { Category } from './categories/entities/category.entity';
 import { Employee } from './employees/entities/employee.entity';
 import { Customer } from './customers/entities/customer.entity';
-import { OrderItem } from './orders/entities/order-item.entity';
+import { Order_Product } from './orders_products/entities/order_product.entity';
 import { Order } from './orders/entities/order.entity';
 import { Product } from './products/entities/product.entity';
 import { Category_ProductModule } from './categories_products/categories_products.module';
@@ -20,6 +20,9 @@ import { SideDish } from './sidedishes/entities/sidedish.entity';
 import { SideDishModule } from './sidedishes/sidedish.module';
 import { SideDish_Product } from './products_sidedishes/entities/product_sidedishes.entity';
 import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes.module';
+import { TableModule } from './tables/table.module';
+import { Table } from './tables/entities/table.entity';
+import { OrdersProductsModule } from './orders_products/orders_products.module';
 
 @Module({
   imports: [
@@ -28,36 +31,36 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
     }),
 
     // Chạy db server
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT') || 5432,
-        username: configService.get<string>('DATABASE_USER'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        autoLoadEntities: true, //Tự động load tất cả entity
-        synchronize: true, // Tự động tạo schema trong production ??
-        ssl: {
-          rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
-        },
-        logging: true, // Bật log để debug
-      }),
-      inject: [ConfigService],
-    }),
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService: ConfigService) => ({
+    //     type: 'postgres',
+    //     host: configService.get<string>('DATABASE_HOST'),
+    //     port: configService.get<number>('DATABASE_PORT') || 5432,
+    //     username: configService.get<string>('DATABASE_USER'),
+    //     password: configService.get<string>('DATABASE_PASSWORD'),
+    //     database: configService.get<string>('DATABASE_NAME'),
+    //     autoLoadEntities: true, //Tự động load tất cả entity
+    //     synchronize: true, // Tự động tạo schema trong production ??
+    //     ssl: {
+    //       rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
+    //     },
+    //     logging: true, // Bật log để debug
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
     //Chạy db local
-    // TypeOrmModule.forRoot({
-    //     type: 'postgres',
-    //     host: 'localhost',
-    //     port: 5432,
-    //     username: 'postgres',
-    //     password: '123456',
-    //     database: 'quanlynhahanglocal',
-    //     entities: [Product, Order, OrderItem, Customer, Employee, Category, Category_Product, SideDish, SideDish_Product],
-    //     synchronize: true,
-    // }),
+    TypeOrmModule.forRoot({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'thanhvinh05',
+        database: 'restaurant',
+        entities: [Product, Order, Order_Product, Customer, Employee, Category, Category_Product, SideDish, SideDish_Product, Table],
+        synchronize: true,
+    }),
 
     ProductsModule,
     OrdersModule,
@@ -66,7 +69,9 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
     CategoryModule,
     Category_ProductModule,
     SideDishModule,
-    SideDish_ProductModule
+    SideDish_ProductModule,
+    TableModule,
+    OrdersProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],
