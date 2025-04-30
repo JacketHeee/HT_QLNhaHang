@@ -68,10 +68,10 @@ const OrderConfirmation = () => {
     const [loading, setLoading] = useState(true); // Trạng thái loading
     const [error, setError] = useState(null);  // Lỗi nếu có
 
-    // useEffect(() => {
-    //     // Gọi API khi com
-    //     getData();
-    // }, []); 
+    useEffect(() => {
+        // Gọi API khi com
+        getData();
+    }, []); 
 
 
     const handleSearch = (keyword) => {
@@ -82,7 +82,7 @@ const OrderConfirmation = () => {
         <div className={styles.container}>
             <h3 className={styles.title}>Danh sách đơn hàng</h3>
             <div className={styles.search_select}>
-                <Search onSearch={handleSearch}/>
+                <Search onSearch={handleSearch} placeHolder={"Tìm kiếm theo mã đơn..."}/>
                 <select name="" id="">
                     <option value="">Bún bò</option>
                     <option value="">Gà sợi phở</option>
@@ -102,26 +102,26 @@ export default OrderConfirmation;
 
 
 // Hàm gọi API lấy dữ liệu
-// async function getData() {
-//     try {
-//         const response = await fetch('https://ht-qlnhahang.onrender.com/products'); // Thay bằng URL thật của bạn
-//         const data = await response.json(); // Chuyển response thành đối tượng JSON
+async function getData() {
+    try {
+        const response = await fetch('https://ht-qlnhahang.onrender.com/products'); // Thay bằng URL thật của bạn
+        const data = await response.json(); // Chuyển response thành đối tượng JSON
 
-//         // Hiển thị dữ liệu ra console
-//         console.log(data);
+        // Hiển thị dữ liệu ra console
+        console.log(data);
 
-//         // Duyệt qua từng món ăn và in ra thông tin
-//         data.forEach(monan => {
-//             console.log(`Tên món: ${monan.ID}`);
-//             console.log(`Mô tả: ${monan.tenMonAn}`);
-//             console.log(`Giá bán: ${monan.moTa} VND`);
-//             console.log(`Hình ảnh: ${monan.giaBan}`);
-//             console.log('------------------');
-//         });
+        // Duyệt qua từng món ăn và in ra thông tin
+        data.forEach(monan => {
+            console.log(`Tên món: ${monan.ID}`);
+            console.log(`Mô tả: ${monan.tenMonAn}`);
+            console.log(`Giá bán: ${monan.moTa} VND`);
+            console.log(`Hình ảnh: ${monan.tenHinhAnh}`);
+            console.log('------------------');
+        });
 
-//     } catch (error) {
-//         console.error('Lỗi khi lấy dữ liệu:', error);
-//     }
-// }
+    } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu:', error);
+    }
+}
 
 // Gọi hàm

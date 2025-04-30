@@ -1,0 +1,142 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+    --darkMainColor: #00713F;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.container * {
+    /* border: 1px solid black; */
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search>div {
+    min-width: 400px;
+}
+
+/* ---------------------- */
+
+.category {
+    display: flex;
+    gap: 5px;
+}
+
+.category>button.active {
+    background-color: var(--selected);
+}
+
+
+.theloai{
+    display: flex; 
+}
+
+.select {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+}
+
+.select button {
+    border-radius: 10px;
+    padding: 5px;
+    width: 100px;
+}
+.select>button.active {
+    background-color: var(--red);
+    color: white;
+}
+.maincontent {
+    /* background-color: #00713F; */
+    flex-grow: 1;
+    padding: 20px 100px; 
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #999 transparent; 
+}
+
+/* ---------------------- */
+.product { 
+    display: flex;
+    justify-content: space-between; 
+    padding: 10px;
+    border-radius: 10px;
+    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.productInfor {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.productInfor>img {
+    height: 150px;
+    background: linear-gradient(to right, #ebebeb, #979797);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.productInfor span {
+    font-weight: normal;
+}
+
+.productInfor>div {
+    flex-grow: 1;
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.des {
+    flex-grow: 1;
+}
+
+
+/* ---------------- */
+.productActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.productActions img {
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.productActions img:last-child {
+    background-color: var(--red);
+}

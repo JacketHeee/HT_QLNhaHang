@@ -21,6 +21,10 @@
     align-items: center;
 }
 
+.divSearch>input {
+    flex-grow: 1;
+}
+
 .divSearch  * {
     background: transparent;
     border: none;

@@ -13,13 +13,14 @@ import logout from "../../assets/icon/logout.svg";
 
 // Danh sách menu với vai trò được phép truy cập
 const menuItems = [
-    {id:"product", path: '/admin/product', label: 'Món ăn', roles: ['admin', 'kitchen'],icon: monan},
+    {id:"product", path: '/admin/productManagement', label: 'Món ăn', roles: ['admin', 'kitchen'],icon: monan},
     {id:"table", path: '/admin/table', label: 'Bàn ăn', roles: ['admin', 'kitchen'],icon: banan},
     {id:"order", path: '/admin/orders', label: 'Đơn hàng', roles: ['admin', 'staff'],icon: donhang },
     {id:"kitchen", path: '/admin/kitchen', label: 'Bảng điều khiển bếp', roles: ['admin', 'kitchen'],icon: bep},
     {id:"staff", path: '/admin/staff', label: 'Quản lý nhân viên', roles: ['admin', 'kitchen'],icon: qlnhanvien},
     {id:"account", path: '/admin/account', label: 'Quản lý tài khoản', roles: ['admin', 'kitchen'],icon: hinhanh},
 ];
+
 
 const AdminLayout = () => {
     const [selectedItem,setSelectedItem] = useState("order");
@@ -68,8 +69,7 @@ const AdminLayout = () => {
                         </div>
                     ))}
                 </nav>
-                <div className={styles.classNameButLog}>
-                    
+                <div className={styles.classNameButLog}>     
                     <button
                         onClick={handleLogout}
                         className={styles.logoutButton}
