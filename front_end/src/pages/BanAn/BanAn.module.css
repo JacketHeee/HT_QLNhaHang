@@ -1,0 +1,110 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+    --darkMainColor: #00713F;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 20px;
+}
+
+.container * {
+    /* border: 1px solid black; */
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+}
+
+.select {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+}
+
+.select button {
+    border-radius: 10px;
+    padding: 5px;
+    width: 100px;
+}
+.select>button.active {
+    background-color: var(--red);
+    color: white;
+}
+/* ----------------------------- */
+
+.maincontent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+
+    gap: 20px; 
+    overflow-x: auto;
+    /* justify-content: center; */
+    justify-content: center;
+    align-content: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: #999 transparent; 
+    justify-content: flex-start;
+}
+
+.table {
+    height: 30%; 
+    border-radius: 10px; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: white;
+    padding: 20px; 
+    width: 290px;
+}
+
+.table.active {
+    background-color: var(--selected);
+}
+
+.table * {
+    color: var(--red);
+    background: transparent;
+    
+}
+
+.table span {
+    color: var(--color-text);
+}
+
+.table>h5 {
+    color: var(--color-text);
+}
+
+/* --------------- */
+.infor {
+    display: flex;
+    flex-grow: 1;
+    align-items: end;
+    
+    position: relative;
+}
+
+.infor img {
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+

@@ -52,6 +52,7 @@
     display: flex; 
 }
 
+/* ------------------------------ */
 .select {
     display: flex;
     justify-content: center;
@@ -67,6 +68,8 @@
     background-color: var(--red);
     color: white;
 }
+
+/* ---------------------------- */
 .maincontent {
     /* background-color: #00713F; */
     flex-grow: 1;
