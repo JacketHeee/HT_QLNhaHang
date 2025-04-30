@@ -18,6 +18,7 @@ import ProductDetailAdmin from "../components/ProductDetailAdmin/ProductDetailAd
 import BanAn from "../pages/BanAn/BanAn";
 import QLTaiKhoan from "../pages/QLTaiKhoan/QLTaiKhoan";
 import QLNhanVien from "../pages/QLNhanVien/QLNhanVien";
+import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
 
 // Chứa toàn bộ cấu hình định tuyến của ứng dụng
 export default function AppRoutes() {
@@ -52,6 +53,7 @@ export default function AppRoutes() {
                     <Route path="login" element={<AdminLogin/>}/>
                     <Route element={<AdminLayout/>}>
                         <Route path="account" element={<QLTaiKhoan/>}/>
+                        <Route path="roleLayer" element={<PhanQuyen/>}/>
                         <Route path="staff" element={<QLNhanVien/>}/>
                         <Route path="table" element={<BanAn/>}/>
                         <Route path="orders" element={<OrderConfirmation/>}>

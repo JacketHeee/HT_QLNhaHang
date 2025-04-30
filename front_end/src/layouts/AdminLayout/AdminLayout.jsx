@@ -9,6 +9,7 @@ import donhang from "../../assets/icon/donhang.svg";
 import bep from "../../assets/icon/kitchen.svg";
 import qlnhanvien from "../../assets/icon/qlnhanvien.svg";
 import hinhanh from "../../assets/icon/qlaccount.svg";
+import layer from "../../assets/icon/roleLayer.svg";
 import logout from "../../assets/icon/logout.svg";
 
 // Danh sách menu với vai trò được phép truy cập
@@ -19,6 +20,7 @@ const menuItems = [
     {id:"kitchen", path: '/admin/kitchen', label: 'Bảng điều khiển bếp', roles: ['admin', 'kitchen'],icon: bep},
     {id:"staff", path: '/admin/staff', label: 'Quản lý nhân viên', roles: ['admin', 'kitchen'],icon: qlnhanvien},
     {id:"account", path: '/admin/account', label: 'Quản lý tài khoản', roles: ['admin', 'kitchen'],icon: hinhanh},
+    {id:"roleLayer", path: '/admin/roleLayer', label: 'Phân quyền', roles: ['admin', 'kitchen'],icon: layer},
 ];
 
 
