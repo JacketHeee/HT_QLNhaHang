@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import styles from './OrderConfirmation.module.css';
 import Search from '../../components/Search/Search';
-import CustomTable from '../../components/CustomTable/Table';
+import Table from '../../components/CustomTable/Table';
 
 const OrderConfirmation = () => {
     const nav = useNavigate();
@@ -90,7 +90,7 @@ const OrderConfirmation = () => {
                     <option value="">Bò ba bể</option>
                 </select>
             </div>
-            <CustomTable columns={columns} data={orders} actions={actions}/>
+            <Table columns={columns} data={orders} actions={actions}/>
             <Outlet/>
         </div>
     );

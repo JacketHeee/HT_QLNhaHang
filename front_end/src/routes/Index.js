@@ -16,6 +16,8 @@ import OrderDetail from "../components/OrderDetail/OrderDetail";
 import ProductManagement from "../pages/ProductManagement/ProductManagement";
 import ProductDetailAdmin from "../components/ProductDetailAdmin/ProductDetailAdmin";
 import BanAn from "../pages/BanAn/BanAn";
+import QLTaiKhoan from "../pages/QLTaiKhoan/QLTaiKhoan";
+import QLNhanVien from "../pages/QLNhanVien/QLNhanVien";
 
 // Chứa toàn bộ cấu hình định tuyến của ứng dụng
 export default function AppRoutes() {
@@ -23,8 +25,9 @@ export default function AppRoutes() {
     useEffect(() => {
         // nav("/ban/06")
         // nav("/admin/kitchen")
-        // nav("/admin/login")
-        nav("/admin/table")
+        nav("/admin/login")
+        // nav("/admin/account")
+        // nav("/admin/table")
         // nav("/admin/productManagement")
         // nav("/admin/productManagement/06/productDetail")
         // nav("/admin/orders/06/Detail")
@@ -48,6 +51,8 @@ export default function AppRoutes() {
                 <Route path="/admin">
                     <Route path="login" element={<AdminLogin/>}/>
                     <Route element={<AdminLayout/>}>
+                        <Route path="account" element={<QLTaiKhoan/>}/>
+                        <Route path="staff" element={<QLNhanVien/>}/>
                         <Route path="table" element={<BanAn/>}/>
                         <Route path="orders" element={<OrderConfirmation/>}>
                             <Route path=":orderId/Detail" element={<OrderDetail/>} />
