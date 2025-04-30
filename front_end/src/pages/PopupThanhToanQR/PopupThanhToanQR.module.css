@@ -1,0 +1,89 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+  }
+
+.overLay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainContentContainer {
+    /* z-index: 101; */
+    background-color: var(--color-bg);
+    position: relative;
+    width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    
+}
+
+.mainContentContainer>div {
+    background-color: var(--color-bg);
+}
+.mainContentContainer>div *  {
+    background: transparent;
+}
+
+.mainContentContainer>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 15px;
+}
+
+.mainContentContainer>div>h4{
+    text-align: center;
+}
+
+.thongtinchung img {
+    width: 40px;
+    padding: 5px;
+}
+
+.thongtinchung div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.thongtinThanhtoan {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 5px;
+}
+
+.thongtinThanhtoan h4{
+    color: var(--color-phu);
+}
+
+.thongtinThanhtoan h3 {
+    color: var(--color-text);
+}
+
+.qrThanhtoan {
+    display: flex;
+    margin: auto;
+    background-color: white;
+}
+.qrThanhtoan img {
+    width: 180px;
+    height: 180px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.nhacnho {
+    text-align: center;
+}

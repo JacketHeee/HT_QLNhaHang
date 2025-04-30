@@ -1,0 +1,28 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+}
+
+.counterModel {
+    display: flex;
+    align-items: center;
+}
+.counterModel button {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.counterModel button:last-child {
+    color: var(--color-phu);
+    border: 1px solid var(--color-phu);
+}
+.counterModel>span {
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

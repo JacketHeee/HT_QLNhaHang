@@ -1,0 +1,55 @@
+:root {
+    --color-primary: #00b67a;
+}
+
+.lopphu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* màu đen với độ mờ 50% */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Đảm bảo overlay nằm trên các phần tử khác */
+    transition: opacity 0.3s ease;
+}
+
+.lopphu * {
+    background: transparent;
+}
+
+.dot_loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    gap: 5px;
+}
+
+.dot_loading span {
+    background: transparent;
+    font-size: 80px;
+    color: #00ff8c;
+    animation: jump 0.7s infinite;
+}
+
+.dot_loading span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot_loading span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,97 @@
+.tableContainer {
+    width: 100%;/* Giữ chiều cao cho cuộn dọc */
+    overflow-x: auto; /* Cuộn ngang */
+    overflow-y: auto; /* Cuộn dọc */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tùy chỉnh scrollbar cho WebKit (Chrome, Edge, Safari) */
+.tableContainer::-webkit-scrollbar {
+    width: 4px; /* Scrollbar mỏng */
+    height: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+    background: #003a50;
+    border-radius: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+    background: #005f80;
+}
+
+/* Tùy chỉnh scrollbar cho Firefox */
+.tableContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #003a50 #f1f1f1;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.th {
+    padding: 10px; /* Tăng padding (1.6rem = 16px) */
+    background-color: rgb(0, 58, 80);
+    color: white !important;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.4rem; /* 1.6rem = 16px, lớn hơn cho laptop */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+}
+
+.td {
+    padding: 8px; /* Tăng padding (1.6rem = 16px) */
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1.4rem; /* 1.6rem = 16px, lớn hơn cho laptop */
+    color: #333;
+    max-width: 300px; /* Tăng max-width để ô rộng hơn */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tr:hover {
+    background-color: #f1f1f1;
+}
+
+.empty {
+    padding: 2rem; /* Tăng padding */
+    text-align: center;
+    color: #666;
+    font-size: 1.8rem; /* 1.8rem = 18px, lớn hơn */
+}
+
+/* Media query cho màn hình nhỏ */
+@media (max-width: 767px) {
+    .tableContainer {
+        overflow-x: auto;
+    }
+
+    .th,
+    .td {
+        min-width: 120px;
+        font-size: 1.4rem; /* 1.4rem = 14px trên di động */
+        padding: 1rem; /* 1rem = 10px */
+    }
+
+    .empty {
+        font-size: 1.6rem; /* 1.6rem = 16px trên di động */
+    }
+}

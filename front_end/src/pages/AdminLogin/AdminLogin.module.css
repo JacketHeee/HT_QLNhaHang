@@ -1,0 +1,77 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    padding: 0;
+}
+
+.container * {
+    background: transparent;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 4px rgba(0, 255, 191, 0.3);
+}
+
+.error {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+.button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--color-primary);
+}
