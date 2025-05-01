@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Category } from "./entities/category.entity";
 import { Repository } from "typeorm";
@@ -30,6 +30,17 @@ export class CategoryService {
         }
         const {ID: idCategory, tenLoaiMonAn} = category;
         return {ID: idCategory, tenLoaiMonAn}
+    }
+
+    async getProductsByCategoryID(categoryID: number){
+        const category = await this.categoriesReposistory.findOne({
+            where: {ID: categoryID},
+            relations: ['products'],
+        });
+        if(!category){
+            throw new NotFoundException('Không tìm thấy sản phẩm!')
+        }
+        return category.products;
     }
 
     async create(createCategory: CreateCategoryDto): Promise<CategoryResponseDto>{

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Category } from 'src/categories/entities/category.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity() 
 export class Product {
@@ -21,12 +22,17 @@ export class Product {
     @Column()
     tenHinhAnh: string;
 
+    @Column()
+    IDLoaiMonAn: number;
+
     @Column({
         type: 'boolean',
         default: false, // Đặt giá trị mặc định là false
     })
     isDelete: boolean;
 
-
+    @ManyToOne(() => Category, (category)=>category.products)
+    @JoinColumn({name: 'IDLoaiMonAn'})
+    category: Category
 
 }

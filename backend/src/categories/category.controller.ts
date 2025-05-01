@@ -20,6 +20,12 @@ export class CategoryController {
         return category;
     }
 
+    @Get(":id/products")
+    async getProducts(@Param('id') id: number){
+        const products = this.categoryService.getProductsByCategoryID(id);
+        return products;
+    }
+
     @Post()
     async create(@Body() createCategoryDto: CreateCategoryDto): Promise<CategoryResponseDto>{
         const category = await this.categoryService.create(createCategoryDto);
