@@ -11,7 +11,13 @@ async function bootstrap() {
     transform: true,
   }));
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.enableCors(); // Bật CORS
+  // app.enableCors(); // Bật CORS
+  // await app.listen(3001);
+
+  app.enableCors({
+    origin: 'http://localhost:3000', 
+  });
   await app.listen(3001);
+  
 }
 bootstrap();

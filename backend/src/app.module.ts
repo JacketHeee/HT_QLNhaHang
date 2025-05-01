@@ -28,36 +28,36 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
     }),
 
     // Chạy db server
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT') || 5432,
-        username: configService.get<string>('DATABASE_USER'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        autoLoadEntities: true, //Tự động load tất cả entity
-        synchronize: true, // Tự động tạo schema trong production ??
-        ssl: {
-          rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
-        },
-        logging: true, // Bật log để debug
-      }),
-      inject: [ConfigService],
-    }),
-
-    //Chạy db local
-    // TypeOrmModule.forRoot({
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService: ConfigService) => ({
     //     type: 'postgres',
-    //     host: 'localhost',
-    //     port: 5432,
-    //     username: 'postgres',
-    //     password: '123456',
-    //     database: 'quanlynhahanglocal',
-    //     entities: [Product, Order, OrderItem, Customer, Employee, Category, Category_Product, SideDish, SideDish_Product],
-    //     synchronize: true,
+    //     host: configService.get<string>('DATABASE_HOST'),
+    //     port: configService.get<number>('DATABASE_PORT') || 5432,
+    //     username: configService.get<string>('DATABASE_USER'),
+    //     password: configService.get<string>('DATABASE_PASSWORD'),
+    //     database: configService.get<string>('DATABASE_NAME'),
+    //     autoLoadEntities: true, //Tự động load tất cả entity
+    //     synchronize: true, // Tự động tạo schema trong production ??
+    //     ssl: {
+    //       rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
+    //     },
+    //     logging: true, // Bật log để debug
+    //   }),
+    //   inject: [ConfigService],
     // }),
+
+    // Chạy db local
+    TypeOrmModule.forRoot({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '123456',
+        database: 'quanlynhahanglocal',
+        entities: [Product, Order, OrderItem, Customer, Employee, Category, Category_Product, SideDish, SideDish_Product],
+        synchronize: true,
+    }),
 
     ProductsModule,
     OrdersModule,
