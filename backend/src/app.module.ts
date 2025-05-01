@@ -14,8 +14,6 @@ import { Customer } from './customers/entities/customer.entity';
 import { Order_Product } from './orders_products/entities/order_product.entity';
 import { Order } from './orders/entities/order.entity';
 import { Product } from './products/entities/product.entity';
-import { Category_ProductModule } from './categories_products/categories_products.module';
-import { Category_Product } from './categories_products/entities/categories_products.entity';
 import { SideDish } from './sidedishes/entities/sidedish.entity';
 import { SideDishModule } from './sidedishes/sidedish.module';
 import { SideDish_Product } from './products_sidedishes/entities/product_sidedishes.entity';
@@ -31,36 +29,36 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
     }),
 
     // Chạy db server
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT') || 5432,
-        username: configService.get<string>('DATABASE_USER'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        autoLoadEntities: true, //Tự động load tất cả entity
-        synchronize: true, // Tự động tạo schema trong production ??
-        ssl: {
-          rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
-        },
-        logging: true, // Bật log để debug
-      }),
-      inject: [ConfigService],
-    }),
-
-    //Chạy db local
-    // TypeOrmModule.forRoot({
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService: ConfigService) => ({
     //     type: 'postgres',
-    //     host: 'localhost',
-    //     port: 5432,
-    //     username: 'postgres',
-    //     password: '123456',
-    //     database: 'quanlynhahanglocal',
-    //     entities: [Product, Order, Order_Product, Customer, Employee, Category, Category_Product, SideDish, SideDish_Product, Table],
-    //     synchronize: true,
+    //     host: configService.get<string>('DATABASE_HOST'),
+    //     port: configService.get<number>('DATABASE_PORT') || 5432,
+    //     username: configService.get<string>('DATABASE_USER'),
+    //     password: configService.get<string>('DATABASE_PASSWORD'),
+    //     database: configService.get<string>('DATABASE_NAME'),
+    //     autoLoadEntities: true, //Tự động load tất cả entity
+    //     synchronize: true, // Tự động tạo schema trong production ??
+    //     ssl: {
+    //       rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
+    //     },
+    //     logging: true, // Bật log để debug
+    //   }),
+    //   inject: [ConfigService],
     // }),
+
+    // Chạy db local
+    TypeOrmModule.forRoot({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '123456',
+        database: 'quanlynhahanglocal',
+        entities: [Product, Order, Order_Product, Customer, Employee, Category, SideDish, SideDish_Product, Table],
+        synchronize: true,
+    }),
 
 
 
@@ -69,7 +67,6 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
     CustomersModule,
     EmployeesModule,
     CategoryModule,
-    Category_ProductModule,
     SideDishModule,
     SideDish_ProductModule,
     TableModule,

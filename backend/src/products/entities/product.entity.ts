@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity() 
 export class Product {
@@ -26,4 +26,7 @@ export class Product {
         default: false, // Đặt giá trị mặc định là false
     })
     isDelete: boolean;
+
+
+
 }
