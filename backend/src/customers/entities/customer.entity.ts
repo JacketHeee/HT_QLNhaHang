@@ -21,6 +21,6 @@ export class Customer {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToMany(() => Order, order => order.customer)
-    orders: Order[];
+    // @OneToMany(() => Order, order => order.customer)
+    // orders: Order[];
 }
