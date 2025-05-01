@@ -19,8 +19,8 @@ export class ProductsService{ //implements OnModuleInit {
             relations: ['category']
         });
         return products.map(product => {
-            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh} = product; //phân rã để tạo đối tượng response
-            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh};
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
         });
     }
 
@@ -32,16 +32,16 @@ export class ProductsService{ //implements OnModuleInit {
         if (!product) {
             throw new Error('Product not found');
         }
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = product;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = product;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
     }
 
     async create(newProduct: CreateProductDto): Promise<ProductResponseDto> {
         const product = this.productsRepository.create(newProduct);
         const savedProduct = await this.productsRepository.save(product);
 
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = savedProduct;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = savedProduct;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
     }
 
     async update(ID: number, updateProductDto: UpdateProductDto): Promise<ProductResponseDto>{
@@ -53,8 +53,8 @@ export class ProductsService{ //implements OnModuleInit {
 
         const updatedProductDto = await this.productsRepository.save(product);
 
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh} = updatedProductDto;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = updatedProductDto;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
     }
 
     async delete(ID: number): Promise<void> {

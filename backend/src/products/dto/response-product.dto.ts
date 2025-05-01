@@ -1,4 +1,5 @@
 import { IsString, IsDecimal, IsNumber } from 'class-validator';
+import { Category } from 'src/categories/entities/category.entity';
 
 export class ProductResponseDto {
     @IsNumber()
@@ -15,4 +16,7 @@ export class ProductResponseDto {
 
     @IsString()
     tenHinhAnh: string;
+
+    @IsString()
+    category: Category;
 }
