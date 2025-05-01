@@ -8,6 +8,8 @@ import eye from "../../assets/icon/conmat.svg";
 import conmat from "../../assets/icon/conmat.svg"; 
 import { Outlet, useNavigate } from "react-router-dom";
 import { getProducts } from "../../api/services/productService";
+import FilterButton from "../../components/FilterButton/filterbutton";
+import { getProductsByCategoryID } from "../../api/services/categoryService";
 
 // Lấy tất cả ảnh .jpg trong thư mục products và các thư mục con
 const requireImages = require.context('../../assets/img/products', true, /\.png$/);
@@ -34,6 +36,10 @@ const imageMap = requireImages.keys().reduce((acc, path) => {
 export default function ProductManagement() {
     const [category,setCategory] = useState([
         {
+            id: '0',
+            name: 'Tất cả'
+        },
+        {
             id: '1', 
             name: 'Hamburger'
         },
@@ -56,46 +62,89 @@ export default function ProductManagement() {
     ]);
 
     const [choosedStateDish, setChoosedStateDish] = useState("all")
-    const [categoryChoosed, setCategoryChoosed] = useState("1"); 
+    const [categoryChoosed, setCategoryChoosed] = useState("0"); 
 
     const nav = useNavigate()
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true); //theo dõi trạng thái loading
     const [error, setError] = useState(null); //theo dõi trạng thái lỗi
+    const [filterProducts, setFilterProducts] = useState([]); //cho tìm kiếm
 
     //Chỉ chạy duy nhất 1 lần khi mount
     useEffect(() => {
-        const fetchProducts = async () =>{
-            try {
-                const data = await getProducts();
-                setProducts(data);
-            } catch (error) {
-                setError('Load dữ liệu thất bại!');
-                console.error(error);
-            }finally{
-                setLoading(false)
-            }
-        }
-        fetchProducts();
+        fetchAllProducts();
     }, []);
 
+    const fetchAllProducts = async () =>{
+        try {
+            const data = await getProducts();
+            setProducts(data);
+            setFilterProducts(data);
+        } catch (error) {
+            setError('Load dữ liệu thất bại!');
+            console.error(error);
+        }finally{
+            setLoading(false)
+        }
+    }
+
+    const fetchOnCategory = async (id) =>{
+        try {
+            const data = await getProductsByCategoryID(id);
+            setProducts(data);
+            setFilterProducts(data);
+        } catch (error) {
+            setError('Load dữ liệu thất bại!');
+            console.error(error);
+        }finally{
+            setLoading(false)
+        }
+    }
+
+    const handleSelected = (id) => {
+        if(id == 0){
+            fetchAllProducts();
+        }
+        else{
+            fetchOnCategory(id);
+        }
+    }
+
+    const handleSearch = (keyWord) => {
+        if (!keyWord.trim()) {
+            setFilterProducts(products);
+            return;
+        }        
+        const filtered = products.filter((p) =>
+            p.tenMonAn.toLowerCase().includes(keyWord.toLowerCase())
+        );
+        setFilterProducts(filtered);
+    }
 
     return (
         <div className={styles.container}>
-            {loading && <div>Đang load dữ liệu...</div>}
-            {error && <div>{error}</div>}
             <div className={styles.search}>
-                <Search placeHolder={"Tìm kiếm theo tên món..."}/>
+                <Search onSearch={(keyWord)=>handleSearch(keyWord)} placeHolder={"Tìm kiếm theo tên món..."}/>
             </div>
             {/* Thanh phân loại */}
             <div className={styles.theloai}>
                 <div className={styles.category}>
                     {
                         category.map(index => (
-                            <button onClick={() => {setCategoryChoosed(index.id)}} className={categoryChoosed === index.id ? styles.active : ""}>
-                                {index.name}
-                            </button>
+                            // <button onClick={() => {setCategoryChoosed(index.id)}} className={categoryChoosed === index.id ? styles.active : ""}>
+                            //     {index.name}
+                            // </button>
+                            <FilterButton 
+                                id={index.id} 
+                                onSelect={() => {
+                                    handleSelected(index.id);
+                                    setCategoryChoosed(index.id)
+                                }}
+                                className={categoryChoosed === index.id ? styles.active : ""}
+                            >
+                                {index.name} 
+                            </FilterButton>
                         ))
                     }
                 
@@ -107,16 +156,20 @@ export default function ProductManagement() {
                 <button onClick={()=>setChoosedStateDish("ready")} className={choosedStateDish === "ready" ? styles.active : ""}>Hiện có</button>
                 <button onClick={()=>setChoosedStateDish("lock")} className={choosedStateDish === "lock" ? styles.active : ""}>Đang khóa</button>
             </div>
+            
+            {/* Trường hợp chưa load dữ liệu hoặc lỗi */}
+            {loading && <div>Đang load dữ liệu...</div>}
+            {error && <div>{error}</div>}
 
             {/* Các sản phẩm */}
             <div className={styles.maincontent}>
-            {products.map(product => (
+            {filterProducts.map(product => (
                     <div className={styles.product}>
                         <div className={styles.productInfor}>
                             <img src={imageMap[product.tenHinhAnh]} alt="" />
                             <div>
                                 <h4>{product.tenMonAn}</h4>
-                                <h6>Loại: <span>Hamberger</span></h6>
+                                <h6>Loại: <span>{product.category.tenLoaiMonAn}</span></h6>
                                 <h6 className={styles.des}>Mô tả: <span>{product.moTa}</span></h6>
                                 <h6>Đơn giá: <span>{product.giaBan}đ</span></h6>
                             </div>
