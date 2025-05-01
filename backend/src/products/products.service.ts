@@ -16,6 +16,7 @@ export class ProductsService{ //implements OnModuleInit {
     async findAll(): Promise<ProductResponseDto[]> {
         const products = await this.productsRepository.find({
             where: { isDelete: false }, // Lọc sản phẩm chưa bị xóa
+            relations: ['category']
         });
         return products.map(product => {
             const {ID, tenMonAn, moTa, giaBan, tenHinhAnh} = product; //phân rã để tạo đối tượng response
@@ -24,7 +25,10 @@ export class ProductsService{ //implements OnModuleInit {
     }
 
     async findOne(ID: number): Promise<ProductResponseDto> {
-        const product = await this.productsRepository.findOneBy({ ID });
+        const product = await this.productsRepository.findOne({
+            where: { ID },
+            relations: ['category']
+        });
         if (!product) {
             throw new Error('Product not found');
         }
