@@ -10,6 +10,7 @@
 
 .container {
     display: flex;
+    min-height: 100vh;
     max-height: 100vh;
 }
 
@@ -30,7 +31,13 @@
 
 .mainContent {
     flex-grow: 1;
+    display: flex;
 }
+
+.mainContent>div {
+    flex-grow: 1;
+}
+
 
 /* ---------------------- */
 

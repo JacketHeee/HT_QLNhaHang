@@ -1,0 +1,74 @@
+:root {
+    /* 🌈 Màu sắc chủ đạo */
+    --color-primary: #00b67a;
+    --color-bg: #F3F3F3;
+    --color-text: #1B1B1B;
+    --border: #EAEAEA;
+    --color-phu: #ED0101;
+    --selected: #ffd3d3;
+    --red: #F8726F;
+    --green: #38D497; 
+    --blue: #818CF8;
+    --yellow: #FABE1F;
+    --darkMainColor: #00713F;
+}
+
+
+.container {
+    display: flex;
+    background-color: white;
+    gap: 10px;
+}
+
+.container * {
+    background: transparent;
+    /* border: 1px solid black; */
+}
+
+.container>img {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(to right, #ebebeb, #979797);
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    /* padding: 10px; */
+    flex: 1;
+} 
+
+.infor {
+    width: 400px;
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.infor span, .infor p {
+    font-weight: normal;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price>span {
+    font-weight: bold;
+    font-size: 120%;
+    color: var(--color-phu);
+}
+
+
+.sideDishes {
+    flex-grow: 1;
+}
+
+.infor>button {
+
+    background-color: var(--red);
+    color: white;
+    font-weight: bold;
+
+}
