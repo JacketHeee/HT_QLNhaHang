@@ -40,7 +40,14 @@ export class CategoryService {
         if(!category){
             throw new NotFoundException('Không tìm thấy sản phẩm!')
         }
-        return category.products;
+        return category.products.map(product => ({
+            ID: product.ID,
+            tenMonAn: product.tenMonAn,
+            moTa: product.moTa,
+            giaBan: product.giaBan,
+            tenHinhAnh: product.tenHinhAnh,
+            category: category, // thêm đối tượng category vào sản phẩm
+        }));
     }
 
     async create(createCategory: CreateCategoryDto): Promise<CategoryResponseDto>{
