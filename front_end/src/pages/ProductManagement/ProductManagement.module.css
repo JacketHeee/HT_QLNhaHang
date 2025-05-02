@@ -100,6 +100,10 @@
     flex-grow: 1;
 }
 
+.productLocked{
+    opacity: 0.5;
+}
+
 .productInfor>img {
     height: 150px;
     background: linear-gradient(to right, #ebebeb, #979797);

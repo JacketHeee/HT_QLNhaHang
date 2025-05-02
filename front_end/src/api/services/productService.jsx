@@ -13,5 +13,10 @@ export const getProduct = async (id) => {
     return response.data;
 }
 
-//Mở khóa
-//Khóa
+export const lockProduct = async (id) => {
+    await axios.put(`${API_URL}/${id}/lock`)
+}
+
+export const unLockProduct = async (id) => {
+    await axios.put(`${API_URL}/${id}/unlock`)
+}

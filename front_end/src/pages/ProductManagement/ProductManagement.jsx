@@ -7,9 +7,14 @@ import locked from "../../assets/icon/okhoa.svg";
 import eye from "../../assets/icon/conmat.svg";
 import conmat from "../../assets/icon/conmat.svg"; 
 import { Outlet, useNavigate } from "react-router-dom";
-import { getProducts } from "../../api/services/productService";
+import { getProducts, lockProduct } from "../../api/services/productService";
 import FilterButton from "../../components/FilterButton/filterbutton";
 import { getProductsByCategoryID } from "../../api/services/categoryService";
+import Product from "./Product";
+import { getSideDish } from "../../api/services/sideDish";
+import { getProduct_SideDish } from "../../api/services/sidedish_productService";
+import ProductDetail from "../ProductDetail/ProductDetail";
+import ProductDetailAdmin from "../../components/ProductDetailAdmin/ProductDetailAdmin";
 
 // Lấy tất cả ảnh .jpg trong thư mục products và các thư mục con
 const requireImages = require.context('../../assets/img/products', true, /\.png$/);
@@ -61,26 +66,58 @@ export default function ProductManagement() {
         },
     ]);
 
+    const listStatus = [
+        {
+            id: "all",
+            name: "Tất cả"
+        },
+        {
+            id: "ready",
+            name: "Hiện có"
+        },
+        {
+            id: "lock",
+            name: "Đang khóa"
+        },
+    ]
+    ////các useState
     const [choosedStateDish, setChoosedStateDish] = useState("all")
     const [categoryChoosed, setCategoryChoosed] = useState("0"); 
 
     const nav = useNavigate()
 
     const [products, setProducts] = useState([]);
+    const [sidedish_product, setSidedish_Product] = useState([]);
+    const [sidedish, setSidedish] = useState([]);
+
     const [loading, setLoading] = useState(true); //theo dõi trạng thái loading
     const [error, setError] = useState(null); //theo dõi trạng thái lỗi
+    
     const [filterProducts, setFilterProducts] = useState([]); //cho tìm kiếm
+    const [categoryProducts, setCategoryProducts] = useState([]); //cho phân loại
+    const [statusProducts,  setStatusProducts] = useState([]); //cho trạng thái
 
-    //Chỉ chạy duy nhất 1 lần khi mount
+    const [displayProducts, setDisplayProducts] = useState([]); //cho hiển thị
+
+    const [loadingSideDish, setLoadingSideDish] = useState(true); //cho phần load sidedish
+    ////các useState
+
+    //load products: Chỉ chạy duy nhất 1 lần khi mount
     useEffect(() => {
         fetchAllProducts();
     }, []);
+
+    useEffect(() =>{
+        fetchSideDish();
+    }, [])
 
     const fetchAllProducts = async () =>{
         try {
             const data = await getProducts();
             setProducts(data);
-            setFilterProducts(data);
+            setCategoryProducts(data);
+            setStatusProducts(data);
+            setDisplayProducts(data);
         } catch (error) {
             setError('Load dữ liệu thất bại!');
             console.error(error);
@@ -89,38 +126,102 @@ export default function ProductManagement() {
         }
     }
 
-    const fetchOnCategory = async (id) =>{
+    const fetchSideDish = async () => {
         try {
-            const data = await getProductsByCategoryID(id);
-            setProducts(data);
-            setFilterProducts(data);
+
+            const [sdp, sd] = await Promise.all([
+                await getProduct_SideDish(),
+                await getSideDish()
+            ])
+
+            setSidedish_Product(sdp);
+            setSidedish(sd);
+
         } catch (error) {
             setError('Load dữ liệu thất bại!');
             console.error(error);
-        }finally{
-            setLoading(false)
+        } finally{
+            setLoadingSideDish(false)
         }
     }
 
-    const handleSelected = (id) => {
-        if(id == 0){
-            fetchAllProducts();
-        }
-        else{
-            fetchOnCategory(id);
+    ////////////////////////////////////////////////////////////////// Phân loại, Phân loại trạng thái, Tìm kiếm
+    // Mức ưu tiên lọc: Lọc theo category > Lọc theo status > Tìm kiếm ()
+    // set danh sách hiển thị dựa trên phân loại, lấy data từ products
+    const handleSelectedCategory = (id) => {
+        if(products){ // tránh trường hợp chưa load xong
+            if(id === 0){
+                setCategoryProducts(products);
+                setDisplayProducts(products);
+            }
+            else{
+                const list = products.filter((p) => {
+                    if(p.category.ID === id){
+                        return p;
+                    }
+                })
+                setCategoryProducts(list);
+                setDisplayProducts(list);
+            }
         }
     }
 
     const handleSearch = (keyWord) => {
         if (!keyWord.trim()) {
-            setFilterProducts(products);
+            setFilterProducts(statusProducts);
             return;
         }        
-        const filtered = products.filter((p) =>
+        const filtered = statusProducts.filter((p) =>
             p.tenMonAn.toLowerCase().includes(keyWord.toLowerCase())
         );
         setFilterProducts(filtered);
+        setDisplayProducts(filtered);
     }
+
+    const handleStatus = (id) => {
+        if(products){ // tránh trường hợp chưa load xong
+            if(id == 'all'){
+                setStatusProducts(categoryProducts)
+                setDisplayProducts(categoryProducts);
+            }
+            else if(id === 'ready'){
+                const list = categoryProducts.filter((p) => {
+                    if(p.isLocked === false){
+                        return p;
+                    }
+                })
+                setStatusProducts(list);
+                setDisplayProducts(list);
+            }
+            else{   //lock
+                const list = categoryProducts.filter((p) => {
+                    if(p.isLocked === true){
+                        return p;
+                    }
+                })
+                setStatusProducts(list);
+                setDisplayProducts(list);
+            }
+        }
+    }
+
+
+    const getListSideDish = (idProduct) => {
+        const listSP = sidedish_product.filter((sp) => 
+            sp.IDMonAn === idProduct
+        )
+
+        const sideDishes = sidedish.filter(sd => 
+            listSP.some(sp => sp.IDMonAnKem == sd.ID)
+        );
+        return sideDishes
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////// Phân loại, Phân loại trạng thái, Tìm kiếm
+
+
 
     return (
         <div className={styles.container}>
@@ -138,7 +239,7 @@ export default function ProductManagement() {
                             <FilterButton 
                                 id={index.id} 
                                 onSelect={() => {
-                                    handleSelected(index.id);
+                                    handleSelectedCategory(index.id);
                                     setCategoryChoosed(index.id)
                                 }}
                                 className={categoryChoosed === index.id ? styles.active : ""}
@@ -152,9 +253,39 @@ export default function ProductManagement() {
             </div>
             {/* Lọc */}
             <div className={styles.select}>
-                <button onClick={()=>setChoosedStateDish("all")} className={choosedStateDish === "all" ? styles.active : ""}>Tất cả</button>
-                <button onClick={()=>setChoosedStateDish("ready")} className={choosedStateDish === "ready" ? styles.active : ""}>Hiện có</button>
-                <button onClick={()=>setChoosedStateDish("lock")} className={choosedStateDish === "lock" ? styles.active : ""}>Đang khóa</button>
+                {listStatus.map((index) => (
+                    <FilterButton
+                        id={index.id} 
+                        onSelect={() => {
+                            handleStatus(index.id);
+                            setChoosedStateDish(index.id);
+                        }}
+                        className={choosedStateDish === index.id ? styles.active : ""}
+                    >
+                        {index.name}
+                    </FilterButton>
+                ))}
+
+
+
+                {/* <button 
+                    onClick={()=>setChoosedStateDish("all")} 
+                    className={choosedStateDish === "all" ? styles.active : ""}
+                >Tất cả
+                </button>
+
+                <button 
+                    onClick={()=>setChoosedStateDish("ready")} 
+                    className={choosedStateDish === "ready" ? styles.active : ""}
+                >Hiện có
+                </button>
+
+                <button 
+                    onClick={()=>setChoosedStateDish("lock")} 
+                    className={choosedStateDish === "lock" ? styles.active : ""}
+                >Đang khóa
+                </button> */}
+
             </div>
             
             {/* Trường hợp chưa load dữ liệu hoặc lỗi */}
@@ -163,22 +294,31 @@ export default function ProductManagement() {
 
             {/* Các sản phẩm */}
             <div className={styles.maincontent}>
-            {filterProducts.map(product => (
-                    <div className={styles.product}>
-                        <div className={styles.productInfor}>
-                            <img src={imageMap[product.tenHinhAnh]} alt="" />
-                            <div>
-                                <h4>{product.tenMonAn}</h4>
-                                <h6>Loại: <span>{product.category.tenLoaiMonAn}</span></h6>
-                                <h6 className={styles.des}>Mô tả: <span>{product.moTa}</span></h6>
-                                <h6>Đơn giá: <span>{product.giaBan}đ</span></h6>
-                            </div>
-                        </div>
-                        <div className={styles.productActions}>
-                            <img src={conmat} alt="" onClick={() => {nav("06/productDetail")}}/>
-                            <img src={locked} alt="" />
-                        </div>
-                    </div>             
+            {displayProducts.map(product => ( 
+   
+                <Product 
+                    key={product.ID} 
+                    product={product}
+                    getListSideDish={(id) => getListSideDish(id)}
+                ></Product>
+
+                
+                
+                                        // <div className={styles.product}>
+                    //     <div className={`${styles.productInfor} ${product.isLocked ? styles.productLocked : ''}`}>
+                    //         <img src={imageMap[product.tenHinhAnh]} alt="" />
+                    //         <div>
+                    //             <h4>{product.tenMonAn}</h4>
+                    //             <h6>Loại: <span>{product.category.tenLoaiMonAn}</span></h6>
+                    //             <h6 className={styles.des}>Mô tả: <span>{product.moTa}</span></h6>
+                    //             <h6>Đơn giá: <span>{product.giaBan}đ</span></h6>
+                    //         </div>
+                    //     </div>
+                    //     <div className={styles.productActions}>
+                    //         <img src={conmat} alt="" onClick={() => {nav("06/productDetail")}}/>
+                    //         <img src={locked} alt="" onClick={() => {lockProduct(product.ID)}}/>
+                    //     </div>
+                    // </div>   
             ))}
             </div>
 {/* 

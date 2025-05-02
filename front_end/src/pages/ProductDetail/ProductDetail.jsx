@@ -6,7 +6,7 @@ import { formatCurrency } from "../../utils/format";
 import { useState } from "react";
 import Payment from "../../components/Payment/Payment";
 import CounterModel from "../../components/CounterModel/CounterModel";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ProductDetail() {
     const nav = useNavigate()
@@ -15,6 +15,8 @@ export default function ProductDetail() {
         nav(-1)
     }
 
+    const {productId} = useParams(); //phân rã lấy productID
+    //Để tạm mốt sửa
     return (
         <div className={style.productDetail}>
             <button onClick={handleProductClose}>x</button>
@@ -22,7 +24,8 @@ export default function ProductDetail() {
                 <div><img src={burger} alt="" /></div>
                 <div style={{padding: "10px"}} className={style.chitietProduct}>
                     <h3>
-                        Hamburger Cheesedlx BB 
+                        {productId}
+                        {console.log(productId)}
                     </h3>
                     <div className={style.loai_gia_product}>
                         <div>
