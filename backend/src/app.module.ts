@@ -21,6 +21,12 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
 import { TableModule } from './tables/table.module';
 import { Table } from './tables/entities/table.entity';
 import { OrdersProductsModule } from './orders_products/orders_products.module';
+import { AccountsModule } from './accounts/accounts.module';
+import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './auth/auth.module';
+import { FeaturesModule } from './features/features.module';
+import { FeatureRolesModule } from './feature-roles/feature-roles.module';
+import { AccessControlModule } from './access-control/access-control.module';
 
 @Module({
   imports: [
@@ -68,7 +74,13 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
     SideDishModule,
     SideDish_ProductModule,
     TableModule,
-    OrdersProductsModule
+    OrdersProductsModule,
+    AccountsModule,
+    RolesModule,
+    AuthModule,
+    FeaturesModule,
+    FeatureRolesModule,
+    AccessControlModule
   ],
   controllers: [AppController],
   providers: [AppService],
