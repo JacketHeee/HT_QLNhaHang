@@ -150,13 +150,13 @@ export default function ProductManagement() {
     // set danh sách hiển thị dựa trên phân loại, lấy data từ products
     const handleSelectedCategory = (id) => {
         if(products){ // tránh trường hợp chưa load xong
-            if(id === 0){
+            if(id == 0){
                 setCategoryProducts(products);
                 setDisplayProducts(products);
             }
             else{
                 const list = products.filter((p) => {
-                    if(p.category.ID === id){
+                    if(p.category.ID == id){
                         return p;
                     }
                 })
