@@ -27,7 +27,7 @@ export class Product {
 
     @Column({
         type: 'boolean',
-        default: false, // Đặt giá trị mặc định là false
+        default: false,
     })
     isDeleted: boolean;
 
