@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { SideDish_Product } from "./entities/product_sidedishes.entity";
 import { SideDish_ProductResponseDto } from "./dto/response-product_sidedishes.dto";
 import { CreateSideDish_ProductDto } from "./dto/create-product_sidedishes.dto";
+import { SideDish } from "src/sidedishes/entities/sidedish.entity";
 
 
 @Injectable()
@@ -32,6 +33,15 @@ export class SideDish_ProductService {
         }
         const {IDMonAn, IDMonAnKem} = SideDish_Product;
         return {IDMonAn, IDMonAnKem};
+    }
+
+    async findAllSideDishByProductID(ID: number){
+        const SideDish_Product = await this.SideDish_ProductReposistory.find({
+            where: {IDMonAn: ID},
+            relations: ['sideDish'],
+        });
+        const listSD = SideDish_Product.map((sd) => (sd.sideDish));
+        return listSD;
     }
 
     async create(createSideDish_ProductDto: CreateSideDish_ProductDto): Promise<SideDish_ProductResponseDto>{

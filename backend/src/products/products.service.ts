@@ -5,6 +5,7 @@ import { Product } from './entities/product.entity';
 import { ProductResponseDto } from './dto/response-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
 
 @Injectable()
 export class ProductsService{ //implements OnModuleInit {
@@ -16,11 +17,13 @@ export class ProductsService{ //implements OnModuleInit {
     async findAll(): Promise<ProductResponseDto[]> {
         const products = await this.productsRepository.find({
             where: { isDelete: false }, // Lọc sản phẩm chưa bị xóa
-            relations: ['category']
+            relations: ['category'],
+            order: { ID: 'ASC' }
         });
+
         return products.map(product => {
-            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = product; //phân rã để tạo đối tượng response
-            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
         });
     }
 
@@ -32,16 +35,16 @@ export class ProductsService{ //implements OnModuleInit {
         if (!product) {
             throw new Error('Product not found');
         }
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = product;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
     }
 
     async create(newProduct: CreateProductDto): Promise<ProductResponseDto> {
         const product = this.productsRepository.create(newProduct);
         const savedProduct = await this.productsRepository.save(product);
 
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = savedProduct;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = savedProduct;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
     }
 
     async update(ID: number, updateProductDto: UpdateProductDto): Promise<ProductResponseDto>{
@@ -53,8 +56,8 @@ export class ProductsService{ //implements OnModuleInit {
 
         const updatedProductDto = await this.productsRepository.save(product);
 
-        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category} = updatedProductDto;
-        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, category};
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = updatedProductDto;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
     }
 
     async delete(ID: number): Promise<void> {
@@ -63,6 +66,24 @@ export class ProductsService{ //implements OnModuleInit {
           throw new Error('Product not found');
         }
         product.isDelete = true;
+        await this.productsRepository.save(product);
+    }
+
+    async lock(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isLocked = true;
+        await this.productsRepository.save(product);
+    }
+
+    async unLock(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isLocked = false;
         await this.productsRepository.save(product);
     }
 }

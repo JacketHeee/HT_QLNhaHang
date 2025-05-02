@@ -32,6 +32,16 @@ export class ProductsController {
         return product;
     }
 
+    @Put(':id/lock')
+    async lock(@Param('id') id: number): Promise<void>{
+        const product = await this.productsService.lock(id);
+    }
+
+    @Put(':id/unlock')
+    async unLock(@Param('id') id: number): Promise<void>{
+        const product = await this.productsService.unLock(id);
+    }
+
     @Delete(':id')
     async delete(@Param('id') id: number): Promise<void>{
         const product = await this.productsService.delete(id);

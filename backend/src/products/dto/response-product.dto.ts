@@ -1,5 +1,6 @@
-import { IsString, IsDecimal, IsNumber } from 'class-validator';
+import { IsString, IsDecimal, IsNumber, IsBoolean } from 'class-validator';
 import { Category } from 'src/categories/entities/category.entity';
+import { SideDish } from 'src/sidedishes/entities/sidedish.entity';
 
 export class ProductResponseDto {
     @IsNumber()
@@ -17,6 +18,8 @@ export class ProductResponseDto {
     @IsString()
     tenHinhAnh: string;
 
-    @IsString()
+    @IsBoolean()
+    isLocked: boolean;
+
     category: Category;
 }

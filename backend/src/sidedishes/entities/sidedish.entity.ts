@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity() 
 export class SideDish {
@@ -13,4 +14,7 @@ export class SideDish {
         default: false, 
     })
     isDeleted: boolean;
+
+    @OneToMany(() => SideDish_Product, (SD)=>SD.sideDish)
+    SDList: SideDish_Product[]
 }
