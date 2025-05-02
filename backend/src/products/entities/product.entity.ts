@@ -29,7 +29,7 @@ export class Product {
         type: 'boolean',
         default: false, // Đặt giá trị mặc định là false
     })
-    isDelete: boolean;
+    isDeleted: boolean;
 
     @ManyToOne(() => Category, (category)=>category.products)
     @JoinColumn({name: 'IDLoaiMonAn'})

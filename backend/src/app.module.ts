@@ -21,6 +21,15 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
 import { TableModule } from './tables/table.module';
 import { Table } from './tables/entities/table.entity';
 import { OrdersProductsModule } from './orders_products/orders_products.module';
+import { AccountsModule } from './accounts/accounts.module';
+import { RolesModule } from './roles/roles.module';
+import { FunctionsModule } from './functions/functions.module';
+import { RoleFunctionsModule } from './role_functions/role-functions.module';
+import { Account } from './accounts/entities/account.entity';
+import { Role } from './roles/entities/role.entity';
+import { Function } from './functions/entities/function.entity';
+import { RoleFunction } from './role_functions/entities/role_function.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,23 +37,41 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
       isGlobal: true,
     }),
 
-    // Chạy db server
+    // Sử dụng TypeORM với cấu hình từ .env
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT') || 5432,
-        username: configService.get<string>('DATABASE_USER'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        autoLoadEntities: true, //Tự động load tất cả entity
-        synchronize: true, // Tự động tạo schema trong production ??
-        ssl: {
-          rejectUnauthorized: false, // Bỏ qua kiểm tra chứng chỉ
-        },
-        logging: true, // Bật log để debug
-      }),
+      useFactory: (configService: ConfigService) => {
+        const dbType = configService.get<string>('DATABASE_TYPE') || 'postgres';
+        
+        if (dbType === 'sqlite') {
+          // Cấu hình cho SQLite
+          return {
+            type: 'sqlite',
+            database: configService.get<string>('DATABASE_FILE') || 'pos.sqlite',
+            autoLoadEntities: true,
+            synchronize: true,
+            logging: true,
+          };
+        } else {
+          // Cấu hình cho PostgreSQL
+          return {
+            type: 'postgres',
+            host: configService.get<string>('DATABASE_HOST'),
+            port: configService.get<number>('DATABASE_PORT') || 5432,
+            username: configService.get<string>('DATABASE_USER'),
+            password: configService.get<string>('DATABASE_PASSWORD'),
+            database: configService.get<string>('DATABASE_NAME'),
+            autoLoadEntities: true,
+            synchronize: true,
+            ssl: configService.get<boolean>('DATABASE_SSL') 
+              ? {
+                  rejectUnauthorized: false,
+                }
+              : false,
+            logging: true,
+          };
+        }
+      },
       inject: [ConfigService],
     }),
 
@@ -56,7 +83,7 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
     //     username: 'postgres',
     //     password: '123456',
     //     database: 'quanlynhahanglocal',
-    //     entities: [Product, Order, Order_Product, Customer, Employee, Category, SideDish, SideDish_Product, Table],
+    //     entities: [Product, Order, Order_Product, Customer, Employee, Category, SideDish, SideDish_Product, Table, Account, Role, Function, RoleFunction],
     //     synchronize: true,
     // }),
 
@@ -68,7 +95,12 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
     SideDishModule,
     SideDish_ProductModule,
     TableModule,
-    OrdersProductsModule
+    OrdersProductsModule,
+    AccountsModule,
+    RolesModule,
+    FunctionsModule,
+    RoleFunctionsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

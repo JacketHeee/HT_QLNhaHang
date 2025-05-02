@@ -11,11 +11,13 @@ export class EmployeesService {
     ) {}
 
     async findAll(): Promise<Employee[]> {
-        return this.employeesRepository.find();
+        return this.employeesRepository.find({
+            where: { isDeleted: false }
+        });
     }
 
     async findOne(id: number): Promise<Employee> {
-        const employee = await this.employeesRepository.findOneBy({ id });
+        const employee = await this.employeesRepository.findOneBy({ ID: id, isDeleted: false });
         if (!employee) {
             throw new Error('Employee not found');
         }
@@ -23,7 +25,7 @@ export class EmployeesService {
     }
 
     async findByUsername(username: string): Promise<Employee> {
-        const employee = await this.employeesRepository.findOneBy({ username });
+        const employee = await this.employeesRepository.findOneBy({ tenNhanVien: username, isDeleted: false });
         if (!employee) {
             throw new Error('Employee not found');
         }
@@ -40,13 +42,9 @@ export class EmployeesService {
         return this.findOne(id);
     }
 
-    async toggleActive(id: number, isActive: boolean): Promise<Employee> {
+    async softDelete(id: number): Promise<Employee> {
         const employee = await this.findOne(id);
-        employee.isActive = isActive;
+        employee.isDeleted = true;
         return this.employeesRepository.save(employee);
-    }
-
-    async remove(id: number): Promise<void> {
-        await this.employeesRepository.delete(id);
     }
 }

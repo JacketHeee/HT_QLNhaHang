@@ -15,7 +15,7 @@ export class ProductsService{ //implements OnModuleInit {
 
     async findAll(): Promise<ProductResponseDto[]> {
         const products = await this.productsRepository.find({
-            where: { isDelete: false }, // Lọc sản phẩm chưa bị xóa
+            where: { isDeleted: false }, // Lọc sản phẩm chưa bị xóa
             relations: ['category']
         });
         return products.map(product => {
@@ -62,7 +62,7 @@ export class ProductsService{ //implements OnModuleInit {
         if (!product) {
           throw new Error('Product not found');
         }
-        product.isDelete = true;
+        product.isDeleted = true;
         await this.productsRepository.save(product);
     }
 }
