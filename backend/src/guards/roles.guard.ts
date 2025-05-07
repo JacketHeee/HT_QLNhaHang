@@ -1,22 +1,30 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { FeatureRolesService } from 'src/feature-roles/feature-roles.service';
+import { PermissionService } from './permission.service';
 
 @Injectable()
-export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+export class PermissionsGuard implements CanActivate {
+  constructor(
+    private reflector: Reflector,
+    private permissionService: PermissionService
+  ) {}
 
-  canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());//đổi lại permission: monan, bep, ... 
     if (!roles) {
-      return true;
+      return true;//không có decorator @Roles
     }
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
+    const user = request.user; 
+
+    const feature = await this.permissionService.getFeatureNamesByRoleName(user.role) ;
     
-    if (!user || !user.role) {
-      throw new ForbiddenException('Bạn không có quyền truy cập tài nguyên này');
-    }
-    
-    return roles.includes(user.role);
+    const hasCommon = roles.some(f => feature.includes(f));
+    console.log('feature bên role yêu cầu',roles);
+    console.log('feature của tài khoản hiện có',feature);
+
+    return hasCommon;
+
   }
 }

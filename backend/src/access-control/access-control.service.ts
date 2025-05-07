@@ -58,7 +58,8 @@
 //     return role.features;
 //   }
 
-//   async checkIfUserHasFeature(user: any, featureCode: string): Promise<boolean> {
-//     return this.checkUserAccess(user, [featureCode]);
+//   // async checkIfUserHasFeature(user: any, featureCode: string): Promise<boolean> {
+//   //   return this.checkUserAccess(user, [featureCode]);
+
 //   }
 // }

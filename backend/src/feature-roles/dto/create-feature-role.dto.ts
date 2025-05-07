@@ -1,11 +1,11 @@
-// import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
-// export class CreateFeatureRoleDto {
-//   @IsNotEmpty()
-//   @IsNumber()
-//   roleId: number;
+export class CreateFeatureRoleDto {
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number;
 
-//   @IsNotEmpty()
-//   @IsNumber()
-//   featureId: number;
-// } 
+  @IsNotEmpty()
+  @IsNumber()
+  featureId: number;
+} 

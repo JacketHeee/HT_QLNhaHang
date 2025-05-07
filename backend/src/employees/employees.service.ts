@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
@@ -11,7 +11,10 @@ export class EmployeesService {
     ) {}
 
     async findAll(): Promise<Employee[]> {
-        return this.employeesRepository.find();
+        return this.employeesRepository.find({
+            where: { isDelete: false },
+            order: { id: 'ASC' }
+        });
     }
 
     async findOne(id: number): Promise<Employee> {
@@ -22,13 +25,13 @@ export class EmployeesService {
         return employee;
     }
 
-    async findByUsername(username: string): Promise<Employee> {
-        const employee = await this.employeesRepository.findOneBy({ username });
-        if (!employee) {
-            throw new Error('Employee not found');
-        }
-        return employee;
-    }
+    // async findByUsername(username: string): Promise<Employee> {
+    //     const employee = await this.employeesRepository.findOneBy({ username });
+    //     if (!employee) {
+    //         throw new Error('Employee not found');
+    //     }
+    //     return employee;
+    // }
 
     async create(employeeData: Partial<Employee>): Promise<Employee> {
         const employee = this.employeesRepository.create(employeeData);
@@ -46,7 +49,24 @@ export class EmployeesService {
         return this.employeesRepository.save(employee);
     }
 
-    async remove(id: number): Promise<void> {
-        await this.employeesRepository.delete(id);
+    async remove(ID: number): Promise<void> {
+        const employee = await this.employeesRepository.findOne({
+            where: {id: ID}
+        })
+        if(!employee){
+            throw new NotFoundException('Không tìm thấy nhân viên');
+        }   
+        employee.isDelete = true
+        await this.employeesRepository.save(employee);
+    }
+
+    async getEmployeeNotHaveAccount(): Promise<Employee[]>{
+        const employees = await this.employeesRepository.find({
+            where: {
+                isDelete: false,
+                idAccount: 0
+            },
+        })
+        return employees;
     }
 }

@@ -4,13 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
-import { CustomersModule } from './customers/customers.module';
 import { EmployeesModule } from './employees/employees.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoryModule } from './categories/category.module';
 import { Category } from './categories/entities/category.entity';
 import { Employee } from './employees/entities/employee.entity';
-import { Customer } from './customers/entities/customer.entity';
 import { Order_Product } from './orders_products/entities/order_product.entity';
 import { Order } from './orders/entities/order.entity';
 import { Product } from './products/entities/product.entity';
@@ -21,11 +19,12 @@ import { SideDish_ProductModule } from './products_sidedishes/product_sidedishes
 import { TableModule } from './tables/table.module';
 import { Table } from './tables/entities/table.entity';
 import { OrdersProductsModule } from './orders_products/orders_products.module';
-// import { AccountsModule } from './accounts/accounts.module';
-// import { RolesModule } from './roles/roles.module';
-// import { AuthModule } from './auth/auth.module';
-// import { FeaturesModule } from './features/features.module';
-// import { FeatureRolesModule } from './feature-roles/feature-roles.module';
+import { AccountsModule } from './accounts/accounts.module';
+import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './auth/auth.module';
+import { FeaturesModule } from './features/features.module';
+import { FeatureRolesModule } from './feature-roles/feature-roles.module';
+import { PermissionsModule } from './guards/permission.module';
 // import { AccessControlModule } from './access-control/access-control.module';
 
 @Module({
@@ -68,18 +67,18 @@ import { OrdersProductsModule } from './orders_products/orders_products.module';
 
     ProductsModule,
     OrdersModule,
-    CustomersModule,
     EmployeesModule,
     CategoryModule,
     SideDishModule,
     SideDish_ProductModule,
     TableModule,
     OrdersProductsModule,
-    // AccountsModule,
-    // RolesModule,
-    // AuthModule,
-    // FeaturesModule,
-    // FeatureRolesModule,
+    AccountsModule,
+    RolesModule,
+    AuthModule,
+    FeaturesModule,
+    FeatureRolesModule,
+    PermissionsModule
     // AccessControlModule
   ],
   controllers: [AppController],

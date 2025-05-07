@@ -1,36 +1,52 @@
-// import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-// import { Employee } from '../../employees/entities/employee.entity';
-// import { Role } from '../../roles/entities/role.entity';
-// import { Exclude } from 'class-transformer';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Employee } from '../../employees/entities/employee.entity';
+import { Role } from '../../roles/entities/role.entity';
+import { Exclude } from 'class-transformer';
 
-// @Entity()
-// export class Account {
-//   @PrimaryGeneratedColumn()
-//   id: number;
+@Entity()
+export class Account {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-//   @Column({ unique: true })
-//   username: string;
+  @Column({ unique: true })
+  username: string;
 
-//   @Column()
-//   @Exclude() // Để loại trừ password khỏi response
-//   password: string;
+  @Column()
+  @Exclude() // Để loại trừ password khỏi response
+  password: string;
 
-//   @Column({ default: true })
-//   isActive: boolean;
+  @Column({ default: true })// cho khóa
+  isActive: boolean;
 
-//   @Column({ nullable: true })
-//   lastLogin: Date;
+  @Column({ nullable: true })
+  lastLogin: Date;
 
-//   // @ManyToOne(() => Role, role => role.accounts)
-//   // role: Role;
+  @Column({
+  })
+  employeeId: number;
 
-//   // @OneToOne(() => Employee, { eager: true })
-//   // @JoinColumn()
-//   // employee: Employee;
+  @Column({
+  })
+  roleId: number;
 
-//   @CreateDateColumn()
-//   createdAt: Date;
+  @ManyToOne(() => Role, role => role.accounts, {onDelete: 'CASCADE'})
+  @JoinColumn({name: 'roleId'})
+  role: Role;
 
-//   @UpdateDateColumn()
-//   updatedAt: Date;
-// }
+  @OneToOne(() => Employee, { eager: true ,onDelete: 'CASCADE'})
+  @JoinColumn({name: 'employeeId'})
+  employee: Employee;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column({
+    type: 'boolean',
+    default: false
+  })
+  isDeleted: boolean;
+
+}
