@@ -144,6 +144,6 @@
     cursor: pointer;
 }
 
-.productActions img:last-child {
+.productActions img:nth-of-type(2) {
     background-color: var(--red);
 }

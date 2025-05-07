@@ -5,6 +5,7 @@ import locked from "../../assets/icon/okhoa.svg";
 import conmat from "../../assets/icon/conmat.svg"; 
 import { useState } from "react";
 import ProductDetailAdmin from "../../components/ProductDetailAdmin/ProductDetailAdmin";
+import Loading from "../../components/Loading/Loading";
 
 // Lấy tất cả ảnh .jpg trong thư mục products và các thư mục con
 const requireImages = require.context('../../assets/img/products', true, /\.png$/);
@@ -66,9 +67,10 @@ function Product(props){
                             setListSideDish(props.getListSideDish(props.product.ID));
                             setDetail(true);
                         }}/>
-                    <img src={locked}/>
+                    {lock ? <img src={locked}/> : null}
                 </div>
             </div>   
+            {/* Mở detail */}
             {detail ? <ProductDetailAdmin 
                         onClose={() => setDetail(false)} 
                         product={props.product}
@@ -76,6 +78,8 @@ function Product(props){
                         changeStatus={()=>changeStatus()}
                     >
                     </ProductDetailAdmin> : null}
+            {/* Load khóa */}
+            {load ? <Loading></Loading> : null}
         </div>
     )
 }

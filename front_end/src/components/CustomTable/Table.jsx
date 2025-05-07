@@ -23,6 +23,7 @@ const Table = ({ columns = [], data = [], actions }) => {
                                     {col.render ? col.render(row) : row[col.key]}
                                 </td>
                             ))}
+                            {/* action */}
                             {actions && (
                                 <td className={styles.td}>
                                     {actions(row)}

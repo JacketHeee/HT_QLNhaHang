@@ -218,10 +218,7 @@ export default function ProductManagement() {
     }
 
 
-
     ////////////////////////////////////////////////////////////////// Phân loại, Phân loại trạng thái, Tìm kiếm
-
-
 
     return (
         <div className={styles.container}>
@@ -233,9 +230,6 @@ export default function ProductManagement() {
                 <div className={styles.category}>
                     {
                         category.map(index => (
-                            // <button onClick={() => {setCategoryChoosed(index.id)}} className={categoryChoosed === index.id ? styles.active : ""}>
-                            //     {index.name}
-                            // </button>
                             <FilterButton 
                                 id={index.id} 
                                 onSelect={() => {
@@ -266,26 +260,6 @@ export default function ProductManagement() {
                     </FilterButton>
                 ))}
 
-
-
-                {/* <button 
-                    onClick={()=>setChoosedStateDish("all")} 
-                    className={choosedStateDish === "all" ? styles.active : ""}
-                >Tất cả
-                </button>
-
-                <button 
-                    onClick={()=>setChoosedStateDish("ready")} 
-                    className={choosedStateDish === "ready" ? styles.active : ""}
-                >Hiện có
-                </button>
-
-                <button 
-                    onClick={()=>setChoosedStateDish("lock")} 
-                    className={choosedStateDish === "lock" ? styles.active : ""}
-                >Đang khóa
-                </button> */}
-
             </div>
             
             {/* Trường hợp chưa load dữ liệu hoặc lỗi */}
@@ -302,45 +276,8 @@ export default function ProductManagement() {
                     getListSideDish={(id) => getListSideDish(id)}
                 ></Product>
 
-                
-                
-                                        // <div className={styles.product}>
-                    //     <div className={`${styles.productInfor} ${product.isLocked ? styles.productLocked : ''}`}>
-                    //         <img src={imageMap[product.tenHinhAnh]} alt="" />
-                    //         <div>
-                    //             <h4>{product.tenMonAn}</h4>
-                    //             <h6>Loại: <span>{product.category.tenLoaiMonAn}</span></h6>
-                    //             <h6 className={styles.des}>Mô tả: <span>{product.moTa}</span></h6>
-                    //             <h6>Đơn giá: <span>{product.giaBan}đ</span></h6>
-                    //         </div>
-                    //     </div>
-                    //     <div className={styles.productActions}>
-                    //         <img src={conmat} alt="" onClick={() => {nav("06/productDetail")}}/>
-                    //         <img src={locked} alt="" onClick={() => {lockProduct(product.ID)}}/>
-                    //     </div>
-                    // </div>   
             ))}
             </div>
-{/* 
-            <div className={styles.maincontent}>
-                <div className={styles.product}>
-                    <div className={styles.productInfor}>
-                        <img src={imageMap["xchickbg.png"]} alt="" />
-                        <div>
-                            <h4>Hamberger</h4>
-                            <h6>Loại: <span>Hamberger</span></h6>
-                            <h6 className={styles.des}>Mô tả: <span>Đây là một hamberder không bánh không nước</span></h6>
-                            <h6>Đơn giá: <span>50.000đ</span></h6>
-                        </div>
-                    </div>
-                    <div className={styles.productActions}>
-                        <img src={conmat} alt="" onClick={() => {nav("06/productDetail")}}/>
-                        <img src={locked} alt="" />
-                    </div>
-                </div>
-            </div>     */}
-
-            
             <Outlet/>
         </div>
     )

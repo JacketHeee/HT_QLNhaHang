@@ -2,7 +2,7 @@
 import styles from "./QLNhanVien.module.css" 
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Search from "../../components/Search/Search"
 import { formatCurrency } from "../../utils/format"
 
@@ -11,35 +11,51 @@ import Table from "../../components/CustomTable/Table"
 
 import remove from "../../assets/icon/remove.svg"
 import edit from "../../assets/icon/edit.svg"
+import { addEmployee, deleteEmployee, getEmployees, updateEmployee } from "../../api/services/employeeService"
+import AddEmployee from "../../components/AddEmployee/AddEmployee"
+import Loading from "../../components/Loading/Loading";
+
 
 export default function QLNhanVien() {
-    const [choosedStateDish, setChoosedStateDish] = useState("all")
+    const [create, setCreate] = useState(false);
+    const [update, setUpdate] = useState(false);
+
+    const [employeeUpdate, setEmployeeUpdate] = useState(null);
 
 
-    const [listData, setListData] = useState([
-            { id: '1', tenNhanvien: 'Nguyễn Hùng Mạnh', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-            { id: '2', tenNhanvien: 'Nguyễn Ngọc Thiên Ân', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-            { id: '3', tenNhanvien: 'Lê Hoàng Sơn', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-            { id: '4', tenNhanvien: 'Lê Hữu Thành Vinh', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-            { id: '5', tenNhanvien: 'Nguyễn Dương', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-            { id: '6', tenNhanvien: 'Lê Quang Hoàng', gioitinh: 'nam', email: "jackethee@gmail.com",sdt:"0862915493"},
-        ]);
+    const [employees, setEmployees] = useState([]);
+
+    //cho khi load từ bảng lên
+    const [error, setError] = useState(null);
+    const [load, setLoad] = useState(true);
+
+    //cho khi cập thêm, sửa, xoas
+    const [loadUpdate, setLoadUpdate] = useState(false);
+
+    const [displayEmployees, setDisplayEmployees] = useState([]);
     
         // Định nghĩa cột
         const columns = [
-            { key: 'id', title: 'Mã tài khoản' },
-            { key: 'tenNhanvien', title: 'Tên nhân viên' },
-            { key: 'gioitinh', title: 'Giới tính' },
-            { key: 'email', email: 'Email'},
-            { key: 'sdt', title: 'Số điện thoại'},
+            { key: 'id', title: 'Mã nhân viên' },
+            { key: 'name', title: 'Tên nhân viên' },
+            { key: 'gioiTinh', title: 'Giới tính' },
+            { key: 'soDT', title: 'Số điện thoại'},
         ];
     
         // Định nghĩa hành động
-        const actions = (row) => {
+        const actions = (row) => { // có thông tin hàng đã chọn
             return (
                 <div className={styles.actionBottoms}>
-                   <img src={edit} alt="edit" />
-                   <img src={remove} alt="remove" />
+                    <img 
+                        src={edit} 
+                        alt="edit" 
+                        onClick = {() => setOldDataUpdate(row)}
+                    />
+                    <img
+                        src={remove} 
+                        alt="remove"
+                        onClick = {() => removeEmployee(row)}
+                    />
                 </div>
             );
         };
@@ -53,24 +69,128 @@ export default function QLNhanVien() {
         //         );
         //     };
 
+    const createObject = (id, ten, gt, sdt) => (
+        {
+            "id": id,
+            "name" : ten,
+            "gioiTinh" : gt,
+            "soDT" : sdt 
+        }
+    )
+
+    //////////////////// 
+
+    ////// useEffect gọi khi mount
+    useEffect(() =>{
+        fetchEmployees()
+    },[])
+
+    const fetchEmployees = async () =>{
+        try {
+            const data = await getEmployees();
+            // console.log(data);
+            setEmployees(data);
+            setDisplayEmployees(data);
+        } catch (error) {
+            setError('Load dữ liệu thất bại!');
+            console.error(error);
+        }finally{
+            setLoad(false)
+        }
+    }
+
+
+    ///Search
+    const handleSearch = (keyword) => {
+        if(keyword.trim() === ''){
+            setDisplayEmployees(employees);
+        }
+        else{
+            const de = employees.filter((em) => (
+                em.name.toLowerCase().includes(keyword.toLowerCase())
+            ))
+            setDisplayEmployees(de);
+        }
+    }
+
+
+    ///// CRUD
+    const createE = async (nhanVien) => {
+        setLoadUpdate(true);
+        const newEmployee = await addEmployee(nhanVien);
+        setEmployees(prev => [...prev, newEmployee]);
+        setDisplayEmployees(prev => [...prev, newEmployee]);
+        setLoadUpdate(false);
+    }
+
+    const updateE = async (id, nhanVien) => {
+        setLoadUpdate(true);
+        const newEmployee = await updateEmployee(id, nhanVien);
+        setEmployees(prev => prev.map((p) => p.id === id ? newEmployee : p));
+        setDisplayEmployees(prev => prev.map((p) => p.id === id ? newEmployee : p));
+        setLoadUpdate(false);
+    }
+
+
+    ///update
+    const setOldDataUpdate = async (obj) => {
+        const nhanVien = createObject(obj.id, obj.name, obj.gioiTinh, obj.soDT);
+        setEmployeeUpdate(nhanVien);
+    }
+
+    //remove
+    const removeEmployee = async (obj) => {
+        setLoadUpdate(true)
+        await deleteEmployee(obj.id);
+        setEmployees(prev => prev.filter((p) => (p.id != obj.id)));
+        setDisplayEmployees(prev => prev.filter((p) => (p.id != obj.id)));
+        setLoadUpdate(false)
+    }
+    //đợi employee cũ cập nhật xong
+    useEffect(() => {
+        if(!employeeUpdate) return
+        setUpdate(true);
+    } , [employeeUpdate])
+
+    //////////////////// 
+
     return (
         <div className={styles.container}>
-            <div className={styles.search}><Search placeHolder={"Tìm kiếm theo tên nhân viên..."}/> </div>
-
+            {/* thanh tìm kiếm */}
+            <div className={styles.search}><Search 
+                placeHolder={"Tìm kiếm theo tên nhân viên..."}
+                onSearch={(keyword) => {handleSearch(keyword)}}
+                /> </div>
+            {/* nút thêm */}
             <div className={styles.actions}>
-                <button> + Thêm</button>
-            </div>
-                {actions}
-            <div className={styles.select}>
-                <button onClick={()=>setChoosedStateDish("all")} className={choosedStateDish === "all" ? styles.active : ""}>Tất cả</button>
-                <button onClick={()=>setChoosedStateDish("used")} className={choosedStateDish === "used" ? styles.active : ""}>Hoạt động</button>
-                <button onClick={()=>setChoosedStateDish("none")} className={choosedStateDish === "none" ? styles.active : ""}>Bị khóa</button>
+                <button onClick ={() => {setCreate(true)}}> + Thêm</button>
             </div>
 
+            {/* /////////////////loading///////////////// */}
+            {load ? <div>Đang load dữ liệu</div> : 
+                <div className={styles.maincontent}> 
+                    <Table data={displayEmployees} columns={columns} actions={actions}/>
+                </div>
+            }
 
-            <div className={styles.maincontent}> 
-                <Table data={listData} columns={columns} actions={actions}/>
-            </div>
+            {/* load cho create */}
+            {loadUpdate ? <Loading></Loading> : null}
+            {/* /////////////////loading///////////////// */}
+
+            {create ? <AddEmployee 
+                onCreate={(nhanVien) => {createE(nhanVien)}} //cho thêm
+                onClose={() => {setCreate(false)}}
+            ></AddEmployee> : null
+            } {/*action mở popup thêm nhân viên*/}
+
+            {update ? <AddEmployee 
+                onCreate={(id, nhanVien) => {updateE(id, nhanVien)}} //cho sửa
+                onClose={() => {setUpdate(false)}}
+                isUpdate={true}
+                updateEmployee={employeeUpdate}
+            ></AddEmployee> : null
+            }
+
         </div>
     )
 }

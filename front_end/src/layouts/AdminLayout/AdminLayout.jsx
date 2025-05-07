@@ -14,35 +14,50 @@ import logout from "../../assets/icon/logout.svg";
 
 // Danh sách menu với vai trò được phép truy cập
 const menuItems = [
-    {id:"product", path: '/admin/productManagement', label: 'Món ăn', roles: ['admin', 'kitchen'],icon: monan},
-    {id:"table", path: '/admin/table', label: 'Bàn ăn', roles: ['admin', 'kitchen'],icon: banan},
-    {id:"order", path: '/admin/orders', label: 'Đơn hàng', roles: ['admin', 'staff'],icon: donhang },
-    {id:"kitchen", path: '/admin/kitchen', label: 'Bảng điều khiển bếp', roles: ['admin', 'kitchen'],icon: bep},
-    {id:"staff", path: '/admin/staff', label: 'Quản lý nhân viên', roles: ['admin', 'kitchen'],icon: qlnhanvien},
-    {id:"account", path: '/admin/account', label: 'Quản lý tài khoản', roles: ['admin', 'kitchen'],icon: hinhanh},
-    {id:"roleLayer", path: '/admin/roleLayer', label: 'Phân quyền', roles: ['admin', 'kitchen'],icon: layer},
+    // {id:"product", path: '/admin/productManagement', label: 'Món ăn', roles: ['admin', 'kitchen'],icon: monan},
+    // {id:"table", path: '/admin/table', label: 'Bàn ăn', roles: ['admin', 'kitchen'],icon: banan},
+    // {id:"order", path: '/admin/orders', label: 'Đơn hàng', roles: ['admin', 'staff'],icon: donhang },
+    // {id:"kitchen", path: '/admin/kitchen', label: 'Bảng điều khiển bếp', roles: ['admin', 'kitchen'],icon: bep},
+    // {id:"staff", path: '/admin/staff', label: 'Quản lý nhân viên', roles: ['admin', 'kitchen'],icon: qlnhanvien},
+    // {id:"account", path: '/admin/account', label: 'Quản lý tài khoản', roles: ['admin', 'kitchen'],icon: hinhanh},
+    // {id:"roleLayer", path: '/admin/roleLayer', label: 'Phân quyền', roles: ['admin', 'kitchen'],icon: layer},
+
+    {id:"product", path: '/admin/productManagement',routeName:'productManagement', label: 'Món ăn',icon: monan},
+    {id:"table", path: '/admin/table',routeName:'table', label: 'Bàn ăn',icon: banan},
+    {id:"order", path: '/admin/orders',routeName:'orders', label: 'Đơn hàn',icon: donhang },
+    {id:"kitchen", path: '/admin/kitchen',routeName:'kitchen', label: 'Bảng điều khiển bếp',icon: bep},
+    {id:"staff", path: '/admin/staff',routeName:'staff', label: 'Quản lý nhân viên',icon: qlnhanvien},
+    {id:"account", path: '/admin/account',routeName:'account', label: 'Quản lý tài khoản',icon: hinhanh},
+    {id:"roleLayer", path: '/admin/roleLayer',routeName:'roleLayer', label: 'Phân quyền',icon: layer},
 ];
 
+//localStorage hiện lưu : token + routes, firstpage
 
 const AdminLayout = () => {
-    const [selectedItem,setSelectedItem] = useState("order");
+    const [selectedItem,setSelectedItem] = useState("firstpage");
     const navigate = useNavigate();
-    const userRole = localStorage.getItem('userRole') || 'staff';
+    // const userRole = localStorage.getItem('userRole') || 'staff';
 
+    //đợi token
     useEffect(() => {
-        if (!localStorage.getItem('adminToken')) {
+        if (!localStorage.getItem('token')) {
             navigate('/admin/login');
         }
     }, [navigate]);
 
-
+    //logout
     const handleLogout = () => {
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('userRole');
+        localStorage.removeItem('token');
+        localStorage.removeItem('routes');
+        localStorage.removeItem('firstpage');
         navigate('/admin/login');
     };
 
-    const allowedMenuItems = menuItems.filter(item => item.roles.includes(userRole));
+    const listRoutes = JSON.parse(localStorage.getItem('routes')) // lấy những route thằng này truy cập được
+
+    const allowedMenuItems = menuItems.filter((item) => 
+        listRoutes.includes(item.routeName)
+    );
 
     
     return (

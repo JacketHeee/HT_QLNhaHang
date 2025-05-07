@@ -14,7 +14,7 @@ export default function ProductDetail() {
     const handleProductClose = () => {
         nav(-1)
     }
-
+    
     const {productId} = useParams(); //phân rã lấy productID
     //Để tạm mốt sửa
     return (

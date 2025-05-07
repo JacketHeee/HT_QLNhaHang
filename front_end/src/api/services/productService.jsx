@@ -1,22 +1,22 @@
 import { API_ENDPOINTS } from "../constants";
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 
 const API_URL = API_ENDPOINTS.PRODUCTS;
 
 export const getProducts = async () => {
-    const response = await axios.get(`${API_URL}`);
+    const response = await axiosInstance.get(`${API_URL}`);
     return response.data;
 }
 
 export const getProduct = async (id) => {
-    const response = await axios.get(`${API_URL}/${id}`);
+    const response = await axiosInstance.get(`${API_URL}/${id}`);
     return response.data;
 }
 
 export const lockProduct = async (id) => {
-    await axios.put(`${API_URL}/${id}/lock`)
+    await axiosInstance.put(`${API_URL}/${id}/lock`)
 }
 
 export const unLockProduct = async (id) => {
-    await axios.put(`${API_URL}/${id}/unlock`)
+    await axiosInstance.put(`${API_URL}/${id}/unlock`)
 }

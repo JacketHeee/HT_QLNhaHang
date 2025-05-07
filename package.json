@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "pg": "^8.14.1"

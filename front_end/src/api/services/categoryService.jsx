@@ -1,9 +1,9 @@
 import { API_ENDPOINTS } from "../constants";
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 
 const API_URL = API_ENDPOINTS.CATEGORIES;
 
 export const getProductsByCategoryID = async (id) => {
-    const response = await axios.get(`${API_URL}/${id}/products`);
+    const response = await axiosInstance.get(`${API_URL}/${id}/products`);
     return response.data;
 }
