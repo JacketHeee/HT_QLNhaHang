@@ -11,7 +11,7 @@ import Loading from "../Loading/Loading";
 
 export default function AddAccount(props) {// listEm, listRole
 
-    const [active, setActive] = useState(props.updateAccount.isActive)
+    const [active, setActive] = useState(props.updateAccount?.isActive?? true)
     const [load, setLoad] = useState(false);
     const listEm = props.listEm;
     const listRole = props.listRole;
