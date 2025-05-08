@@ -8,16 +8,19 @@ export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @Column({ nullable: true })
   description: string;
 
+  @Column({ type: 'boolean', default: false })
+  isDeleted: boolean;
+
   @OneToMany(() => Account, account => account.role)
   accounts: Account[];
 
-  @OneToMany(() => FeatureRole, listFR=>listFR.role)
+  @OneToMany(() => FeatureRole, listFR=>listFR.role, { eager: true })
   listFR: FeatureRole[];
   
   @CreateDateColumn()

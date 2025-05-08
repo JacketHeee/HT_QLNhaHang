@@ -17,7 +17,7 @@ export class FeatureRole {
   @JoinColumn({ name: 'roleId' })
   role: Role;
 
-  @ManyToOne(() => Feature, (feature)=>feature.listFR)
+  @ManyToOne(() => Feature, (feature)=>feature.listFR, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'featureId' })
   feature: Feature;
 
