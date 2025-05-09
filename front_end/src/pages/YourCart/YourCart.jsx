@@ -6,13 +6,21 @@ import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import ButtonClose from "../../components/ButtonClose/ButtonClose";
 import CounterModel from "../../components/CounterModel/CounterModel";
 import classNames from "classnames";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
+import { ImageLoader } from "../../utils/ImageLoader";
 
 export default function YourCart() {
-    const [count, setCount] = useState(6)
 
     const nav = useNavigate();
+    const location = useLocation();
+    const data = location.state || {};
+    // console.log(data)
+
+
+    const [count, setCount] = useState(data.numberOfProduct);
+
+
 
     return (
         <div className={style.yourCart}>
@@ -24,36 +32,46 @@ export default function YourCart() {
             </div>
 
             <div className={style.itemShow}>
+                {data.listCTHD.map((item) => <ProductItem cTHD={item}/>)}
+               {console.log(data.listCTHD)}
+
+
+                {/* {console.log(data.listCTHD[0].product.tenMonAn)} */}
+                {/* <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
+                <ProductItem/> */}
             </div>
-            <Payment/>
+            <Payment data={data}/>
             <Outlet/>
         </div>
     )
 }
 
-function ProductItem() {
+function ProductItem({cTHD}) {
+    const imageMap = ImageLoader.load();
+
+    const tinhGiaBan = (giaBan, soLuong) => {
+        return +giaBan * +soLuong
+    }
     return (
         <div className={style.productItem}>
-            <img src={burger} alt="" />
+            <img src={imageMap[cTHD.product.tenHinhAnh]} alt="" />
             <div>
                 <div className={style.productNameAndSideDishes}>
-                    <h5>Grill Squid Satay</h5>
+                    <h5>{cTHD.product.tenMonAn}</h5>
                     <div>
-                        <SideDishes title="Đồ ăn kèm" des="Rau thơm"/>
+                        <SideDishes title="Đồ ăn kèm" des={cTHD.sideDishes} gia={cTHD.giaSideDish}/>
                     </div>
                 </div>
                 <div className={style.quantityAndPrice}>   
-                    <CounterModel/>
+                    {console.log(cTHD.quantity)}
+                    <CounterModel value={cTHD.quantity}/>
                     <div>
-                        <h5>{formatCurrency(1000000)}đ</h5>
+                        <h5>{formatCurrency(tinhGiaBan(cTHD.product.giaBan, cTHD.quantity))}đ</h5>
                         <span>(Tip 5%, VAT 10%)</span>
                     </div>
                 </div>
@@ -63,17 +81,25 @@ function ProductItem() {
 }
 
 
-function SideDishes({title,des}) {
+function SideDishes({title,des, gia}) {
     return (
         <div className={style.sideDihes}>
             <span>{title}: {des}</span>
-            <h6>{formatCurrency(1000)}đ</h6>
+            <h6>{formatCurrency(gia)}đ</h6>
         </div>
     )
 }
 
-function Payment() {
+function Payment({data}) {
     const [paymentMethod, setPaymentMethod] = useState('qr');
+
+    const tinhTongGia = () => {
+        let tongGia = 0;
+        data.listCTHD.forEach((item) => {
+            tongGia += +item.product.giaBan * +item.quantity + +item.giaSideDish
+        })
+        return tongGia;
+    }
 
     const nav = useNavigate();
     const {simulateLoading} = useLoading()
@@ -90,7 +116,7 @@ function Payment() {
             <div>
                 <h4>Tổng tiền:</h4>
                 <div>
-                    <h3>{formatCurrency(1000000)}đ</h3>
+                    <h3>{formatCurrency(tinhTongGia())}đ</h3>
                     <span>(Tip 5%, VAT 10%)</span>
                 </div>
             </div>

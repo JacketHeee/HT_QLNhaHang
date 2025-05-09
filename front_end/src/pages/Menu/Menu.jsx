@@ -7,7 +7,7 @@ import classNames from "classnames";
 import "../../index.css"
 import Payment from "../../components/Payment/Payment";
 import YourCart from "../YourCart/YourCart";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getProducts } from "../../api/services/productService";
 import Loading from "../../components/Loading/Loading";
@@ -16,6 +16,8 @@ import { getSideDish } from "../../api/services/sideDish";
 import { getProduct_SideDish } from "../../api/services/sidedish_productService";
 
 export default function Menu() {
+  const { id } = useParams();
+  // console.log(id)
 
   const nav = useNavigate()
   const { simulateLoading } = useLoading();
@@ -31,7 +33,9 @@ export default function Menu() {
   const [detail, setDetail] = useState(false);
   const [productForDetail, setProductForDetail] = useState(null);
   const [listSPforDetail, setListSPForDetail] = useState([]);
-  
+  const [numberOfP, setNumberOfP] = useState(0); //cho phần số sản phẩm đặt của giỏ hàng bên dưới
+  const [dataForCart, setDataForCart] = useState([]);
+  const [listMAK, setListMAK] = useState([]);
 
   const category = [
     {
@@ -92,7 +96,9 @@ export default function Menu() {
       setProducts(list);
       setDisplayProducts(list);
       const listSP = await getProduct_SideDish();
-      setListSP(listSP)
+      setListSP(listSP);
+      const listMAK = await getSideDish();
+      setListMAK(listMAK)
     } catch (error) {
       throw new Error(error);
     }
@@ -130,7 +136,16 @@ export default function Menu() {
     }
   }, [listSPforDetail])
 
+  const handleAddToCart = (dataForCart) => {
+    console.log(dataForCart);
 
+    setDataForCart(prev => [...prev, dataForCart])// truyền cho cart
+  }
+
+  const handleUpdateNumberOfP = () => {
+    setNumberOfP(prev => prev + 1);
+    console.log(numberOfP);
+  }
 
   return (
     //phân loại
@@ -199,12 +214,27 @@ export default function Menu() {
         </div>
         {/* <ProductDetail product={selectedProduct} onClose={handleProductClose}/> */}
       </div>
-      <Payment text="Thanh toán" onClick={() => { simulateLoading(500, () => { nav("YourCart") }) }} />
+      <Payment 
+        text="Thanh toán" 
+        onClick={() => { nav("YourCart", {
+          state: {
+            numberOfProduct: numberOfP,
+            listCTHD: dataForCart,
+          }
+        })}} 
+        count={numberOfP}
+        canPay={dataForCart.length !== 0?true:false}//để check xem nút thanh toán được bấm không
+      />
 
       {detail && statusListSP ? <ProductDetail
         onClose={() => {setDetail(false)}}
         product={productForDetail}
         listSP={listSPforDetail}
+        idTable={id}
+        onAddToCart={(dataForCart) => {handleAddToCart(dataForCart)}}
+        numberOfProduct={numberOfP}
+        updateNumberOfP={() => {handleUpdateNumberOfP()}}
+        listMAK={listMAK}
       >
       </ProductDetail> : null}
     </div>

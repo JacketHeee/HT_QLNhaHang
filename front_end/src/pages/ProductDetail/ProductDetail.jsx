@@ -9,7 +9,7 @@ import CounterModel from "../../components/CounterModel/CounterModel";
 import { useNavigate, useParams } from "react-router-dom";
 import { ImageLoader } from "../../utils/ImageLoader";
 
-export default function ProductDetail({onClose, product, listSP}) {
+export default function ProductDetail({onClose, product, listSP, onAddToCart, numberOfProduct, updateNumberOfP, listMAK}) {
     // đổi qua function cha con nha !!!
     // const nav = useNavigate()
 
@@ -19,9 +19,68 @@ export default function ProductDetail({onClose, product, listSP}) {
     
     // const {productId} = useParams(); //phân rã lấy productID 
     //Để tạm mốt sửa
+ 
     const imageMap = ImageLoader.load();
-    console.log(product);
-    console.log(listSP);
+
+    const [quantity, setQuantity] = useState(0);
+    const [selectedSideDish, setSelectedSideDish] = useState({});
+
+    const [numberOfP, setNumberOfP] = useState(numberOfProduct) //số lượng cập nhật cho cart bên dưới
+
+    const handleChangeCheckBox = (e) => {
+        const { name, checked } = e.target;
+        setSelectedSideDish(prev => ({
+            ...prev,
+            [name]: checked
+        }));
+        // console.log(selectedSideDish);
+    };
+
+    const getListSideDishString = () => {
+        const listsd = listSP
+            .map((item) => item.sideDish.tenMonAnKem)
+            .filter((name) => selectedSideDish[name])
+        return listsd.join(", ");
+    }
+
+    const getGiaSideDish = (string) =>{
+        let gia = 0;
+        const arr = string.split(", ");
+        const filtered = listMAK.filter(item =>
+            arr.includes(item.tenMonAnKem)
+        );
+        filtered.forEach((item) => {gia += +item.price})
+        console.log(gia)
+        return(gia)
+    }
+
+
+    const createObj = (product, quantity, listSideDishString, giaSideDish) => { //side dish kiểu string
+        return {
+            product: product,
+            quantity: quantity,
+            sideDishes: listSideDishString,
+            giaSideDish: giaSideDish
+        }
+    }
+
+    const getObjForCart = () => {
+        const listSideDishString = getListSideDishString();
+        const giaSideDish = getGiaSideDish(listSideDishString);
+
+        console.log(createObj(product, quantity, listSideDishString, giaSideDish));
+        return createObj(product, quantity, listSideDishString, giaSideDish);
+    }
+
+    const handleChangeCounter = (value) => {
+        setQuantity(value);
+    }
+
+    const handleAddToCart = () => {
+        onAddToCart(getObjForCart());
+        setNumberOfP(prev => prev + 1);
+        updateNumberOfP(1);
+    }
 
     return (
         <div className={style.productDetail}>
@@ -41,7 +100,7 @@ export default function ProductDetail({onClose, product, listSP}) {
                     </div>
                     <div className={style.soluongProduct}>
                         <span>Số lượng:</span>
-                        <CounterModel/>
+                        <CounterModel onChange={(value) => handleChangeCounter(value)}/>
                     </div>
 
                     <div onClick={() => {
@@ -57,7 +116,11 @@ export default function ProductDetail({onClose, product, listSP}) {
                     </h4>
                     <div className={style.sideDishes}>
                         {listSP.map((item) => (
-                            <Properties name={item.sideDish.tenMonAnKem} />
+                            <Properties 
+                                name={item.sideDish.tenMonAnKem}
+                                checked={selectedSideDish[item.sideDish.tenMonAnKem] || false}
+                                onChange={handleChangeCheckBox}
+                            />
                         ))}
                         
                         {/* // <Properties name="Vegetebale"/>
@@ -65,17 +128,31 @@ export default function ProductDetail({onClose, product, listSP}) {
                         // <Properties name="Vegetebale"/> */}
                     </div>
 
-                    <Payment text="Thêm vào giỏ hàng"/>
+                    <Payment 
+                        text="Thêm vào giỏ hàng"
+                        onClick={() => {
+                            handleAddToCart()
+                            onClose();
+                            // printData()
+                        }}
+                        count={numberOfP}
+                        canPay={true}
+                    />
                 </div>
             </div>
         </div>
     )
 }
 
-function Properties({name}) {
+function Properties({name, onChange}) {
     return (
         <div>
-            <input type="checkBox" className={style.custom_checkbox}/>
+            <input 
+                type="checkBox" 
+                className={style.custom_checkbox}
+                name={name}
+                onChange={onChange}
+            />
             <p>{name}</p>
         </div>
     )
