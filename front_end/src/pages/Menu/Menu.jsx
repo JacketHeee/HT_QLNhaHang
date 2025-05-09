@@ -1,7 +1,7 @@
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import Product from "../../components/Product/Product";
 import ProductDetail from "../ProductDetail/ProductDetail";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useParams } from "react";
 import "./Menu.css"
 import classNames from "classnames";
 import "../../index.css"
@@ -19,6 +19,7 @@ export default function Menu() {
 
   const nav = useNavigate()
   const { simulateLoading } = useLoading();
+  // const { id: tableId } = useParams(); // Lấy tableId từ URL
 
   const [products, setProducts] = useState([]); //raw data
   const [statusListSP, setStatusListSP] = useState(false);
@@ -95,9 +96,16 @@ export default function Menu() {
       const listSP = await getProduct_SideDish();
       setListSP(listSP)
     } catch (error) {
+      console.error('Error fetching products:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
       throw new Error(error);
     }
-    setLoad(false);
+    finally {
+      setLoad(false);
+    }
   }
 
 

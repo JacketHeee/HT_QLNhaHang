@@ -14,12 +14,22 @@ const AdminLogin = () => {
     const [load, setLoad] = useState(false);
     const navigate = useNavigate();
 
+    // Kiểm tra token khi component mount
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const firstPage = localStorage.getItem('firstpage');
+        if (token && firstPage) {
+        navigate(`/admin/${firstPage}`);
+        }
+    }, [navigate]);
+
     const fetchToken = async (usrname, passwd) => {
         setLoad(true);
         try {
             const request = await login(usrname, passwd);
             let roleName = request.user.role;
             console.log(roleName);
+            
             //set token cho các request
             localStorage.setItem('token', request.access_token);
     
