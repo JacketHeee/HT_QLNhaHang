@@ -11,31 +11,35 @@ import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getProducts } from "../../api/services/productService";
 import Loading from "../../components/Loading/Loading";
+import { ImageLoader } from "../../utils/ImageLoader";
 
 export default function Menu() {
 
   const nav = useNavigate()
   const { simulateLoading } = useLoading();
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]); //raw data
   const [load, setLoad] = useState(true);
   const [select, setSelect] = useState('0');
+  const imageMap = ImageLoader.load();
+  const [displayProducts, setDisplayProducts] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState([]);
 
   const category = [
     {
       id: '0',
       name: 'Tất cả',
-      img: burger
+      img: 'cheesedlx_bb.png'
     },
     {
       id: '1',
       name: 'Hamburger',
-      img: burger
+      img: 'cheesedlx_bb.png'
     },
     {
       id: '2',
       name: 'Coffee',
-      img: 'iced_milkVNCoffee.png'
+      img: 'iced_milkVNcoffee.png'
     },
     {
       id: '3',
@@ -50,13 +54,30 @@ export default function Menu() {
     {
       id: '5',
       name: 'Tráng miệng',
-      img: 'xhotfudge_mcsundea.png'
+      img: 'xhotfudge_mcsundae.png'
     },
   ];
 
   useEffect(() => {
     fetchProducts();
   }, [])
+
+  const handleCategory = (id) => {
+      if (id == 0) {
+        setCategoryProducts(products);
+        setDisplayProducts(products);
+      }
+      else {
+        const list = products.filter((p) => {
+          if (p.category.ID == id) {
+            return p;
+          }
+        })
+        setCategoryProducts(list);
+        setDisplayProducts(list);
+      }
+  }
+
 
 
 
@@ -97,9 +118,12 @@ export default function Menu() {
         {category.map((item) => (
           <div 
             className={`flex-column categoryItem ${select === item.id ? 'selected' : ''}`}
-            onClick={() => {setSelect(item.id)}}
+            onClick={() => {
+              setSelect(item.id);
+              handleCategory(item.id)
+            }}
           >
-          <img src={burger} alt="" />
+          <img src={imageMap[item.img]} alt="" />
           {item.name}
           </div>
         ))}
@@ -135,7 +159,7 @@ export default function Menu() {
         <div className="areShowProduct flex-column">
 
           {load ? <Loading></Loading> :
-            products.map((item) => {
+            displayProducts.map((item) => {
               return <Product onClick={handelProductClick} product={item} />
             })
           }
