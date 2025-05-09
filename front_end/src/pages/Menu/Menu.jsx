@@ -110,6 +110,7 @@ export default function Menu() {
   const fetchProducts = async () => {
     try {
       setLoad(true);
+      console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL); // Debug
       const productResponse = await getProducts();
       console.log('Products:', productResponse.data);
       setProducts(productResponse.data);
