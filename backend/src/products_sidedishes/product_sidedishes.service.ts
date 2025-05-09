@@ -14,14 +14,12 @@ export class SideDish_ProductService {
         private SideDish_ProductReposistory: Repository<SideDish_Product>,
     ){}
 
-    async findAll(): Promise<SideDish_ProductResponseDto[]>{
+    async findAll(){
         const dishes_products = await this.SideDish_ProductReposistory.find({
             where: {isDeleted: false},
+            relations: ['sideDish', 'product'],
         });
-        return dishes_products.map(sidedish_product =>{
-            const {IDMonAn, IDMonAnKem} = sidedish_product;
-            return {IDMonAn, IDMonAnKem} ;
-        });
+        return dishes_products;
     }
 
     async findOne(IDMA: number, IDMAK: number): Promise<SideDish_ProductResponseDto>{
