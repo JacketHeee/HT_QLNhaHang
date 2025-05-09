@@ -87,26 +87,49 @@ export default function Menu() {
       }
   }
 
+  // const fetchProducts = async () => {
+  //   try {
+  //     const list = await getProducts();
+  //     console.log(list)
+  //     setProducts(list);
+  //     setDisplayProducts(list);
+  //     const listSP = await getProduct_SideDish();
+  //     setListSP(listSP)
+  //   } catch (error) {
+  //     console.error('Error fetching products:', {
+  //       status: error.response?.status,
+  //       data: error.response?.data,
+  //       message: error.message,
+  //     });
+  //     throw new Error(error);
+  //   }
+  //   finally {
+  //     setLoad(false);
+  //   }
+  // }
   const fetchProducts = async () => {
     try {
-      const list = await getProducts();
-      console.log(list)
-      setProducts(list);
-      setDisplayProducts(list);
-      const listSP = await getProduct_SideDish();
-      setListSP(listSP)
+      setLoad(true);
+      const productResponse = await getProducts();
+      console.log('Products:', productResponse.data);
+      setProducts(productResponse.data);
+      setDisplayProducts(productResponse.data);
+
+      const sideDishResponse = await getProduct_SideDish();
+      console.log('Side Dishes:', sideDishResponse.data);
+      setListSP(sideDishResponse.data);
     } catch (error) {
-      console.error('Error fetching products:', {
+      const errorDetails = {
         status: error.response?.status,
         data: error.response?.data,
         message: error.message,
-      });
-      throw new Error(error);
-    }
-    finally {
+      };
+      console.error('Error fetching products:', errorDetails);
+      alert(`Không thể tải sản phẩm: ${error.message}`); // Hiển thị lỗi trên UI
+    } finally {
       setLoad(false);
     }
-  }
+  };
 
 
   const getListSPByPID = (productId) => {
