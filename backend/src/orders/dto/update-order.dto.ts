@@ -3,7 +3,7 @@ import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
 export class UpdateOrderDto {
     @IsNumber()
     @IsOptional()
-    customerId: number;
+    accountId: number;
         
     @IsNumber()
     @IsOptional()

@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { Employee } from '../../employees/entities/employee.entity';
 import { Role } from '../../roles/entities/role.entity';
 import { Exclude } from 'class-transformer';
+import { Order } from 'src/orders/entities/order.entity';
 
 @Entity()
 export class Account {
@@ -48,5 +49,8 @@ export class Account {
     default: false
   })
   isDeleted: boolean;
+
+  @OneToMany(() => Order, listOD => listOD.table)
+  listOD: Order[];
 
 }

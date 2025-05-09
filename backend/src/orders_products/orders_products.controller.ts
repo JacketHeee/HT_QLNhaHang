@@ -15,7 +15,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 
-@Controller('orders-products')
+@Controller('orders_products')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class OrdersProductsController {
   constructor(private readonly ordersProductsService: OrdersProductsService) {}
@@ -33,6 +33,14 @@ export class OrdersProductsController {
     @Param('productId') productId: string,
   ) {
     return this.ordersProductsService.findOne(+orderId, +productId);
+  }
+
+  @Get('get/listOP/:orderId')
+  @Roles('donhang')
+  getListOPByOrderId(
+    @Param('orderId') orderId: string,
+  ) {
+    return this.ordersProductsService.getListOPByOrderId(+orderId);
   }
 
   @Post()

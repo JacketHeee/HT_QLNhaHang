@@ -1,4 +1,5 @@
 import { Category } from 'src/categories/entities/category.entity';
+import { Order_Product } from 'src/orders_products/entities/order_product.entity';
 import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
 import { SideDish } from 'src/sidedishes/entities/sidedish.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
@@ -45,5 +46,8 @@ export class Product {
 
     @OneToMany(() => SideDish_Product, (SD)=>SD.product)
     SDList: SideDish_Product[]
+
+    @OneToMany(() => Order_Product, listOP => listOP.product)
+    listOP: Order_Product[]
 
 }

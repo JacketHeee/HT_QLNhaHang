@@ -1,17 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Order_Product } from '../../orders_products/entities/order_product.entity';
+import { Table } from 'src/tables/entities/table.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
+import { Account } from 'src/accounts/entities/account.entity';
 
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    // @ManyToOne(() => Customer, customer => customer.orders)
-    // @JoinColumn({ name: 'customerId' })
-    // customer: Customer;
-
     @Column()
-    customerId: number;
+    accountId: number;
 
     @Column()
     tableId: number;
@@ -20,9 +19,9 @@ export class Order {
     note: string;
 
     @CreateDateColumn()
-    createdAt: Date;
+    createdAt: Date; //tự động gán thời gian hiện tại
 
-    @Column({ default: 'pending' })
+    @Column({ default: 'Chờ xác nhận' })
     status: string;
 
     @Column('decimal')
@@ -31,12 +30,14 @@ export class Order {
     @Column({default: false})
     isDeleted: boolean;
 
-    // @Column({ default: false })
-    // isTakeAway: boolean;
+    @ManyToOne(() => Table, table => table.listOD, {eager: true})
+    @JoinColumn({name : 'tableId'})
+    table: Table;
 
-    // @UpdateDateColumn()
-    // updatedAt: Date;
+    @ManyToOne(() => Account, account => account.listOD, {eager: true})
+    @JoinColumn({name : 'accountId'})
+    account: Account;
 
-    // @OneToMany(() => OrderItem, orderItem => orderItem.order, { cascade: true })
-    // orderItems: OrderItem[];
+    @OneToMany(() => Order_Product, listOP => listOP.order)
+    listOP: Order_Product[]
 }

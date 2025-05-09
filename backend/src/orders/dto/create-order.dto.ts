@@ -3,7 +3,7 @@ import { IsNull } from "typeorm";
 
 export class CreateOrderDto {
     @IsNumber()
-    customerId: number;
+    accountId: number;
     
     @IsNumber()
     tableId: number;

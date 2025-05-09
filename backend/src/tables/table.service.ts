@@ -10,7 +10,11 @@ export class TableService {
     constructor(@InjectRepository(Table) private readonly tableRepository: Repository<Table>) {}
 
     findAll() {
-        return this.tableRepository.find({where: {isDeleted: false}});
+        return this.tableRepository.find({
+            where: {isDeleted: false},
+            relations: ['listOD'],
+            order: { id: 'ASC' }
+        });
     }
 
     async findOne(id: number) {

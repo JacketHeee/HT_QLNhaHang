@@ -18,8 +18,8 @@ export class SideDishService {
             where: {isDeleted: false},
         });
         return SideDishs.map(SideDish => {
-            const {ID, tenMonAnKem} = SideDish
-            return {ID, tenMonAnKem}
+            const {ID, tenMonAnKem, price} = SideDish
+            return {ID, tenMonAnKem, price}
         });
     }
 
@@ -28,16 +28,16 @@ export class SideDishService {
         if(!SideDish){
             throw new Error("SideDish not found");
         }
-        const {ID: idSideDish, tenMonAnKem} = SideDish;
-        return {ID: idSideDish, tenMonAnKem}
+        const {ID: idSideDish, tenMonAnKem, price} = SideDish;
+        return {ID: idSideDish, tenMonAnKem, price}
     }
 
     async create(createSideDish: CreateSideDishDto): Promise<SideDishResponseDto>{
         const SideDish = this.sidedishesReposistory.create(createSideDish);
         const saveSideDish = await this.sidedishesReposistory.save(SideDish);
 
-        const {ID, tenMonAnKem} = saveSideDish;
-        return {ID, tenMonAnKem}
+        const {ID, tenMonAnKem, price} = saveSideDish;
+        return {ID, tenMonAnKem, price}
     }
 
     async update(ID: number, updateSideDishDto: UpdateSideDishDto): Promise<SideDishResponseDto>{
@@ -49,9 +49,9 @@ export class SideDishService {
         Object.assign(SideDish, updateSideDishDto);
 
         const updateSideDish = await this.sidedishesReposistory.save(SideDish);
-        const {ID: idSideDish, tenMonAnKem} = updateSideDish
+        const {ID: idSideDish, tenMonAnKem, price} = updateSideDish
 
-        return {ID: idSideDish, tenMonAnKem}
+        return {ID: idSideDish, tenMonAnKem, price}
     }
 
     async delete(ID: number): Promise<void>{

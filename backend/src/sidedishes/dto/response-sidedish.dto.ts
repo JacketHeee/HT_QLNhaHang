@@ -6,4 +6,7 @@ export class SideDishResponseDto{
 
     @IsString()
     tenMonAnKem: string
+
+    @IsNumber()
+    price: number
 }

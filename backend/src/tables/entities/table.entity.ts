@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "src/orders/entities/order.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Table {
@@ -8,6 +9,16 @@ export class Table {
     @Column()
     name: string;
 
+    @Column({
+        type: 'boolean',
+        default: 'true'
+    })
+    isEmpty: boolean;
+
     @Column({default: false})
     isDeleted: boolean;
+
+    @OneToMany(() => Order, listOD => listOD.table)
+    listOD: Order[];
+
 }

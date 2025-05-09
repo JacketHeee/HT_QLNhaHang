@@ -13,7 +13,10 @@ export class OrdersProductsService {
   ) {}
 
   findAll() {
-    return this.order_productRepository.find({ where: { isDeleted: false } });
+    return this.order_productRepository.find({ 
+      where: { isDeleted: false },
+      relations: ['product']
+    });
   }
 
   async findOne(orderId: number, productId: number) {
@@ -32,6 +35,14 @@ export class OrdersProductsService {
       quantity: order_product.quantity,
       sideDishes: order_product.sideDishes,
     };
+  }
+
+  async getListOPByOrderId(orderId: number){
+    const rs = this.order_productRepository.find({ 
+      where: { isDeleted: false, orderId: orderId},
+      relations: ['product']
+    });
+    return rs;
   }
 
   async create(createOrder_ProductDto: CreateOrder_ProductDto) {

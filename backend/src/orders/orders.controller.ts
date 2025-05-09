@@ -66,7 +66,7 @@ export class OrdersController {
     return this.orderService.create(createOrderDto);
   }
 
-  @Patch('/:id')
+  @Put('/:id')
   @Roles('donhang')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.orderService.update(+id, updateOrderDto);

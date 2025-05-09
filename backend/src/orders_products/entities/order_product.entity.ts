@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   PrimaryColumn,
+  OneToMany,
 } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
 import { Product } from '../../products/entities/product.entity';
@@ -34,18 +35,29 @@ export class Order_Product {
   // @Column('decimal')
   // price: number;
 
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  id:number;
+
+  @Column()
   orderId: number;
 
-  @PrimaryColumn()
+  @Column()
   productId: number;
 
   @Column()
-  quantity: number;
+  quantity: number; //số lượng
 
-  @Column()
+  @Column({ default: "" })
   sideDishes: string;
 
   @Column({ default: false })
   isDeleted: boolean;
+
+  @ManyToOne(() => Order, order => order.listOP)
+  @JoinColumn({name:'orderId'})
+  order: Order;
+  
+  @ManyToOne(() => Product, product => product.listOP)
+  @JoinColumn({name:'productId'})
+  product: Product;
 }

@@ -15,6 +15,12 @@ export class SideDish {
     })
     isDeleted: boolean;
 
+    @Column({
+        type: 'decimal',
+        default: 5000,
+    })
+    price: number;
+
     @OneToMany(() => SideDish_Product, (SD)=>SD.sideDish)
     SDList: SideDish_Product[]
 }
