@@ -1,20 +1,22 @@
 import cart from "../../assets/icon/cart.svg"
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
+import { ImageLoader } from "../../utils/ImageLoader";
 import style from  "./Product.module.css"
 
-export default function Product({onClick}) {
-    let value = 100000; 
+export default function Product({onClick, product}) {
+    const imageMap = ImageLoader.load();
+    console.log(product);
     return (
       <div className={style.product} onClick={onClick}>
-        <img src={burger} alt=""/>
+        <img src={imageMap[product.tenHinhAnh]} alt=""/>
         <div>
-          <div className={style.productName}>1. <span>Hamburger</span>
+          <div className={style.productName}>{product.ID} <span>{product.tenMonAn}</span>
             <div>
-                Protein: <span>What is lorem ipsum?</span>
+                Mô tả: <span>{product.moTa}</span>
             </div>
           </div>
           <div className={style.productAction}>
-            <h4>{formatCurrency(value)} đ</h4>
+            <h4>{formatCurrency(product.giaBan)} đ</h4>
             <img src={cart} alt=""/>
           </div>
         </div>

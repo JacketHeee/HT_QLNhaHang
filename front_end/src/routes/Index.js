@@ -24,9 +24,9 @@ import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
 export default function AppRoutes() {
     const nav = useNavigate()
     useEffect(() => {
-        // nav("/ban/06")
+        nav("/ban/06")
         // nav("/admin/kitchen")
-        nav("/admin/login")
+        // nav("/admin/login")
         // nav("/admin/account")
         // nav("/admin/table")
         // nav("/admin/productManagement")
