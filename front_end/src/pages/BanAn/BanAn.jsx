@@ -1,14 +1,32 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Search from "../../components/Search/Search"
 import styles from "./BanAn.module.css"
 import { formatCurrency } from "../../utils/format"
 
 import table from "../../assets/icon/chair.svg"
 import classNames from "classnames"
+import { getTables } from "../../api/services/tableService"
 
 export default function BanAn() {
     const [choosedStateDish, setChoosedStateDish] = useState("all")
+
+    const [tables, setTables] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchData();
+    },[])
+
+    const fetchData = async () => {
+        try {
+            const list = await getTables();
+            setTables(list);
+        } catch (error) {
+            throw new Error(error);
+        }
+        setLoading(false);
+    }
 
     return (
         <div className={styles.container}>
@@ -21,7 +39,22 @@ export default function BanAn() {
             </div>
 
             <div className={styles.maincontent}> 
-                <div className={classNames(styles.table)}>
+                {loading ? <div>Đang load dữ liệu...</div>: 
+                    tables.map((tb) => (
+                        <div className={classNames(styles.table)}>
+                            <h5>{tb.name}</h5>
+                            <div className={styles.infor}>
+                                <div>
+                                    <span></span>
+                                    <h5></h5>
+                                </div>
+                                <img src={table} alt="" />
+                            </div>
+                        </div>
+                    ))  
+                }
+
+                {/* <div className={classNames(styles.table)}>
                     <h5>Bàn 1</h5>
                     <div className={styles.infor}>
                         <div>
@@ -40,187 +73,8 @@ export default function BanAn() {
                         </div>
                         <img src={table} alt="" />
                     </div>
-                </div>
-                <div className={classNames(styles.table,styles.active)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span>45p</span>
-                            <h5>{formatCurrency(2000000)}đ</h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table,styles.active)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span>45p</span>
-                            <h5>{formatCurrency(2000000)}đ</h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table,styles.active)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span>45p</span>
-                            <h5>{formatCurrency(2000000)}đ</h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table,styles.active)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span>45p</span>
-                            <h5>{formatCurrency(2000000)}đ</h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table,styles.active)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span>45p</span>
-                            <h5>{formatCurrency(2000000)}đ</h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
-                <div className={classNames(styles.table)}>
-                    <h5>Bàn 1</h5>
-                    <div className={styles.infor}>
-                        <div>
-                            <span></span>
-                            <h5></h5>
-                        </div>
-                        <img src={table} alt="" />
-                    </div>
-                </div>
+                </div> */}
+
             </div>
         </div>
     )

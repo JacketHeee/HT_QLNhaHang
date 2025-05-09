@@ -1,108 +1,86 @@
 
 import { useNavigate, useParams } from "react-router-dom";
-import Popup from "../PopUp/PopUp"
 import styles from "./OrderDetail.module.css"
 
-import { useState } from "react";
-import Table from "../CustomTable/Table";
+import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format";
+import Table from "../CustomTable/Table";
+import CustomPopUp from "../CustomPopUp/CustomPopUp";
 
-export default function OrderDetail() {
+export default function OrderDetail(props) {
     const {orderId} = useParams() 
-    console.log(orderId)
+    const [listOP, setListOP] = useState([]); 
+    const [displayListOP, setDisplayListOP] = useState([]);
 
-    const [orders, setOrders] = useState([
-        { 
-            id: '1', 
-            table: 'Bàn 1', 
-            time: '2025-04-28 10:30', 
-            total: 150000, 
-            totalSideDishes: 90192, 
-            status: 'Chờ xác nhận',
-            orderDetail: [
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-                { 
-                    dish: "Hamberger", 
-                    quantity: 3, 
-                    price: 190000, 
-                    sideDishes: "Phô mai, rau, cơm", 
-                    totalSideDishes: 100000, 
-                    totalProduct: 19000 
-                },
-            ]
-        }
-    ]);
+    useEffect(()=>{
+        setListOP(props.listOPForDetail)
+        setDisplayListOP(getListObjForDisplay(props.listOPForDetail));
+    }, [listOP])
+
+    const orders =
+    {
+        id: props.orderDetail.orderId,
+        table: props.orderDetail.tableId,
+        time: props.orderDetail.time,
+        total: "chưa",
+        totalSideDishes: "chưa",
+        status: "Chưa thanh toán",
+        orderDetail: [
+            {
+                dish: "Hamberger",
+                quantity: 3,
+                price: 190000,
+                sideDishes: "Phô mai, rau, cơm",
+                totalSideDishes: 100000,
+                totalProduct: 19000
+            },
+            {
+                dish: "Hamberger",
+                quantity: 3,
+                price: 190000,
+                sideDishes: "Phô mai, rau, cơm",
+                totalSideDishes: 100000,
+                totalProduct: 19000
+            },
+            {
+                dish: "Hamberger",
+                quantity: 3,
+                price: 190000,
+                sideDishes: "Phô mai, rau, cơm",
+                totalSideDishes: 100000,
+                totalProduct: 19000
+            },
+            {
+                dish: "Hamberger",
+                quantity: 3,
+                price: 190000,
+                sideDishes: "Phô mai, rau, cơm",
+                totalSideDishes: 100000,
+                totalProduct: 19000
+            },
+        ]
+    }
+
+    const getObjForDisplay = (obj) => ({
+        dish: obj.product.tenMonAn,
+        quantity: obj.quantity,
+        price: obj.product.giaBan,
+        sideDishes: "Dữ liệu khách gửi",
+        totalSideDishes: "Chưa cài đặt",
+        totalProduct: obj.product.giaBan * obj.quantity
+    })
+
+    const getListObjForDisplay = (list) => {
+        console.log(list);
+        return list.map((item) => (getObjForDisplay(item)))
+    }
+
+    const tinhTongTienHoaDon = (listDisplay) => {
+        console.log(listDisplay)
+        let tongTien = 0;
+        listDisplay.map((item) => {tongTien += item.totalProduct})
+        return tongTien
+    }
 
     const nav = useNavigate();
 
@@ -116,31 +94,36 @@ export default function OrderDetail() {
     ];
 
     return (
-        <Popup> 
+        <CustomPopUp onClose={props.onClose}> 
         <div className={styles.container}>
             <h3>Xác nhận đơn hàng</h3>
             <div className={styles.thongtinchung}>
-                <div><h6>Mã đơn hàng:</h6> <span>1234</span></div>
-                <div><h6>Số bàn:</h6> <span>B04</span></div>
-                <div><h6>Thời gian đặt:</h6> <span>20-04-2025 19:04</span></div>
+                <div><h6>Mã đơn hàng:</h6> <span>{orders.id}</span></div>
+                <div><h6>Số bàn:</h6> <span>B{orders.table}</span></div>
+                <div><h6>Thời gian đặt:</h6> <span>{orders.time}</span></div>
                 <div><h6>Hình thức thanh toán:</h6> <span>Online - đã thanh toán</span></div>
             </div>
-            <div className={styles.chitiet}>
-                <Table data={orders[0].orderDetail} columns={columns}/>
-                <h6>Tổng tiền: <span>{formatCurrency(102920349)}đ</span></h6>
-            </div>
-    
+
+                <div className={styles.chitiet}>
+                    <Table data={displayListOP} columns={columns}/>
+                    <h6>Tổng tiền: <span>{tinhTongTienHoaDon(displayListOP)}đ</span></h6>
+                </div>
+
+            
             <div className={styles.ghichu}>
                 <h6>Ghi chú của khách hàng:</h6>
-                <textarea rows="3" cols="40" placeholder="Ghi chú của khách hàng" disabled value="Hamberger không bánh không đường"/>
+                <textarea rows="3" cols="40" placeholder="Ghi chú của khách hàng" disabled value={props.orderDetail.note}/>
             </div>
     
             <div className={styles.actions}>
-                <button onClick={() => {nav(-1)}}>Xác nhận</button>
-                <button onClick={() => {nav(-1)}}>Hủy</button>
+                <button onClick={() => {
+                    props.onAccept(props.orderDetail.orderId);
+                    props.onClose();
+                }}>Xác nhận</button>
+                <button onClick={() => {props.onClose()}}>Hủy</button>
             </div>
-    
+            
         </div>
-      </Popup>
+      </CustomPopUp>
     )
 }

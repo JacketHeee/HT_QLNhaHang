@@ -156,6 +156,11 @@
     color: var(--darkMainColor);
 }
 
+.orderDetail>div>div>span {
+    margin-left: 10px;
+    color: var(--darkMainColor);
+}
+
 .time {
     width: 100%;
     padding-right: 10px;

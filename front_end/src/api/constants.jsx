@@ -11,4 +11,7 @@ export const API_ENDPOINTS = {
     EMPLOYEE: `/employees`,
     ACCOUNTS: `/accounts`,
     ROLES: `/roles`,
+    ORDERS: `/orders`,
+    TABLES: `/table`,
+    ORDERSPRODUCTS: `/orders_products`,
 };
