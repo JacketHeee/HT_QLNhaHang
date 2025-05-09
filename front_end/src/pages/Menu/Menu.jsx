@@ -89,6 +89,7 @@ export default function Menu() {
   const fetchProducts = async () => {
     try {
       const list = await getProducts();
+      console.log(list)
       setProducts(list);
       setDisplayProducts(list);
       const listSP = await getProduct_SideDish();
