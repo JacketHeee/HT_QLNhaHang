@@ -15,9 +15,9 @@ async function bootstrap() {
   // await app.listen(3001);
 
   app.enableCors({
-    origin: 'http://localhost:3000', 
+    origin: ['https://ht-ql-nha-hang.vercel.app/', 'http://localhost:3001'], 
     methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+     allowedHeaders: 'Content-Type,Authorization',
     credentials: true,
   });
   await app.listen(3001);
