@@ -24,12 +24,12 @@ import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
 export default function AppRoutes() {
     const nav = useNavigate()
     useEffect(() => {
-        nav("/ban/06")
+        // nav("/ban/06")
         // nav("/admin/kitchen")
         // nav("/admin/login")
         // nav("/admin/account")
         // nav("/admin/table")
-        // nav("/admin/productManagement")
+        nav("/admin/productManagement")
         // nav("/admin/productManagement/06/productDetail")
         // nav("/admin/orders/06/Detail")
     },[])
