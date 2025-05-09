@@ -5,9 +5,9 @@ import style from  "./Product.module.css"
 
 export default function Product({onClick, product}) {
     const imageMap = ImageLoader.load();
-    console.log(product);
+    // console.log(product);
     return (
-      <div className={style.product} onClick={onClick}>
+      <div className={style.product} onClick={() => onClick(product)}>
         <img src={imageMap[product.tenHinhAnh]} alt=""/>
         <div>
           <div className={style.productName}>{product.ID} <span>{product.tenMonAn}</span>

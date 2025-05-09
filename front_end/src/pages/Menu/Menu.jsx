@@ -12,6 +12,8 @@ import { useLoading } from "../../contexts/LoadingContext";
 import { getProducts } from "../../api/services/productService";
 import Loading from "../../components/Loading/Loading";
 import { ImageLoader } from "../../utils/ImageLoader";
+import { getSideDish } from "../../api/services/sideDish";
+import { getProduct_SideDish } from "../../api/services/sidedish_productService";
 
 export default function Menu() {
 
@@ -19,11 +21,17 @@ export default function Menu() {
   const { simulateLoading } = useLoading();
 
   const [products, setProducts] = useState([]); //raw data
+  const [statusListSP, setStatusListSP] = useState(false);
+  const [listSP, setListSP] = useState([]);
   const [load, setLoad] = useState(true);
   const [select, setSelect] = useState('0');
   const imageMap = ImageLoader.load();
   const [displayProducts, setDisplayProducts] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [detail, setDetail] = useState(false);
+  const [productForDetail, setProductForDetail] = useState(null);
+  const [listSPforDetail, setListSPForDetail] = useState([]);
+  
 
   const category = [
     {
@@ -78,13 +86,13 @@ export default function Menu() {
       }
   }
 
-
-
-
   const fetchProducts = async () => {
     try {
       const list = await getProducts();
       setProducts(list);
+      setDisplayProducts(list);
+      const listSP = await getProduct_SideDish();
+      setListSP(listSP)
     } catch (error) {
       throw new Error(error);
     }
@@ -92,16 +100,37 @@ export default function Menu() {
   }
 
 
-
+  const getListSPByPID = (productId) => {
+    const list = listSP.filter((item) => {
+      return(item.IDMonAn === productId)
+    })
+    return list;
+  }
 
 
   const handelProductClick = (product) => {
     // setSelectedProduct(product)
-    const spID = product?.id || "sp01";
-    simulateLoading(500, () => {
-      nav(`${spID}/Detail`)
-    })
+    // const spID = product?.id || "sp01";
+    // simulateLoading(500, () => {
+    //   nav(`${spID}/Detail`)
+    // })
+    setProductForDetail(product);
+    setListSPForDetail(getListSPByPID(product.ID))
   }
+
+  useEffect(() => {
+    if(productForDetail){
+      setDetail(true);
+    }
+  }, [productForDetail])
+
+  useEffect(() => {
+    if(listSPforDetail){
+      setStatusListSP(true);
+    }
+  }, [listSPforDetail])
+
+
 
   return (
     //phân loại
@@ -152,7 +181,8 @@ export default function Menu() {
       {/* Vùng sản phẩm */}
       <div className="areaProducts">
         <div className="areaProductHeader">
-          <h5>Burger</h5>
+          
+          <h5>{category.find((item) => (item.id == select)).name}</h5>
           <hr />
         </div>
 
@@ -160,30 +190,23 @@ export default function Menu() {
 
           {load ? <Loading></Loading> :
             displayProducts.map((item) => {
-              return <Product onClick={handelProductClick} product={item} />
+              return <Product onClick={(product) => {handelProductClick(product)}} product={item} />
             })
           }
           {/* <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
-          <Product onClick={handelProductClick} />
           <Product onClick={handelProductClick} /> */}
+
         </div>
         {/* <ProductDetail product={selectedProduct} onClose={handleProductClose}/> */}
       </div>
       <Payment text="Thanh toán" onClick={() => { simulateLoading(500, () => { nav("YourCart") }) }} />
 
+      {detail && statusListSP ? <ProductDetail
+        onClose={() => {setDetail(false)}}
+        product={productForDetail}
+        listSP={listSPforDetail}
+      >
+      </ProductDetail> : null}
     </div>
   )
 }
