@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+// export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+export const API_URL = process.env.REACT_APP_API_URL;
 
 //cài đặt gọi request kèm token
 const axiosInstance = axios.create({
