@@ -146,7 +146,7 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
             setTongGia(0);
 
             createOrder(getOrderObj(), listCTHD); //thêm order xuống cơ sở dữ liệu
-            nav("/ban/05/OrderSuccess")
+            nav(`/ban/${idTable}/OrderSuccess`)
         }
            
     }

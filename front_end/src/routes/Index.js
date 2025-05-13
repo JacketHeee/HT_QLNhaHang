@@ -25,9 +25,9 @@ import DataProvider from "../api/services/ProductContext/DataProvider";
 export default function AppRoutes() {
     const nav = useNavigate()
     useEffect(() => {
-        nav("/ban/6")
+        // nav("/ban/1")
         // nav("/admin/kitchen")
-        // nav("/admin/login")
+        nav("/admin/login")
         // nav("/admin/account")
         // nav("/admin/table")
         // nav("/admin/productManagement")

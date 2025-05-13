@@ -38,3 +38,9 @@ export const accept = async (orderId) => {
     const response = await axiosInstance.put(`${API_URL}/${orderId}`,obj);
     return response.data;
 }
+
+export const doneOrder = async (orderId) => {
+    const obj = {status: 'Đã xong'};
+    const response = await axiosInstance.put(`${API_URL}/${orderId}`,obj);
+    return response.data;
+}

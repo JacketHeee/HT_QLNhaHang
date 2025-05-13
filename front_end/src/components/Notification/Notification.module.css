@@ -14,7 +14,7 @@
     padding: 20 20 20 20;
 }
 
-.text {
+#text {
     background-color: rgba(0, 0, 0, 0);
     color: white;
     font-size: 20px;

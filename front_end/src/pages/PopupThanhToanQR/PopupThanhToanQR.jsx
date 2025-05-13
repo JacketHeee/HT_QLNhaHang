@@ -35,7 +35,7 @@ export default function PopupThanhToanQR() {
 
                 createOrder(getOrderObj(),listCTHD); //thêm order xuống cơ sở dữ liệu
 
-                nav("/ban/05/OrderSuccess"); 
+                nav(`/ban/${idTable}/OrderSuccess`); 
         }, 3000); // 4 giây
     
         return () => clearTimeout(timer);
