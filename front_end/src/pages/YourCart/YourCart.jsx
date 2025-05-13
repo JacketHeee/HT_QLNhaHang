@@ -1,4 +1,4 @@
-import { use, useState } from "react"
+import { use, useContext, useEffect, useState } from "react"
 import style from "./YourCart.module.css" 
 import { formatCurrency } from "../../utils/format"
 import cart from "../../assets/icon/cart_red.svg"
@@ -9,31 +9,34 @@ import classNames from "classnames";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
 import { ImageLoader } from "../../utils/ImageLoader";
+import PopupThanhToanQR from "../PopupThanhToanQR/PopupThanhToanQR";
+import { DataContext } from "../../api/services/ProductContext/DataProvider";
+import { createOrder } from "../../api/services/orderService";
 
 export default function YourCart() {
 
     const nav = useNavigate();
-    const location = useLocation();
-    const data = location.state || {};
+    // const location = useLocation();
+    // const data = location.state || {};
     // console.log(data)
 
-
-    const [count, setCount] = useState(data.numberOfProduct);
-
-
-
+    const {idTable, tongGia, numberOfP, setNumberOfP, listCTHD, setListCTHD, setTongGia} = useContext(DataContext);
+    
     return (
         <div className={style.yourCart}>
             <ButtonClose onClick={() => {nav(-1)}}/>
             <div className={style.header}>
                 <img src={cart} alt="" />
-                <h4>Giỏ hàng của bạn ({count})</h4>
+                <h4>Giỏ hàng của bạn ({numberOfP})</h4>
                 <span>Bữa tối</span>
             </div>
 
             <div className={style.itemShow}>
-                {data.listCTHD.map((item) => <ProductItem cTHD={item}/>)}
-               {console.log(data.listCTHD)}
+{/* 
+                {console.log(data)} */}
+                {listCTHD.map((item) => <ProductItem cTHD={item} listCTHD={listCTHD} setListCTHD={setListCTHD}/>)}
+
+               {/* {console.log(data.listCTHD)} */}
 
 
                 {/* {console.log(data.listCTHD[0].product.tenMonAn)} */}
@@ -45,18 +48,39 @@ export default function YourCart() {
                 <ProductItem/>
                 <ProductItem/> */}
             </div>
-            <Payment data={data}/>
+            <Payment idTable={idTable} tongGia={tongGia} listCTHD={listCTHD} setListCTHD={setListCTHD} setNumberOfP={setNumberOfP} setTongGia={setTongGia}/>
             <Outlet/>
         </div>
     )
 }
 
-function ProductItem({cTHD}) {
+function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo mới mảng khi người dùng thay đổi quantity
     const imageMap = ImageLoader.load();
 
     const tinhGiaBan = (giaBan, soLuong) => {
         return +giaBan * +soLuong
     }
+
+    const [quantityOfCTHD, setQuantityOfCTHD] = useState(cTHD.quantity);//theo dõi số lượng từng chi tiết hóa đơn
+
+    const handleChangeQuantity = () => {
+        setQuantityOfCTHD(prev => prev + 1);
+    }
+    useEffect(() => {//chờ quantity cập nhật xong
+        updateQuantity();
+    },[quantityOfCTHD])
+
+    const updateQuantity = () =>{
+        setListCTHD(prev => prev.map((item) =>{
+            if(item.product.ID === cTHD.product.ID){    //lụm cTHD đang tương tác
+                return{...item, quantity: quantityOfCTHD}
+            }
+            else{
+                return item
+            }
+        }))
+    }
+
     return (
         <div className={style.productItem}>
             <img src={imageMap[cTHD.product.tenHinhAnh]} alt="" />
@@ -68,10 +92,12 @@ function ProductItem({cTHD}) {
                     </div>
                 </div>
                 <div className={style.quantityAndPrice}>   
-                    {console.log(cTHD.quantity)}
-                    <CounterModel value={cTHD.quantity}/>
+                    <CounterModel 
+                        value={cTHD.quantity}
+                        onChange={() => handleChangeQuantity()}
+                    />
                     <div>
-                        <h5>{formatCurrency(tinhGiaBan(cTHD.product.giaBan, cTHD.quantity))}đ</h5>
+                        <h5>{formatCurrency(tinhGiaBan(cTHD.product.giaBan, quantityOfCTHD))}đ</h5>
                         <span>(Tip 5%, VAT 10%)</span>
                     </div>
                 </div>
@@ -90,26 +116,47 @@ function SideDishes({title,des, gia}) {
     )
 }
 
-function Payment({data}) {
+function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTongGia}) {
     const [paymentMethod, setPaymentMethod] = useState('qr');
+
+    const [thanhToanQR, setThanhToanQR] = useState(false);
 
     const tinhTongGia = () => {
         let tongGia = 0;
-        data.listCTHD.forEach((item) => {
+        listCTHD.forEach((item) => {
             tongGia += +item.product.giaBan * +item.quantity + +item.giaSideDish
         })
+        setTongGia(tongGia);
+        // console.log(tongGia);
         return tongGia;
     }
 
     const nav = useNavigate();
-    const {simulateLoading} = useLoading()
+
 
     const handleThanhToan = () => {
-        if (paymentMethod === "qr") 
-            simulateLoading(1500,() => {nav("ThanhToanQR")})
-        else 
-            simulateLoading(4000,() => {nav("/ban/05/OrderSuccess")})
+        
+        if (paymentMethod === 'qr') {
+            setThanhToanQR(true);
+        }
+        else {
+            //Xóa hết dữ liệu đơn hàng
+            setListCTHD([]);
+            setNumberOfP(0);
+            setTongGia(0);
+
+            createOrder(getOrderObj(), listCTHD); //thêm order xuống cơ sở dữ liệu
+            nav("/ban/05/OrderSuccess")
+        }
+           
     }
+
+    const getOrderObj = () => (//cho thanh toán tiền mặt
+        {
+            tableId: +idTable,
+            totalPrice: tongGia
+        }
+    )
 
     return (
         <div className={style.yourCartPayment}>
@@ -146,6 +193,10 @@ function Payment({data}) {
                 />
             </div>
             <button onClick={handleThanhToan}>THANH TOÁN</button>
+
+            {thanhToanQR ? <PopupThanhToanQR
+                onClose = {() => {setThanhToanQR(false)}}
+            ></PopupThanhToanQR> : null}
         </div>
     )
 }

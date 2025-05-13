@@ -1,7 +1,7 @@
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import Product from "../../components/Product/Product";
 import ProductDetail from "../ProductDetail/ProductDetail";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import "./Menu.css"
 import classNames from "classnames";
 import "../../index.css"
@@ -14,28 +14,29 @@ import Loading from "../../components/Loading/Loading";
 import { ImageLoader } from "../../utils/ImageLoader";
 import { getSideDish } from "../../api/services/sideDish";
 import { getProduct_SideDish } from "../../api/services/sidedish_productService";
+import { DataContext } from "../../api/services/ProductContext/DataProvider";
 
 export default function Menu() {
   const { id } = useParams();
-  // console.log(id)
 
-  const nav = useNavigate()
-  const { simulateLoading } = useLoading();
-
-  const [products, setProducts] = useState([]); //raw data
-  const [statusListSP, setStatusListSP] = useState(false);
-  const [listSP, setListSP] = useState([]);
-  const [load, setLoad] = useState(true);
-  const [select, setSelect] = useState('0');
+  const nav = useNavigate();
   const imageMap = ImageLoader.load();
-  const [displayProducts, setDisplayProducts] = useState([]);
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [detail, setDetail] = useState(false);
-  const [productForDetail, setProductForDetail] = useState(null);
-  const [listSPforDetail, setListSPForDetail] = useState([]);
-  const [numberOfP, setNumberOfP] = useState(0); //cho phần số sản phẩm đặt của giỏ hàng bên dưới
-  const [dataForCart, setDataForCart] = useState([]);
-  const [listMAK, setListMAK] = useState([]);
+
+  const [load, setLoad] = useState(true);// state load sản phẩm
+
+  const [displayProducts, setDisplayProducts] = useState([]);// state cho sản phẩm hiển thị 
+
+  const [select, setSelect] = useState('0');// state theo dõi bộ lọc
+  const [categoryProducts, setCategoryProducts] = useState([]); // state cho sản phẩm phân loại theo bộ lọc
+
+  // const [productForDetail, setProductForDetail] = useState(null);// setate cho sản phẩm mà detail sẽ hiển thị
+  // const [listSPforDetail, setListSPForDetail] = useState([]);// lấy list sản phẩm-món ăn kèm tương ứng để detail hiển thị
+
+  // const [statusListSP, setStatusListSP] = useState(false);//theo dõi trạng thái list sản phẩm-món ăn kèm để mở detail
+
+  const [dataForCart, setDataForCart] = useState([]); //danh sách chi tiết hóa đơn cho phần thanh toán
+  const { setIdTable, products, sidedishes, listSP, fetchData ,numberOfP, setNumberOfP} = useContext(DataContext);
+  // console.log({ products, sidedishes, listSP, fetchData });
 
   const category = [
     {
@@ -71,8 +72,24 @@ export default function Menu() {
   ];
 
   useEffect(() => {
-    fetchProducts();
-  }, [])
+    setIdTable(id);
+    fetchData();
+  }, [fetchData])
+
+  useEffect(() => {
+    if(products && sidedishes && listSP){
+      setDislay();
+    }
+  }, [products, sidedishes, listSP])
+
+  const setDislay = async () => {
+    try {
+      setDisplayProducts(products);
+    } catch (error) {
+      throw new Error(error);
+    }
+    setLoad(false);
+  }
 
   const handleCategory = (id) => {
       if (id == 0) {
@@ -90,62 +107,14 @@ export default function Menu() {
       }
   }
 
-  const fetchProducts = async () => {
-    try {
-      const list = await getProducts();
-      setProducts(list);
-      setDisplayProducts(list);
-      const listSP = await getProduct_SideDish();
-      setListSP(listSP);
-      const listMAK = await getSideDish();
-      setListMAK(listMAK)
-    } catch (error) {
-      throw new Error(error);
-    }
-    setLoad(false);
-  }
-
-
-  const getListSPByPID = (productId) => {
-    const list = listSP.filter((item) => {
-      return(item.IDMonAn === productId)
-    })
-    return list;
-  }
-
 
   const handelProductClick = (product) => {
-    // setSelectedProduct(product)
-    // const spID = product?.id || "sp01";
-    // simulateLoading(500, () => {
-    //   nav(`${spID}/Detail`)
-    // })
-    setProductForDetail(product);
-    setListSPForDetail(getListSPByPID(product.ID))
+    let spID = product.ID; 
+    nav(`${spID}/Detail`, {state: {product: product}})
   }
 
-  useEffect(() => {
-    if(productForDetail){
-      setDetail(true);
-    }
-  }, [productForDetail])
 
-  useEffect(() => {
-    if(listSPforDetail){
-      setStatusListSP(true);
-    }
-  }, [listSPforDetail])
 
-  const handleAddToCart = (dataForCart) => {
-    console.log(dataForCart);
-
-    setDataForCart(prev => [...prev, dataForCart])// truyền cho cart
-  }
-
-  const handleUpdateNumberOfP = () => {
-    setNumberOfP(prev => prev + 1);
-    console.log(numberOfP);
-  }
 
   return (
     //phân loại
@@ -226,17 +195,21 @@ export default function Menu() {
         canPay={dataForCart.length !== 0?true:false}//để check xem nút thanh toán được bấm không
       />
 
-      {detail && statusListSP ? <ProductDetail
+      {/* {detail && statusListSP ? <ProductDetail
         onClose={() => {setDetail(false)}}
         product={productForDetail}
         listSP={listSPforDetail}
-        idTable={id}
+        listMAK={sidedishes}
+
         onAddToCart={(dataForCart) => {handleAddToCart(dataForCart)}}
         numberOfProduct={numberOfP}
+
         updateNumberOfP={() => {handleUpdateNumberOfP()}}
-        listMAK={listMAK}
+        
       >
-      </ProductDetail> : null}
+      </ProductDetail> : null} */}
+
+
     </div>
   )
 }

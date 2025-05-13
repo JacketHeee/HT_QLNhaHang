@@ -19,6 +19,7 @@ import BanAn from "../pages/BanAn/BanAn";
 import QLTaiKhoan from "../pages/QLTaiKhoan/QLTaiKhoan";
 import QLNhanVien from "../pages/QLNhanVien/QLNhanVien";
 import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
+import DataProvider from "../api/services/ProductContext/DataProvider";
 
 // Chứa toàn bộ cấu hình định tuyến của ứng dụng
 export default function AppRoutes() {
@@ -39,7 +40,11 @@ export default function AppRoutes() {
             <Routes>
 
                 {/* Routes khách hàng */}
-                <Route path="/ban/:id" element={<BanLayout/>}>
+                <Route path="/ban/:id" element={// bọc DataProvider bên ngoài BanLayout để các lớp con xài dữ liệu chung
+                    <DataProvider> 
+                        <BanLayout/>
+                    </DataProvider>
+                }>
                     <Route index element={<Menu/>}/>
                     <Route path=":spID/Detail" element={<ProductDetail/>}/>
                     <Route path="YourCart" element={<YourCart/>}> 

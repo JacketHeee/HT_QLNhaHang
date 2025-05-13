@@ -89,7 +89,6 @@ const KitchenDashboard = () => {
             setOrders(rs);
             const listOP = await getorderproducts();
             setListOP(listOP)
-            console.log(rs);
             console.log(listOP)
         } catch (error) {
             throw new Error(error);
@@ -130,10 +129,10 @@ const KitchenDashboard = () => {
                         <button className={styles.doneDish}>{"<<< Ready >>>"}</button>
 
                         <div className={styles.orderDetail}>
-                            {getListOPForDetail(item.id).map((sd) => (
+                            {getListOPForDetail(item.id).map((sd) => (// Lấy danh sách OP theo id 
                                 <div>
                                     <div>
-                                        <p>({item.listOP[index].quantity}){sd.product.tenMonAn}</p>
+                                        <p>({sd.quantity}){sd.product.tenMonAn}</p>
                                     </div>
                                     <div>
                                         <p>{sd.product.moTa}</p>
