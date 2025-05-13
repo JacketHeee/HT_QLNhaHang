@@ -2,13 +2,11 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nes
 import { SideDishService } from "./sidedish.service";
 import { SideDishResponseDto } from "./dto/response-sidedish.dto";
 import { CreateSideDishDto } from "./dto/create-sidedish.dto";
-import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
-import { PermissionsGuard } from "src/guards/roles.guard";
+
 import { Roles } from "src/decorators/roles.decorator";
 
 
 @Controller("sidedishes")
-@UseGuards(JwtAuthGuard, PermissionsGuard)
 export class SideDishController {
 
     constructor(private sideDishService: SideDishService){}

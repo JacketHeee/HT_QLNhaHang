@@ -10,9 +10,6 @@ export class Order {
     id: number;
 
     @Column()
-    accountId: number;
-
-    @Column()
     tableId: number;
 
     @Column({default: ""})
@@ -34,7 +31,7 @@ export class Order {
     @JoinColumn({name : 'tableId'})
     table: Table;
 
-    @ManyToOne(() => Account, account => account.listOD, {eager: true})
+    @ManyToOne(() => Account, account => account.listOD, { nullable:true})
     @JoinColumn({name : 'accountId'})
     account: Account;
 

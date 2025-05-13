@@ -3,9 +3,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductResponseDto } from './dto/response-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { PermissionsGuard } from 'src/guards/roles.guard';
-import { Roles } from 'src/decorators/roles.decorator';
+
 
 @Controller('products')
 export class ProductsController {

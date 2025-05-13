@@ -2,10 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nes
 import { SideDish_ProductService } from "./product_sidedishes.service";
 import { SideDish_ProductResponseDto } from "./dto/response-product_sidedishes.dto";
 import { CreateSideDish_ProductDto } from "./dto/create-product_sidedishes.dto";
-import { SideDish } from "src/sidedishes/entities/sidedish.entity";
-import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
-import { PermissionsGuard } from "src/guards/roles.guard";
-import { Roles } from "src/decorators/roles.decorator";
+
 
 @Controller("sidedish_product")
 export class SideDish_ProductController {

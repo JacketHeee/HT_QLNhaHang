@@ -11,5 +11,5 @@ export class CreateOrder_ProductDto{
     quantity: number;
         
     @IsString()
-    sideDishes: string;
+    sideDishes?: string;
 }

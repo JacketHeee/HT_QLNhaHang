@@ -19,60 +19,40 @@ import { PermissionsGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('orders')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
+// @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class OrdersController {
-  // constructor(private readonly ordersService: OrdersService) {}
-
-  // @Get()
-  // findAll(): Promise<Order[]> {
-  //     return this.ordersService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string): Promise<Order> {
-  //     return this.ordersService.findOne(+id);
-  // }
-
-  // @Post()
-  // create(
-  //     @Body('order') order: Partial<Order>,
-  //     @Body('items') items: Partial<OrderItem>[],
-  // ): Promise<Order> {
-  //     return this.ordersService.create(order, items);
-  // }
-
-  // @Put(':id/status')
-  // updateStatus(@Param('id') id: string, @Body('status') status: string): Promise<Order> {
-  //     return this.ordersService.updateStatus(+id, status);
-  // }
 
   constructor(private readonly orderService: OrdersService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   findAll() {
     return this.orderService.findAll();
   }
 
   @Get('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
 
   @Post()
-  @Roles('donhang')
+  @UseGuards()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);
   }
 
   @Put('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.orderService.update(+id, updateOrderDto);
   }
 
   @Delete('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   delete(@Param('id') id: string) {
     return this.orderService.delete(+id);
