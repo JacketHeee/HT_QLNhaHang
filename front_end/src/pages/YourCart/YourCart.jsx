@@ -168,6 +168,8 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
                 </div>
             </div>
 
+            <textarea id="message" className={style.massage} name="message" rows="3" cols="50" placeholder="Ghi chú của khách hàng">
+            </textarea>
             {/* <div className={style.choosedPayment}>
                 <div className={classNames(style.choosedItem)}>
                     <span>✓</span>
