@@ -1,13 +1,14 @@
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import Product from "../../components/Product/Product";
 import ProductDetail from "../ProductDetail/ProductDetail";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 import "./Menu.css"
 import classNames from "classnames";
 import "../../index.css"
 import Payment from "../../components/Payment/Payment";
 import YourCart from "../YourCart/YourCart";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getProducts } from "../../api/services/productService";
 import Loading from "../../components/Loading/Loading";
@@ -17,9 +18,18 @@ import { getProduct_SideDish } from "../../api/services/sidedish_productService"
 import { DataContext } from "../../api/services/ProductContext/DataProvider";
 
 export default function Menu() {
+
   const { id } = useParams();
 
-  const nav = useNavigate();
+  const nav = useNavigate()
+  const { simulateLoading } = useLoading();
+  // const { id: tableId } = useParams(); // Lấy tableId từ URL
+
+  // const [products, setProducts] = useState([]); //raw data
+  const [statusListSP, setStatusListSP] = useState(false);
+  // const [listSP, setListSP] = useState([]);
+  // const [load, setLoad] = useState(true);
+  // const [select, setSelect] = useState('0');
   const imageMap = ImageLoader.load();
 
   const [load, setLoad] = useState(true);// state load sản phẩm
@@ -106,6 +116,75 @@ export default function Menu() {
         setDisplayProducts(list);
       }
   }
+
+  // const fetchProducts = async () => {
+  //   try {
+  //     const list = await getProducts();
+  //     console.log(list)
+  //     setProducts(list);
+  //     setDisplayProducts(list);
+  //     const listSP = await getProduct_SideDish();
+  //     setListSP(listSP)
+  //   } catch (error) {
+  //     console.error('Error fetching products:', {
+  //       status: error.response?.status,
+  //       data: error.response?.data,
+  //       message: error.message,
+  //     });
+  //     throw new Error(error);
+  //   }
+  //   finally {
+  //     setLoad(false);
+  //   }
+  // }
+  // const fetchProducts = async () => {
+  //   try {
+  //     setLoad(true);
+  //     const productResponse = await getProducts();
+  //     setProducts(productResponse.data);
+  //     setDisplayProducts(productResponse.data);
+
+  //     const sideDishResponse = await getProduct_SideDish();
+  //     console.log('Side Dishes:', sideDishResponse.data);
+  //     setListSP(sideDishResponse.data);
+  //   } catch (error) {
+  //     const errorDetails = {
+  //       status: error.response?.status,
+  //       data: error.response?.data,
+  //       message: error.message,
+  //     };
+  //     console.error('Error fetching products:', errorDetails);
+  //     alert(`Không thể tải sản phẩm: ${error.message}`); // Hiển thị lỗi trên UI
+  //   } 
+  //     setLoad(false);
+    
+  // };
+
+  // const fetchProducts = async () =>{
+  //       try {
+  //           setLoad(true)
+  //           const data = await getProducts();
+  //           console.log(data)
+  //           setProducts(data);
+  //           setDisplayProducts(data);
+  //           const sideDishResponse = await getProduct_SideDish();
+  //           console.log('Side Dishes:', sideDishResponse);
+  //           setListSP(sideDishResponse);
+  //       } catch (error) {
+  //           alert('Load dữ liệu thất bại!');
+  //           console.error(error);
+  //       }finally{
+  //           setLoad(false)
+  //       }
+  //   }
+
+
+  // const getListSPByPID = (productId) => {
+  //   const list = listSP.filter((item) => {
+  //     return(item.IDMonAn === productId)
+  //   })
+  //   return list;
+  // }
 
 
   const handelProductClick = (product) => {

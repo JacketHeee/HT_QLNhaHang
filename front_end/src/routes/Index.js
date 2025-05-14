@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import BanLayout from "../layouts/BanLayout";
 import Menu from "../pages/Menu/Menu";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
@@ -19,6 +19,7 @@ import BanAn from "../pages/BanAn/BanAn";
 import QLTaiKhoan from "../pages/QLTaiKhoan/QLTaiKhoan";
 import QLNhanVien from "../pages/QLNhanVien/QLNhanVien";
 import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
+import ProtectedRoute from "../components/ProtectedRoute";
 import DataProvider from "../api/services/ProductContext/DataProvider";
 
 // Chứa toàn bộ cấu hình định tuyến của ứng dụng
@@ -55,20 +56,24 @@ export default function AppRoutes() {
 
                 {/* Routes Admin */}
                 <Route path="/admin">
+                {/* Chuyển hướng từ /admin sang /admin/login */}
+                    <Route index element={<Navigate to="/admin/login" replace />} />
                     <Route path="login" element={<AdminLogin/>}/>
-                    <Route element={<AdminLayout/>}>
-                        <Route path="account" element={<QLTaiKhoan/>}/>
-                        <Route path="roleLayer" element={<PhanQuyen/>}/>
-                        <Route path="staff" element={<QLNhanVien/>}/>
-                        <Route path="table" element={<BanAn/>}/>
-                        <Route path="orders" element={<OrderConfirmation/>}>
-                            <Route path=":orderId/Detail" element={<OrderDetail/>} />
-                        </Route>
-                        <Route path="kitchen" element={<KitchenDashboard/>}/>
-                        <Route path="productManagement" element={<ProductManagement/>}>
-                            <Route path=":productId/productDetail" element={<ProductDetailAdmin/>}/>    
-                        </Route>
-                    </Route> 
+                    <Route element={<ProtectedRoute/>}>
+                        <Route element={<AdminLayout/>}>
+                            <Route path="account" element={<QLTaiKhoan/>}/>
+                            <Route path="roleLayer" element={<PhanQuyen/>}/>
+                            <Route path="staff" element={<QLNhanVien/>}/>
+                            <Route path="table" element={<BanAn/>}/>
+                            <Route path="orders" element={<OrderConfirmation/>}>
+                                <Route path=":orderId/Detail" element={<OrderDetail/>} />
+                            </Route>
+                            <Route path="kitchen" element={<KitchenDashboard/>}/>
+                            <Route path="productManagement" element={<ProductManagement/>}>
+                                <Route path=":productId/productDetail" element={<ProductDetailAdmin/>}/>    
+                            </Route>
+                        </Route> 
+                    </Route>
                     {/* <Route path="*" element={<AdminNotFound/>}/> */}
                 </Route>
 

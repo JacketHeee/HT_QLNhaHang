@@ -179,3 +179,10 @@
     font-size: 7px;
     font-weight: bold;
 }
+
+/* ------------------- */
+
+.massage {
+    border: 1px solid var(--border);
+    /* border: none; */
+}

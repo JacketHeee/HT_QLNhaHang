@@ -106,6 +106,7 @@
 
 .productInfor>img {
     height: 150px;
+    width: 150px;
     background: linear-gradient(to right, #ebebeb, #979797);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);

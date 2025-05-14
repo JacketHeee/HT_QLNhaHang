@@ -17,16 +17,24 @@
     background: transparent;
 }
 
-.product>img {
-    height: 140px;
-    width: auto;
+.product>div:first-child {
     background: linear-gradient(
-        to bottom right,
+        to top left,
         rgba(0, 0, 0, 0.4),
         rgba(0, 0, 0, 0.1),
         transparent
     );
     border-radius: 10px 0 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    max-width: 100px;
+}
+
+.product img {
+    height: 100px;
+    width: 100px;
 }
 .product>div {
     background-color: white;
