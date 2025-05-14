@@ -16,7 +16,7 @@ export default function Product({onClick, product}) {
             </div>
           </div>
           <div className={style.productAction}>
-            <h4>{formatCurrency(product.giaBan)} đ</h4>
+            <h4>{parseFloat(product.giaBan).toLocaleString('vi-VN')} đ</h4>
             <img src={cart} alt=""/>
           </div>
         </div>

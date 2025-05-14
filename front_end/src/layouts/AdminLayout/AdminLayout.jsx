@@ -24,7 +24,7 @@ const menuItems = [
 
     {id:"product", path: '/admin/productManagement',routeName:'productManagement', label: 'Món ăn',icon: monan},
     {id:"table", path: '/admin/table',routeName:'table', label: 'Bàn ăn',icon: banan},
-    {id:"order", path: '/admin/orders',routeName:'orders', label: 'Đơn hàn',icon: donhang },
+    {id:"order", path: '/admin/orders',routeName:'orders', label: 'Đơn hàng',icon: donhang },
     {id:"kitchen", path: '/admin/kitchen',routeName:'kitchen', label: 'Bảng điều khiển bếp',icon: bep},
     {id:"staff", path: '/admin/staff',routeName:'staff', label: 'Quản lý nhân viên',icon: qlnhanvien},
     {id:"account", path: '/admin/account',routeName:'account', label: 'Quản lý tài khoản',icon: hinhanh},

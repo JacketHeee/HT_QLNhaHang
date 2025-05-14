@@ -1,38 +1,52 @@
 import burger from "../../assets/img/products/burger/cheesedlx_bb.png";
 import Product from "../../components/Product/Product";
 import ProductDetail from "../ProductDetail/ProductDetail";
-import { useEffect, useState,useParams } from "react";
+import { useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 import "./Menu.css"
 import classNames from "classnames";
 import "../../index.css"
 import Payment from "../../components/Payment/Payment";
 import YourCart from "../YourCart/YourCart";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getProducts } from "../../api/services/productService";
 import Loading from "../../components/Loading/Loading";
 import { ImageLoader } from "../../utils/ImageLoader";
 import { getSideDish } from "../../api/services/sideDish";
 import { getProduct_SideDish } from "../../api/services/sidedish_productService";
+import { DataContext } from "../../api/services/ProductContext/DataProvider";
 
 export default function Menu() {
+
+  const { id } = useParams();
 
   const nav = useNavigate()
   const { simulateLoading } = useLoading();
   // const { id: tableId } = useParams(); // Lấy tableId từ URL
 
-  const [products, setProducts] = useState([]); //raw data
+  // const [products, setProducts] = useState([]); //raw data
   const [statusListSP, setStatusListSP] = useState(false);
-  const [listSP, setListSP] = useState([]);
-  const [load, setLoad] = useState(true);
-  const [select, setSelect] = useState('0');
+  // const [listSP, setListSP] = useState([]);
+  // const [load, setLoad] = useState(true);
+  // const [select, setSelect] = useState('0');
   const imageMap = ImageLoader.load();
-  const [displayProducts, setDisplayProducts] = useState([]);
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [detail, setDetail] = useState(false);
-  const [productForDetail, setProductForDetail] = useState(null);
-  const [listSPforDetail, setListSPForDetail] = useState([]);
-  
+
+  const [load, setLoad] = useState(true);// state load sản phẩm
+
+  const [displayProducts, setDisplayProducts] = useState([]);// state cho sản phẩm hiển thị 
+
+  const [select, setSelect] = useState('0');// state theo dõi bộ lọc
+  const [categoryProducts, setCategoryProducts] = useState([]); // state cho sản phẩm phân loại theo bộ lọc
+
+  // const [productForDetail, setProductForDetail] = useState(null);// setate cho sản phẩm mà detail sẽ hiển thị
+  // const [listSPforDetail, setListSPForDetail] = useState([]);// lấy list sản phẩm-món ăn kèm tương ứng để detail hiển thị
+
+  // const [statusListSP, setStatusListSP] = useState(false);//theo dõi trạng thái list sản phẩm-món ăn kèm để mở detail
+
+  const [dataForCart, setDataForCart] = useState([]); //danh sách chi tiết hóa đơn cho phần thanh toán
+  const { setIdTable, products, sidedishes, listSP, fetchData ,numberOfP, setNumberOfP} = useContext(DataContext);
+  // console.log({ products, sidedishes, listSP, fetchData });
 
   const category = [
     {
@@ -68,8 +82,24 @@ export default function Menu() {
   ];
 
   useEffect(() => {
-    fetchProducts();
-  }, [])
+    setIdTable(id);
+    fetchData();
+  }, [fetchData])
+
+  useEffect(() => {
+    if(products && sidedishes && listSP){
+      setDislay();
+    }
+  }, [products, sidedishes, listSP])
+
+  const setDislay = async () => {
+    try {
+      setDisplayProducts(products);
+    } catch (error) {
+      throw new Error(error);
+    }
+    setLoad(false);
+  }
 
   const handleCategory = (id) => {
       if (id == 0) {
@@ -130,54 +160,38 @@ export default function Menu() {
     
   // };
 
-  const fetchProducts = async () =>{
-        try {
-            setLoad(true)
-            const data = await getProducts();
-            console.log(data)
-            setProducts(data);
-            setDisplayProducts(data);
-            const sideDishResponse = await getProduct_SideDish();
-            console.log('Side Dishes:', sideDishResponse);
-            setListSP(sideDishResponse);
-        } catch (error) {
-            alert('Load dữ liệu thất bại!');
-            console.error(error);
-        }finally{
-            setLoad(false)
-        }
-    }
+  // const fetchProducts = async () =>{
+  //       try {
+  //           setLoad(true)
+  //           const data = await getProducts();
+  //           console.log(data)
+  //           setProducts(data);
+  //           setDisplayProducts(data);
+  //           const sideDishResponse = await getProduct_SideDish();
+  //           console.log('Side Dishes:', sideDishResponse);
+  //           setListSP(sideDishResponse);
+  //       } catch (error) {
+  //           alert('Load dữ liệu thất bại!');
+  //           console.error(error);
+  //       }finally{
+  //           setLoad(false)
+  //       }
+  //   }
 
 
-  const getListSPByPID = (productId) => {
-    const list = listSP.filter((item) => {
-      return(item.IDMonAn === productId)
-    })
-    return list;
-  }
+  // const getListSPByPID = (productId) => {
+  //   const list = listSP.filter((item) => {
+  //     return(item.IDMonAn === productId)
+  //   })
+  //   return list;
+  // }
 
 
   const handelProductClick = (product) => {
-    // setSelectedProduct(product)
-    // const spID = product?.id || "sp01";
-    // simulateLoading(500, () => {
-    //   nav(`${spID}/Detail`)
-    // })
-    setProductForDetail(product);
-    setListSPForDetail(getListSPByPID(product.ID))
+    let spID = product.ID; 
+    nav(`${spID}/Detail`, {state: {product: product}})
   }
 
-  useEffect(() => {
-    if(productForDetail){
-      setDetail(true);
-    }
-  }, [productForDetail])
-
-  useEffect(() => {
-    if(listSPforDetail){
-      setStatusListSP(true);
-    }
-  }, [listSPforDetail])
 
 
 
@@ -248,14 +262,33 @@ export default function Menu() {
         </div>
         {/* <ProductDetail product={selectedProduct} onClose={handleProductClose}/> */}
       </div>
-      <Payment text="Thanh toán" onClick={() => { simulateLoading(500, () => { nav("YourCart") }) }} />
+      <Payment 
+        text="Thanh toán" 
+        onClick={() => { nav("YourCart", {
+          state: {
+            numberOfProduct: numberOfP,
+            listCTHD: dataForCart,
+          }
+        })}} 
+        count={numberOfP}
+        canPay={dataForCart.length !== 0?true:false}//để check xem nút thanh toán được bấm không
+      />
 
-      {detail && statusListSP ? <ProductDetail
+      {/* {detail && statusListSP ? <ProductDetail
         onClose={() => {setDetail(false)}}
         product={productForDetail}
         listSP={listSPforDetail}
+        listMAK={sidedishes}
+
+        onAddToCart={(dataForCart) => {handleAddToCart(dataForCart)}}
+        numberOfProduct={numberOfP}
+
+        updateNumberOfP={() => {handleUpdateNumberOfP()}}
+        
       >
-      </ProductDetail> : null}
+      </ProductDetail> : null} */}
+
+
     </div>
   )
 }

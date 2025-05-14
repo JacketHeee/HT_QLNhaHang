@@ -22,61 +22,70 @@ export default function OrderDetail(props) {
         id: props.orderDetail.orderId,
         table: props.orderDetail.tableId,
         time: props.orderDetail.time,
-        total: "chưa",
-        totalSideDishes: "chưa",
-        status: "Chưa thanh toán",
-        orderDetail: [
-            {
-                dish: "Hamberger",
-                quantity: 3,
-                price: 190000,
-                sideDishes: "Phô mai, rau, cơm",
-                totalSideDishes: 100000,
-                totalProduct: 19000
-            },
-            {
-                dish: "Hamberger",
-                quantity: 3,
-                price: 190000,
-                sideDishes: "Phô mai, rau, cơm",
-                totalSideDishes: 100000,
-                totalProduct: 19000
-            },
-            {
-                dish: "Hamberger",
-                quantity: 3,
-                price: 190000,
-                sideDishes: "Phô mai, rau, cơm",
-                totalSideDishes: 100000,
-                totalProduct: 19000
-            },
-            {
-                dish: "Hamberger",
-                quantity: 3,
-                price: 190000,
-                sideDishes: "Phô mai, rau, cơm",
-                totalSideDishes: 100000,
-                totalProduct: 19000
-            },
-        ]
+        // total: "chưa",
+        // totalSideDishes: "chưa",
+        // status: "Chưa thanh toán",
+        // orderDetail: [
+        //     {
+        //         dish: "Hamberger",
+        //         quantity: 3,
+        //         price: 190000,
+        //         sideDishes: "Phô mai, rau, cơm",
+        //         totalSideDishes: 100000,
+        //         totalProduct: 19000
+        //     },
+        //     {
+        //         dish: "Hamberger",
+        //         quantity: 3,
+        //         price: 190000,
+        //         sideDishes: "Phô mai, rau, cơm",
+        //         totalSideDishes: 100000,
+        //         totalProduct: 19000
+        //     },
+        //     {
+        //         dish: "Hamberger",
+        //         quantity: 3,
+        //         price: 190000,
+        //         sideDishes: "Phô mai, rau, cơm",
+        //         totalSideDishes: 100000,
+        //         totalProduct: 19000
+        //     },
+        //     {
+        //         dish: "Hamberger",
+        //         quantity: 3,
+        //         price: 190000,
+        //         sideDishes: "Phô mai, rau, cơm",
+        //         totalSideDishes: 100000,
+        //         totalProduct: 19000
+        //     },
+        // ]
+    }
+
+    const getGiaSideDish = (string, quantity) =>{
+        let gia = 0;
+        const arr = string.split(", ");
+        const filtered = props.listSideDish.filter(item =>
+            arr.includes(item.tenMonAnKem)
+        );
+        filtered.forEach((item) => {gia += +item.price})
+        gia *= quantity;
+        return(gia)
     }
 
     const getObjForDisplay = (obj) => ({
         dish: obj.product.tenMonAn,
         quantity: obj.quantity,
         price: obj.product.giaBan,
-        sideDishes: "Dữ liệu khách gửi",
-        totalSideDishes: "Chưa cài đặt",
-        totalProduct: obj.product.giaBan * obj.quantity
+        sideDishes: obj.sideDishes,
+        totalSideDishes: getGiaSideDish(obj.sideDishes, obj.quantity),
+        totalProduct: obj.product.giaBan * obj.quantity + getGiaSideDish(obj.sideDishes, obj.quantity)
     })
 
     const getListObjForDisplay = (list) => {
-        console.log(list);
         return list.map((item) => (getObjForDisplay(item)))
     }
 
     const tinhTongTienHoaDon = (listDisplay) => {
-        console.log(listDisplay)
         let tongTien = 0;
         listDisplay.map((item) => {tongTien += item.totalProduct})
         return tongTien

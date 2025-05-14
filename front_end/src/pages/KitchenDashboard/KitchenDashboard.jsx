@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styles from './KitchenDashboard.module.css';
 import logout from "../../assets/icon/logout.svg";
 import classNames from "classnames";
-import { getOrders } from '../../api/services/orderService';
+import { doneOrder, getOrders } from '../../api/services/orderService';
 import { format } from 'date-fns';
 import { getorderproducts } from '../../api/services/orderProductService';
+import Loading from '../../components/Loading/Loading';
+import SuccessToast from '../../components/Notification/Notification';
 
 const KitchenDashboard = () => {
     const navigate = useNavigate();
@@ -66,9 +68,11 @@ const KitchenDashboard = () => {
     //     },
     // ]);
 
-    const [data, setData] = useState([]);   //raw data
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState([]);//rawdata
+    const [displayOrders, setDisplayOrders] = useState([]);
     const [load, setLoad] = useState([]);
+    
+    const [doneDishStatus, setDoneDishStatus] = useState(false);
 
     const [listOP, setListOP] = useState([]);
 
@@ -89,12 +93,16 @@ const KitchenDashboard = () => {
             setOrders(rs);
             const listOP = await getorderproducts();
             setListOP(listOP)
-            console.log(rs);
-            console.log(listOP)
+            setOrdersForDisplay(rs);
         } catch (error) {
             throw new Error(error);
         }
         setLoad(false);
+    }
+
+    const setOrdersForDisplay = (rs) => {
+        const list = rs.filter((item) => (item.status == 'Đã xác nhận'));
+        setDisplayOrders(list)
     }
 
 
@@ -107,6 +115,20 @@ const KitchenDashboard = () => {
     const getListOPForDetail = (id) =>(
         listOP.filter((item) => (item.orderId === id))
     )
+
+    const handleDoneOrder = async (orderId) => {
+        setLoad(true);
+        await doneOrder(orderId);
+        setDisplayOrders(prev => prev.filter((item) => (item.id !== orderId)));
+        setLoad(false);
+
+        setDoneDishStatus(true);
+        setTimeout(() => {
+            setDoneDishStatus(false);
+        }, 1000);
+    }
+
+
 
     return (
         <div className={styles.container}>
@@ -122,18 +144,21 @@ const KitchenDashboard = () => {
                 </div>
             </div>
             <div className={styles.body}>
-                {orders.map((item, index) => (
+                {displayOrders.map((item, index) => (
                     <div className={classNames(styles.order, styles.green)}>
                         <h5>#{item.id}</h5>
                         <h4>B{item.tableId} - Eat in</h4>
 
-                        <button className={styles.doneDish}>{"<<< Ready >>>"}</button>
+                        <button 
+                            className={styles.doneDish}
+                            onClick={() => handleDoneOrder(item.id)}
+                        >{"<<< Ready >>>"}</button>
 
                         <div className={styles.orderDetail}>
-                            {getListOPForDetail(item.id).map((sd) => (
+                            {getListOPForDetail(item.id).map((sd) => (// Lấy danh sách OP theo id 
                                 <div>
                                     <div>
-                                        <p>({item.listOP[index].quantity}){sd.product.tenMonAn}</p>
+                                        <p>({sd.quantity}){sd.product.tenMonAn}</p>
                                     </div>
                                     <div>
                                         <p>{sd.product.moTa}</p>
@@ -170,6 +195,10 @@ const KitchenDashboard = () => {
                     Đăng xuất
                 </button>
             </div>
+
+            {load ? <Loading></Loading> : null}
+            {doneDishStatus? <SuccessToast message="Đã xác nhận xong món!"></SuccessToast> : null}
+            
         </div>
     );
 };

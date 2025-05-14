@@ -8,9 +8,12 @@ import qr from "../../assets/img/QR_Web.png"
 
 import style from "./PopupThanhToanQR.module.css"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import { useLoading } from "../../contexts/LoadingContext";
+import { format } from "date-fns";
+import { DataContext } from "../../api/services/ProductContext/DataProvider";
+import { createOrder } from "../../api/services/orderService";
 
 
 export default function PopupThanhToanQR() {
@@ -19,15 +22,37 @@ export default function PopupThanhToanQR() {
     const nav = useNavigate()
     const { simulateLoading } = useLoading();
 
+    const { idTable, setNumberOfP, listCTHD, setListCTHD, setTongGia, tongGia } = useContext(DataContext); // lấy dữ liệu context dùng chung
+
+    console.log(tongGia);
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            simulateLoading(2000,() => {
-                nav("/ban/05/OrderSuccess"); 
-            })
+                //Xóa hết dữ liệu đơn hàng
+                setListCTHD([]);
+                setNumberOfP(0);
+                setTongGia(0);
+
+                createOrder(getOrderObj(),listCTHD); //thêm order xuống cơ sở dữ liệu
+
+                nav(`/ban/${idTable}/OrderSuccess`); 
         }, 3000); // 4 giây
     
         return () => clearTimeout(timer);
       }, [nav]);
+
+    const formatDatetoDateString = (isoDate) => {
+        const formatted = format(new Date(isoDate), 'HH:mm:ss dd/MM/yyyy');
+        return formatted
+    }
+
+    const getOrderObj = () => (
+        {
+            tableId: +idTable,
+            totalPrice: tongGia
+        }
+    )
+
 
     return (
         <div className={style.overLay}
@@ -39,7 +64,7 @@ export default function PopupThanhToanQR() {
                     <div className={style.thongtinchung}>
                         <div>
                             <img src={table} alt="" />
-                            <span> Bàn: B05</span>
+                            <span> Bàn: B{idTable}</span>
                         </div>
 
                         <div>
@@ -49,13 +74,13 @@ export default function PopupThanhToanQR() {
 
                         <div>
                             <img src={clock} alt="" />
-                            <span> Thời gian tạo: 21/04/2024 - 19:13</span>
+                            <span> Thời gian tạo: {formatDatetoDateString(new Date())}</span>
                         </div>
                     </div>
 
                     <div className={style.thongtinThanhtoan}>
                         <h4>Số tiền cần thanh toán:</h4>
-                        <h3>{formatCurrency(141000)}đ</h3>
+                        <h3>{formatCurrency(tongGia)}đ</h3>
                     </div>
 
                     <div className={style.qrThanhtoan}><img src={qr} alt="" /></div> 

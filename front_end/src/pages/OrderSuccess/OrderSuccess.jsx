@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./OrderSuccess.css";
 import Loading from "../../components/Loading/Loading";
 import { useLoading } from "../../contexts/LoadingContext";
@@ -8,11 +8,12 @@ import { useLoading } from "../../contexts/LoadingContext";
 export default function OrderSuccess() {
   const nav = useNavigate();
   const {simulateLoading} = useLoading();
+  const { id } = useParams();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       simulateLoading(1500,() => {
-        nav("/ban/05");
+        nav(`/ban/${id}`);
       })
     }, 5000);
     return () => clearTimeout(timer);

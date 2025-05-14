@@ -218,6 +218,7 @@ const OrderConfirmation = () => {
                     orderDetail = {orderDetail}
                     listOPForDetail = {listOPForDetail}
                     onAccept = {(orderId) => handleAccept(orderId)}
+                    listSideDish = {listSideDish}
                 >
                 </OrderDetail> : 
                 null

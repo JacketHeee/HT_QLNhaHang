@@ -20,27 +20,32 @@ import QLTaiKhoan from "../pages/QLTaiKhoan/QLTaiKhoan";
 import QLNhanVien from "../pages/QLNhanVien/QLNhanVien";
 import PhanQuyen from "../pages/PhanQuyen/PhanQuyen";
 import ProtectedRoute from "../components/ProtectedRoute";
+import DataProvider from "../api/services/ProductContext/DataProvider";
 
 // Chứa toàn bộ cấu hình định tuyến của ứng dụng
 export default function AppRoutes() {
-    // const nav = useNavigate()
-    // useEffect(() => {
-    //     nav("/ban/06")
-    //     // nav("/admin/kitchen")
-    //     // nav("/admin/login")
-    //     // nav("/admin/account")
-    //     // nav("/admin/table")
-    //     // nav("/admin/productManagement")
-    //     // nav("/admin/productManagement/06/productDetail")
-    //     // nav("/admin/orders/06/Detail")
-    // },[])
+    const nav = useNavigate()
+    useEffect(() => {
+        // nav("/ban/1")
+        // nav("/admin/kitchen")
+        // nav("/admin/login")
+        // nav("/admin/account")
+        // nav("/admin/table")
+        // nav("/admin/productManagement")
+        // nav("/admin/productManagement/06/productDetail")
+        // nav("/admin/orders/06/Detail")
+    },[])
 
     return (
         <LoadingProvider>
             <Routes>
 
                 {/* Routes khách hàng */}
-                <Route path="/ban/:id" element={<BanLayout/>}>
+                <Route path="/ban/:id" element={// bọc DataProvider bên ngoài BanLayout để các lớp con xài dữ liệu chung
+                    <DataProvider> 
+                        <BanLayout/>
+                    </DataProvider>
+                }>
                     <Route index element={<Menu/>}/>
                     <Route path=":spID/Detail" element={<ProductDetail/>}/>
                     <Route path="YourCart" element={<YourCart/>}> 
