@@ -107,30 +107,46 @@ export default function Menu() {
   //     setLoad(false);
   //   }
   // }
-  const fetchProducts = async () => {
-    try {
-      setLoad(true);
-      console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL); // Debug
-      const productResponse = await getProducts();
-      console.log('Products:', productResponse.data);
-      setProducts(productResponse.data);
-      setDisplayProducts(productResponse.data);
+  // const fetchProducts = async () => {
+  //   try {
+  //     setLoad(true);
+  //     const productResponse = await getProducts();
+  //     setProducts(productResponse.data);
+  //     setDisplayProducts(productResponse.data);
 
-      const sideDishResponse = await getProduct_SideDish();
-      console.log('Side Dishes:', sideDishResponse.data);
-      setListSP(sideDishResponse.data);
-    } catch (error) {
-      const errorDetails = {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message,
-      };
-      console.error('Error fetching products:', errorDetails);
-      alert(`Không thể tải sản phẩm: ${error.message}`); // Hiển thị lỗi trên UI
-    } finally {
-      setLoad(false);
+  //     const sideDishResponse = await getProduct_SideDish();
+  //     console.log('Side Dishes:', sideDishResponse.data);
+  //     setListSP(sideDishResponse.data);
+  //   } catch (error) {
+  //     const errorDetails = {
+  //       status: error.response?.status,
+  //       data: error.response?.data,
+  //       message: error.message,
+  //     };
+  //     console.error('Error fetching products:', errorDetails);
+  //     alert(`Không thể tải sản phẩm: ${error.message}`); // Hiển thị lỗi trên UI
+  //   } 
+  //     setLoad(false);
+    
+  // };
+
+  const fetchProducts = async () =>{
+        try {
+            setLoad(true)
+            const data = await getProducts();
+            console.log(data)
+            setProducts(data);
+            setDisplayProducts(data);
+            const sideDishResponse = await getProduct_SideDish();
+            console.log('Side Dishes:', sideDishResponse);
+            setListSP(sideDishResponse);
+        } catch (error) {
+            alert('Load dữ liệu thất bại!');
+            console.error(error);
+        }finally{
+            setLoad(false)
+        }
     }
-  };
 
 
   const getListSPByPID = (productId) => {

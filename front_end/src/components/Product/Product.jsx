@@ -8,7 +8,7 @@ export default function Product({onClick, product}) {
     // console.log(product);
     return (
       <div className={style.product} onClick={() => onClick(product)}>
-        <img src={imageMap[product.tenHinhAnh]} alt=""/>
+        <div><img src={imageMap[product.tenHinhAnh]} alt=""/></div>
         <div>
           <div className={style.productName}>{product.ID} <span>{product.tenMonAn}</span>
             <div>

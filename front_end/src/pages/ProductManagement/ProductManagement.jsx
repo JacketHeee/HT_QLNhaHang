@@ -114,6 +114,7 @@ export default function ProductManagement() {
     const fetchAllProducts = async () =>{
         try {
             const data = await getProducts();
+            console.log(data)
             setProducts(data);
             setCategoryProducts(data);
             setStatusProducts(data);
