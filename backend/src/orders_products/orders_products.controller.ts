@@ -16,17 +16,18 @@ import { PermissionsGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('orders_products')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
 export class OrdersProductsController {
   constructor(private readonly ordersProductsService: OrdersProductsService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   findAll() {
     return this.ordersProductsService.findAll();
   }
 
   @Get(':orderId/:productId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   findOne(
     @Param('orderId') orderId: string,
@@ -36,6 +37,7 @@ export class OrdersProductsController {
   }
 
   @Get('get/listOP/:orderId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   getListOPByOrderId(
     @Param('orderId') orderId: string,
@@ -44,12 +46,14 @@ export class OrdersProductsController {
   }
 
   @Post()
-  @Roles('donhang')
+  @UseGuards()
   create(@Body() createOrder_ProductDto: CreateOrder_ProductDto) {
     return this.ordersProductsService.create(createOrder_ProductDto);
   }
 
+  
   @Delete(':orderId/:productId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Roles('donhang')
   delete(
     @Param('orderId') orderId: string,
