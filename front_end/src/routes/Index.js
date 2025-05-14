@@ -27,7 +27,7 @@ export default function AppRoutes() {
     useEffect(() => {
         // nav("/ban/1")
         // nav("/admin/kitchen")
-        nav("/admin/login")
+        // nav("/admin/login")
         // nav("/admin/account")
         // nav("/admin/table")
         // nav("/admin/productManagement")
