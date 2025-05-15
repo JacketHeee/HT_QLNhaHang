@@ -15,6 +15,7 @@ const DataProvider = ({children}) => {
   const [ listCTHD, setListCTHD ] = useState([]);// danh sách chi tiết hóa đơn cho cart
   const [ tongGia, setTongGia ] = useState(0);//tổng giá hóa đơn
   const [ idTable, setIdTable] = useState(0);
+  const [ note, setNote ] = useState('');//cho ghi chú khách hàng
 
   const fetchData = async () => {
     if(!products && !sidedishes && !listSP){
@@ -29,7 +30,7 @@ const DataProvider = ({children}) => {
   }
 
   return (
-    <DataContext.Provider value={{ idTable, setIdTable, products, sidedishes, listSP, fetchData, numberOfP, setNumberOfP, listCTHD, setListCTHD , tongGia, setTongGia}}>
+    <DataContext.Provider value={{ idTable, setIdTable, products, sidedishes, listSP, fetchData, numberOfP, setNumberOfP, listCTHD, setListCTHD , tongGia, setTongGia, note, setNote}}>
       {children}
     </DataContext.Provider>
   )

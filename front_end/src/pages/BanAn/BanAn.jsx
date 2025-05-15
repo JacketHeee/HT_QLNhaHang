@@ -59,7 +59,7 @@ export default function BanAn() {
 
     const setStatusTable = (tables) => {
         const updateTable = tables.map((tb) => {
-            if(tb.listOD.length != 0 && tb.listOD.some((od) => (od.status === "Chờ xác nhận"))){
+            if(tb.listOD.length != 0 && tb.listOD.some((od) => (od.status === "Chờ xác nhận" || od.status === "Đã xác nhận"))){
                 return{...tb, isEmpty: false}
             }
             else {
@@ -76,7 +76,7 @@ export default function BanAn() {
             return 0;
         }
 
-        const listNotAcceptOD = table.listOD.filter((item) => (item.status === "Chờ xác nhận"));
+        const listNotAcceptOD = table.listOD.filter((item) => (item.status === "Chờ xác nhận" || item.status === "Đã xác nhận"));
 
         if(listNotAcceptOD.length === 0){
             return 0;

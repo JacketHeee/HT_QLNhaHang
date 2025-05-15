@@ -16,6 +16,7 @@ import { ImageLoader } from "../../utils/ImageLoader";
 import { getSideDish } from "../../api/services/sideDish";
 import { getProduct_SideDish } from "../../api/services/sidedish_productService";
 import { DataContext } from "../../api/services/ProductContext/DataProvider";
+import logo from '../../assets/img/logo.png';
 
 export default function Menu() {
 
@@ -193,20 +194,20 @@ export default function Menu() {
   }
 
 
-
+  if(load){
+    return (
+      <div className="logoContainer">
+        <img className="logo" src={logo}></img>
+        <p>Vui lòng chờ trong giây lát!</p>
+        <Loading></Loading>
+      </div>
+    )
+  }
 
   return (
     //phân loại
     <div className="container">
       <div className="categoryProducts scroll-box">
-        {/* <div className="flex-column categoryItem selected">
-          <img src={burger} alt="" />
-          Burger
-        </div>
-        <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div> */}
         {category.map((item) => (
           <div 
             className={`flex-column categoryItem ${select === item.id ? 'selected' : ''}`}
@@ -219,32 +220,13 @@ export default function Menu() {
           {item.name}
           </div>
         ))}
-        {/* <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div>
-        <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div>
-        <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div>
-        <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div>
-        <div className="flex-column categoryItem">
-          <img src={burger} alt="" />
-          Burger
-        </div> */}
+
 
       </div>
       {/* Vùng sản phẩm */}
       <div className="areaProducts">
+        {/* Cái thanh ngang á */}
         <div className="areaProductHeader">
-          
           <h5>{category.find((item) => (item.id == select)).name}</h5>
           <hr />
         </div>

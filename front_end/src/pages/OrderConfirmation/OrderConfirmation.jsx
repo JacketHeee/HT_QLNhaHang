@@ -70,17 +70,13 @@ const OrderConfirmation = () => {
     )
 
     // Định nghĩa hành động
-    const actions = (row) => {
-        if (row.status !== 'Chờ xác nhận') return null;
-        return (
-            <div className={styles.actions} onClick={() =>{ 
-                setDataForDetail(row);
-                // printListOPforDetail(row)
-            }}>
-                Xem chi tiết
-            </div>
-        );
-    };
+    const actions = (row) => (
+        <div className={styles.actions} onClick={() => {
+            setDataForDetail(row);
+        }}>
+            Xem chi tiết
+        </div>
+    );
 
 
     //lay du tlieu tu api 
@@ -155,12 +151,14 @@ const OrderConfirmation = () => {
     const getDataForDetail = (row) => {
         const idOrders = row.id;
         const order = getOrderByID(idOrders);
+        console.log(row)
         const objForDetail = {
             orderId: order.id, 
             tableId: order.table.id,
             time: formatDatetoDateString(order.createdAt),
             payment: "Gửi từ khách hàng",
-            note: order.note
+            note: order.note,
+            order: order
         }
         return (objForDetail)
     }

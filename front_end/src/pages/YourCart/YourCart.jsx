@@ -16,11 +16,8 @@ import { createOrder } from "../../api/services/orderService";
 export default function YourCart() {
 
     const nav = useNavigate();
-    // const location = useLocation();
-    // const data = location.state || {};
-    // console.log(data)
 
-    const {idTable, tongGia, numberOfP, setNumberOfP, listCTHD, setListCTHD, setTongGia} = useContext(DataContext);
+    const {idTable, tongGia, numberOfP, setNumberOfP, listCTHD, setListCTHD, setTongGia, note, setNote} = useContext(DataContext);
     
     return (
         <div className={style.yourCart}>
@@ -48,7 +45,7 @@ export default function YourCart() {
                 <ProductItem/>
                 <ProductItem/> */}
             </div>
-            <Payment idTable={idTable} tongGia={tongGia} listCTHD={listCTHD} setListCTHD={setListCTHD} setNumberOfP={setNumberOfP} setTongGia={setTongGia}/>
+            <Payment idTable={idTable} tongGia={tongGia} listCTHD={listCTHD} setListCTHD={setListCTHD} setNumberOfP={setNumberOfP} setTongGia={setTongGia} note={note} setNote={setNote}/>
             <Outlet/>
         </div>
     )
@@ -116,18 +113,23 @@ function SideDishes({title,des, gia}) {
     )
 }
 
-function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTongGia}) {
+function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTongGia, note, setNote}) {
     const [paymentMethod, setPaymentMethod] = useState('qr');
 
     const [thanhToanQR, setThanhToanQR] = useState(false);
+
+    const vat = 0.1;
+    const tip = 0.05
 
     const tinhTongGia = () => {
         let tongGia = 0;
         listCTHD.forEach((item) => {
             tongGia += +item.product.giaBan * +item.quantity + +item.giaSideDish
         })
+        const giaVat = tongGia*vat;
+        const giaTip = tongGia*tip;
+        tongGia += giaVat + giaTip;
         setTongGia(tongGia);
-        // console.log(tongGia);
         return tongGia;
     }
 
@@ -154,9 +156,14 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
     const getOrderObj = () => (//cho thanh toán tiền mặt
         {
             tableId: +idTable,
-            totalPrice: tongGia
+            totalPrice: tongGia,
+            note: note
         }
     )
+
+    const handleChangeNote = (e) => {
+        setNote(e.target.value);
+    }
 
     return (
         <div className={style.yourCartPayment}>
@@ -168,7 +175,7 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
                 </div>
             </div>
 
-            <textarea id="message" className={style.massage} name="message" rows="3" cols="50" placeholder="Ghi chú của khách hàng">
+            <textarea id="message" className={style.massage} onChange={(e) => handleChangeNote(e)} name="message" rows="3" cols="50" placeholder="Ghi chú của khách hàng">
             </textarea>
             {/* <div className={style.choosedPayment}>
                 <div className={classNames(style.choosedItem)}>

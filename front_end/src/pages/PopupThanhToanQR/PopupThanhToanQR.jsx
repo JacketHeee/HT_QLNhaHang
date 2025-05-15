@@ -22,7 +22,7 @@ export default function PopupThanhToanQR() {
     const nav = useNavigate()
     const { simulateLoading } = useLoading();
 
-    const { idTable, setNumberOfP, listCTHD, setListCTHD, setTongGia, tongGia } = useContext(DataContext); // lấy dữ liệu context dùng chung
+    const { idTable, setNumberOfP, listCTHD, setListCTHD, setTongGia, tongGia, note, setNote } = useContext(DataContext); // lấy dữ liệu context dùng chung
 
     console.log(tongGia);
 
@@ -49,7 +49,8 @@ export default function PopupThanhToanQR() {
     const getOrderObj = () => (
         {
             tableId: +idTable,
-            totalPrice: tongGia
+            totalPrice: tongGia,
+            note: note,
         }
     )
 
@@ -69,7 +70,7 @@ export default function PopupThanhToanQR() {
 
                         <div>
                             <img src={checkbox} alt="" />
-                            <span> Mã đơn hàng: DH0242342</span>
+                            <span> Mã đơn hàng: DH{new Date().toLocaleDateString('vi-VN').replaceAll('/', '')}</span>
                         </div>
 
                         <div>

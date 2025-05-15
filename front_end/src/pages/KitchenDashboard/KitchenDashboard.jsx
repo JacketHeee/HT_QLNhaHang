@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { getorderproducts } from '../../api/services/orderProductService';
 import Loading from '../../components/Loading/Loading';
 import SuccessToast from '../../components/Notification/Notification';
+import Timer from '../../components/Timer/Timer';
 
 const KitchenDashboard = () => {
     const navigate = useNavigate();
@@ -76,6 +77,14 @@ const KitchenDashboard = () => {
 
     const [listOP, setListOP] = useState([]);
 
+    const [listTime, setListTime] = useState(() => { //state cho thời gian từng đơn
+        const initList = {};
+        displayOrders.forEach((item) => (
+            initList[item.id] = 0
+        ))
+        return initList;
+    }); 
+
 
     const handleLogout = () => {
         localStorage.removeItem('adminToken');
@@ -128,6 +137,37 @@ const KitchenDashboard = () => {
         }, 1000);
     }
 
+    const getTimeByOrder = (order) => { 
+        const time = new Date() - new Date(order.createdAt);
+        const minute = Math.floor(time/60000);
+        return minute;
+    }
+
+    const handleChangeTime = (orderId, time) => {
+        setListTime(prev => ({...prev, [orderId]: time}))
+    }
+
+    const getAvgTime = () => {
+        let tong = 0;
+        let count = displayOrders.length;
+        displayOrders.forEach((item) => (
+            tong += listTime[item.id]
+        ))
+        if(count === 0) count = 1;
+        return (tong/count).toFixed(0);
+    }
+
+    const getLongestTime = () => {
+        const longestTime = displayOrders.reduce((max, item) => {
+            if(max < listTime[item.id]){
+                return listTime[item.id]
+            }
+            else{
+                return max
+            }
+        }, 0)// tránh lỗi mảng rỗng
+        return longestTime;
+    }
 
 
     return (
@@ -135,17 +175,23 @@ const KitchenDashboard = () => {
             <div className={styles.header}>
                 <div>
                     <h4>Average<br />Order Time</h4>
-                    <h2>27:04</h2>
+                    <h2>{getAvgTime()}:00</h2>
                 </div>
 
                 <div>
                     <h4>Maximum<br />Order Time</h4>
-                    <h2>27:04:02</h2>
+                    <h2>{getLongestTime()}:00</h2>
                 </div>
             </div>
             <div className={styles.body}>
                 {displayOrders.map((item, index) => (
-                    <div className={classNames(styles.order, styles.green)}>
+                    <div className={classNames(styles.order, 
+                        {
+                            [styles.green]: listTime[item.id] < 8,
+                            [styles.yellow]: listTime[item.id] > 7 && listTime[item.id] < 15,
+                            [styles.red]: listTime[item.id] > 14
+                        }
+                    )}>
                         <h5>#{item.id}</h5>
                         <h4>B{item.tableId} - Eat in</h4>
 
@@ -162,7 +208,7 @@ const KitchenDashboard = () => {
                                     </div>
                                     <div>
                                         <p>{sd.product.moTa}</p>
-                                        <span>Dữ liệu món ăn kèm từ khách hàng</span>
+                                        <span>{sd.sideDishes}</span>
                                     </div>
                                 </div>
                             ))}
@@ -179,7 +225,8 @@ const KitchenDashboard = () => {
                             </div> */}
                         </div>
 
-                        <h5 className={styles.time}>{formatDatetoDateString(item.createdAt)}</h5>
+                        {/* <h5 className={styles.time}>{getTimeByOrder(item)}</h5> */}
+                        <Timer className={styles.time} time={getTimeByOrder(item)} onChangeTime={(orderId, time) => handleChangeTime(orderId, time)} orderId={item.id}></Timer>
 
                         <button className={styles.sothutu}>{index + 1}</button>
                     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Timer = ({time=0}) => {
+const Timer = ({time=0, onChangeTime=null, orderId=null}) => {
     const [minute, setMinute] = useState(time);
 
     useEffect(() => {
@@ -10,6 +10,12 @@ const Timer = ({time=0}) => {
 
         return () => clearInterval(intervalId);
     }, [])
+
+    useEffect(() => {
+        if (onChangeTime && orderId) {
+            onChangeTime(orderId, minute);
+        }
+    }, [minute])
 
     return (
         <div>{minute}p</div>

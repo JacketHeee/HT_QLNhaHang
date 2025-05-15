@@ -11,6 +11,7 @@ export default function OrderDetail(props) {
     const {orderId} = useParams() 
     const [listOP, setListOP] = useState([]); 
     const [displayListOP, setDisplayListOP] = useState([]);
+    const isDetail = props.isDetail;
 
     useEffect(()=>{
         setListOP(props.listOPForDetail)
@@ -22,7 +23,7 @@ export default function OrderDetail(props) {
         id: props.orderDetail.orderId,
         table: props.orderDetail.tableId,
         time: props.orderDetail.time,
-        // total: "chưa",
+        total: props.orderDetail.order.total,
         // totalSideDishes: "chưa",
         // status: "Chưa thanh toán",
         // orderDetail: [
@@ -85,13 +86,13 @@ export default function OrderDetail(props) {
         return list.map((item) => (getObjForDisplay(item)))
     }
 
-    const tinhTongTienHoaDon = (listDisplay) => {
-        let tongTien = 0;
-        listDisplay.map((item) => {tongTien += item.totalProduct})
-        return tongTien
-    }
+    // const tinhTongTienHoaDon = (listDisplay) => {
+    //     let tongTien = 0;
+    //     listDisplay.map((item) => {tongTien += item.totalProduct})
+    //     return tongTien
+    // }
 
-    const nav = useNavigate();
+    // const nav = useNavigate();
 
     const columns = [
         { key: 'dish', title: 'Món ăn', render: row => `${row.dish}` },
@@ -115,7 +116,7 @@ export default function OrderDetail(props) {
 
                 <div className={styles.chitiet}>
                     <Table data={displayListOP} columns={columns}/>
-                    <h6>Tổng tiền: <span>{tinhTongTienHoaDon(displayListOP)}đ</span></h6>
+                    <h6>Tổng tiền: <span>{props.orderDetail.order.total}đ</span></h6>
                 </div>
 
             
@@ -125,10 +126,13 @@ export default function OrderDetail(props) {
             </div>
     
             <div className={styles.actions}>
-                <button onClick={() => {
-                    props.onAccept(props.orderDetail.orderId);
-                    props.onClose();
-                }}>Xác nhận</button>
+                {props.orderDetail.order.status === "Chờ xác nhận" ? 
+                        <button onClick={() => {
+                            props.onAccept(props.orderDetail.orderId);
+                            props.onClose();
+                        }}>Xác nhận</button>
+                : null}
+
                 <button onClick={() => {props.onClose()}}>Hủy</button>
             </div>
             
