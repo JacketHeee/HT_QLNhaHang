@@ -58,6 +58,7 @@
 /* ------------------ */
 
 .body {
+    background-color: var(--color-bg);
     display: flex;
     gap: 6px;
     flex-direction: column;

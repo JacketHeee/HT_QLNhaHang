@@ -52,7 +52,6 @@
     flex-direction: column;
     flex-wrap: wrap;
     padding: 10px;
-
     gap: 20px; 
     overflow-x: auto;
     /* justify-content: center; */

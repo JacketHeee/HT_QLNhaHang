@@ -119,6 +119,8 @@
 
 .quantityAndPrice>div:last-child span {
     font-size: smaller;
+    text-align: right;
+
 }
 
 /* -----------------------*/

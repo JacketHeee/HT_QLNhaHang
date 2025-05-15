@@ -161,7 +161,7 @@ export default function BanAn() {
                             <div className={styles.infor}>
                                 <div>
                                     <span>{tb.isEmpty ? null : <Timer time={getLongestTimeOD(tb)}/>}</span>
-                                    <h5></h5>
+                                    {tb.isEmpty ? null : <h5>tb.order.totalPrice</h5>}
                                 </div>
                                 <img src={table} alt="" />
                             </div>

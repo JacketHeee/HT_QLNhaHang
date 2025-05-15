@@ -197,7 +197,7 @@ export default function Menu() {
   if(load){
     return (
       <div className="logoContainer">
-        <img className="logo" src={logo}></img>
+        <div><img className="logo" src={logo}></img></div>
         <p>Vui lòng chờ trong giây lát!</p>
         <Loading></Loading>
       </div>

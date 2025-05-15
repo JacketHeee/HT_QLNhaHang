@@ -28,8 +28,8 @@ const popupStyle = {
   borderRadius: '12px',
   position: 'relative',
   minWidth: '400px',
-  maxWidth: '90%',
-  maxHeight: "90%"
+  maxWidth: '90%'
+  // maxHeight: "90%"
 };
 
 const closeButtonStyle = {

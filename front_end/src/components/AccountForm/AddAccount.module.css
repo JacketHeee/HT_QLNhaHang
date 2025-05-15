@@ -42,7 +42,11 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+}
+.infor>h4 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .infor span, .infor p {

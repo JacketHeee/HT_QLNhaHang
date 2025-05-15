@@ -1,5 +1,7 @@
+import styles from "./InputField.module.css"
+
 const InputField = (props) => (// register, error
-    <div>
+    <div className={styles.inputItem}>
         <h6>{props.children}</h6>
         <input
             {...props.register}
