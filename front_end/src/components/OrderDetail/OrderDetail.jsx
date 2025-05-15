@@ -97,7 +97,7 @@ export default function OrderDetail(props) {
     const columns = [
         { key: 'dish', title: 'Món ăn', render: row => `${row.dish}` },
         { key: 'quantity', title: 'Số lượng', render: row => `${row.quantity}` },
-        { key: 'price', title: 'Giá bán', render: row => `${row.price.toLocaleString()} đ` },
+        { key: 'price', title: 'Giá bán', render: row => `${parseFloat(row.price.toLocaleString())} đ` },
         { key: 'sideDishes', title: 'Món ăn kèm', render: row => `${row.sideDishes}` },
         { key: 'totalSideDishes', title: 'Tiền món ăn kèm', render: row => `${row.totalSideDishes.toLocaleString()} đ` },
         { key: 'totalProduct', title: 'Tổng tiền', render: row => `${row.totalProduct.toLocaleString()} đ` }
@@ -116,7 +116,7 @@ export default function OrderDetail(props) {
 
                 <div className={styles.chitiet}>
                     <Table data={displayListOP} columns={columns}/>
-                    <h6>Tổng tiền: <span>{props.orderDetail.order.total}đ</span></h6>
+                    <h6>Tổng tiền: <span>{parseFloat(props.orderDetail.order.totalPrice).toLocaleString()}đ</span></h6>
                 </div>
 
             
