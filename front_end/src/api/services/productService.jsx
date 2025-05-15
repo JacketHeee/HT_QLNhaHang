@@ -8,6 +8,11 @@ export const getProducts = async () => {
     return response.data;
 }
 
+export const findAllProductNotLock = async () => {
+    const response = await axiosInstance.get(`${API_URL}/product/notlock`);
+    return response.data;
+}
+
 export const getProduct = async (id) => {
     const response = await axiosInstance.get(`${API_URL}/${id}`);
     return response.data;

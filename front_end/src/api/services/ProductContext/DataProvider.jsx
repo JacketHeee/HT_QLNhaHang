@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getProducts } from "../productService";
+import { findAllProductNotLock, getProducts } from "../productService";
 import { getSideDish } from "../sideDish";
 import { getProduct_SideDish } from "../sidedish_productService";
 
@@ -19,7 +19,7 @@ const DataProvider = ({children}) => {
 
   const fetchData = async () => {
     if(!products && !sidedishes && !listSP){
-      const products = await getProducts();
+      const products = await findAllProductNotLock();
       const sidedishes = await getSideDish();
       const sidedish_products = await getProduct_SideDish();
       setProducts(products);

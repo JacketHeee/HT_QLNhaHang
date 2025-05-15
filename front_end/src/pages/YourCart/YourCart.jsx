@@ -60,9 +60,11 @@ function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo m�
 
     const [quantityOfCTHD, setQuantityOfCTHD] = useState(cTHD.quantity);//theo dõi số lượng từng chi tiết hóa đơn
 
-    const handleChangeQuantity = () => {
-        setQuantityOfCTHD(prev => prev + 1);
+    const handleChangeQuantity = (num) => {
+        // setQuantityOfCTHD(prev => prev + 1);
+        setQuantityOfCTHD(num);
     }
+
     useEffect(() => {//chờ quantity cập nhật xong
         updateQuantity();
     },[quantityOfCTHD])
@@ -91,7 +93,7 @@ function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo m�
                 <div className={style.quantityAndPrice}>   
                     <CounterModel 
                         value={cTHD.quantity}
-                        onChange={() => handleChangeQuantity()}
+                        onChange={(num) => handleChangeQuantity(num)}
                     />
                     <div>
                         <h5>{formatCurrency(tinhGiaBan(cTHD.product.giaBan, quantityOfCTHD))}đ</h5>
