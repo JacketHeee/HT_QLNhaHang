@@ -77,7 +77,7 @@ const KitchenDashboard = () => {
 
     const [listOP, setListOP] = useState([]);
 
-    const [listTime, setListTime] = useState(() => { //state cho thời gian từng đơn
+    const [listTime, setListTime] = useState(() => { //state cho thời gian từng đơn 
         const initList = {};
         displayOrders.forEach((item) => (
             initList[item.id] = 0

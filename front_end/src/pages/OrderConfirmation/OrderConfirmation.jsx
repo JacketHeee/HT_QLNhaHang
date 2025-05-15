@@ -9,6 +9,7 @@ import OrderDetail from '../../components/OrderDetail/OrderDetail';
 import { getorderproducts } from '../../api/services/orderProductService';
 import Loading from "../../components/Loading/Loading"
 import { getSideDish } from '../../api/services/sideDish';
+import SuccessToast from '../../components/Notification/Notification';
 
 
 const OrderConfirmation = () => {
@@ -31,6 +32,9 @@ const OrderConfirmation = () => {
     const [listSideDishForDetail, setListSideDishForDetail] = useState([]);
 
     const [ordersDisplay, setOrdersDisplay] = useState([]);
+
+    const [doneDishStatus, setDoneDishStatus] = useState(false); //cho hiển thị thông báo
+
     // const [orders, setOrders] = useState([
     //     { id: '1', table: 'Bàn 1', time: '2025-04-28 10:30', total: 150000, status: 'Chờ xác nhận'},
     //     { id: '2', table: 'Bàn 2', time: '2025-04-28 10:35', total: 200000, status: 'Chờ xác nhận'},
@@ -190,6 +194,12 @@ const OrderConfirmation = () => {
         setOrders(prev => prev.map(item => item.id === orderId ? objectForDisplay : item));
         setOrdersDisplay(prev => prev.map(item => item.id === orderId ? objectForDisplay : item));
         setLoadUpdate(false);
+
+        //hiển thị thông báo
+        setDoneDishStatus(true);
+        setTimeout(() => {
+            setDoneDishStatus(false);
+        }, 1000);
     }
 
 
@@ -222,6 +232,7 @@ const OrderConfirmation = () => {
             }
 
             {loadUpdate ? <Loading></Loading>:null}
+            {doneDishStatus? <SuccessToast message="Đã xác nhận đơn cho khách!"></SuccessToast> : null}
             
             <Outlet/>
         </div>
