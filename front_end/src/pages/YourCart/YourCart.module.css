@@ -85,6 +85,7 @@
 
 .sideDihes {
     display: flex; 
+    gap: 10px;
     justify-content: space-between;
 }
 
@@ -96,6 +97,7 @@
 .quantityAndPrice {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 
@@ -115,6 +117,10 @@
     color: var(--color-phu);
 }
 
+.quantityAndPrice>div:last-child span {
+    font-size: smaller;
+}
+
 /* -----------------------*/
 
 .yourCartPayment {
@@ -132,6 +138,8 @@
 
 .yourCartPayment h3 {
     color: var(--color-phu);
+    /* align-self: ; */
+    text-align: right;
 }
 
 .yourCartPayment>button {

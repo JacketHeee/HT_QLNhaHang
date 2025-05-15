@@ -207,8 +207,9 @@ const KitchenDashboard = () => {
                                         <p>({sd.quantity}){sd.product.tenMonAn}</p>
                                     </div>
                                     <div>
-                                        <p>{sd.product.moTa}</p>
-                                        <span>{sd.sideDishes}</span>
+                                        {/* <p>{sd.product.moTa}</p> */}
+                                        {/* <span>{sd.sideDishes}</span> */}
+                                        <div>{sd.sideDishes}</div>
                                     </div>
                                 </div>
                             ))}

@@ -152,12 +152,17 @@
 }
 
 .orderDetail>div>span {
-    margin-left: 10px;
+    border: 1px solid black;
+    /* margin-left: 10px; */
+    padding-left: 10px;
     color: var(--darkMainColor);
 }
 
-.orderDetail>div>div>span {
+
+.orderDetail>div>div>div {
     margin-left: 10px;
+    /* border: 1px solid black; */
+    /* padding-left: 10px; */
     color: var(--darkMainColor);
 }
 

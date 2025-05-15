@@ -114,10 +114,11 @@ export default function OrderDetail(props) {
                 <div><h6>Hình thức thanh toán:</h6> <span>Online - đã thanh toán</span></div>
             </div>
 
-                <div className={styles.chitiet}>
-                    <Table data={displayListOP} columns={columns}/>
-                    <h6>Tổng tiền: <span>{parseFloat(props.orderDetail.order.totalPrice).toLocaleString()}đ</span></h6>
-                </div>
+            <div className={styles.chitiet}>
+                <Table data={displayListOP} columns={columns}/>
+                <span>(Tip 5%, VAT 10%) = {(parseFloat(props.orderDetail.order.totalPrice)*0.15/1.15).toLocaleString()}đ</span>
+                <h6>Tổng tiền: <span>{parseFloat(props.orderDetail.order.totalPrice).toLocaleString()}đ</span></h6>
+            </div>
 
             
             <div className={styles.ghichu}>

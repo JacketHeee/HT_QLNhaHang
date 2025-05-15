@@ -55,6 +55,8 @@
 
 .areaProductHeader>h5 {
     color: var(--color-primary);
+    /* min-width: 100px; */
+    white-space: nowrap;
 }
 
 .areShowProduct {
