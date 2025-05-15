@@ -151,7 +151,6 @@ const OrderConfirmation = () => {
     const getDataForDetail = (row) => {
         const idOrders = row.id;
         const order = getOrderByID(idOrders);
-        console.log(row)
         const objForDetail = {
             orderId: order.id, 
             tableId: order.table.id,
