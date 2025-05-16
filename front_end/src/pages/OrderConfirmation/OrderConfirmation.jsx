@@ -10,6 +10,8 @@ import { getorderproducts } from '../../api/services/orderProductService';
 import Loading from "../../components/Loading/Loading"
 import { getSideDish } from '../../api/services/sideDish';
 import SuccessToast from '../../components/Notification/Notification';
+import refresh from "../../assets/icon/refresh.svg"
+import Refresh from '../../components/Refresh/Refresh';
 
 
 const OrderConfirmation = () => {
@@ -217,6 +219,7 @@ const OrderConfirmation = () => {
     }
 
 
+
     return (
         <div className={styles.container}>
             <h3 className={styles.title}>Danh sách đơn hàng</h3>
@@ -228,6 +231,7 @@ const OrderConfirmation = () => {
                     <option value="">Pín heo</option>
                     <option value="">Bò ba bể</option>
                 </select> */}
+                <Refresh whenClick={() => {console.log("Lấy các đơn hàng hiện có trong db")}}/>
             </div>
             {loading ? <div>Đang load dữ liệu...</div> :
                 <Table columns={columns} data={sortOrder(ordersDisplay)} actions={actions}/>
