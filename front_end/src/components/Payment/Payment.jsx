@@ -1,12 +1,16 @@
 import style from  "./Payment.module.css"
 import cart from "../../assets/icon/cart_red.svg"
 import { formatCurrency } from "../../utils/format";
+import { useNavigate } from "react-router-dom";
 
 export default function Payment({text,onClick, count = 1, tongTien = ''}) {
+
+    const nav = useNavigate(); 
+
     return (
       <div className={style.payment}>
           <div className={style.cart}>
-            <img src={cart} alt="" />
+            <img src={cart} alt=""/>
             <span>{count}</span>
           </div>
           <div className={style.thanhtoan}>
