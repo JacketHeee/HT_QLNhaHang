@@ -26,6 +26,10 @@
     gap: 10px;
 }
 
+.container * {
+    /* border: 1px solid black; */
+}
+
 /* .title {
     display: flex;
     justify-content: center;
@@ -35,18 +39,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    /* padding: 0 20px; */
-}
-
-.search_select select {
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.search_select>select:active, .search_select>select:focus{
-    border: none;
-    background-color: white;
+    padding: 0 20px;
 }
 
 

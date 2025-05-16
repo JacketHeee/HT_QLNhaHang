@@ -9,6 +9,7 @@ import { getorderproducts } from '../../api/services/orderProductService';
 import Loading from '../../components/Loading/Loading';
 import SuccessToast from '../../components/Notification/Notification';
 import Timer from '../../components/Timer/Timer';
+import Refresh from '../../components/Refresh/Refresh';
 
 const KitchenDashboard = () => {
     const navigate = useNavigate();
@@ -242,6 +243,8 @@ const KitchenDashboard = () => {
                     <img src={logout} alt="" />
                     Đăng xuất
                 </button>
+                
+                <Refresh whenClick={() => {console.log("Lấy các đơn hàng hiện có trong db")}}/>
             </div>
 
             {load ? <Loading></Loading> : null}

@@ -1,0 +1,32 @@
+.refresh {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0 10px;
+
+    cursor: pointer;
+    user-select: none;        /* Chuẩn hiện đại */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge cũ */
+}
+
+.refresh * {
+    background: transparent;
+}
+
+.refresh>img {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.refresh>span {
+    user-select: none;        /* Chuẩn hiện đại */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge cũ */
+}
+

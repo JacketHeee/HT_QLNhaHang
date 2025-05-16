@@ -237,6 +237,8 @@
     padding: 10px;
     width: 100%;
     background-color: #00000090;
+    display: flex;
+    justify-content: space-between;
 }
 
 .logoutButton {
