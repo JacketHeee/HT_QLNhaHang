@@ -27,6 +27,19 @@ export class ProductsService{ //implements OnModuleInit {
         });
     }
 
+    async findAllProductNotLock(): Promise<ProductResponseDto[]> {
+        const products = await this.productsRepository.find({
+            where: { isDelete: false, isLocked: false }, // Lọc sản phẩm chưa bị xóa
+            relations: ['category'],
+            order: { ID: 'ASC' }
+        });
+
+        return products.map(product => {
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
+        });
+    }
+
     async findOne(ID: number): Promise<ProductResponseDto> {
         const product = await this.productsRepository.findOne({
             where: { ID },

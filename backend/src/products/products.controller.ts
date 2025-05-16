@@ -15,6 +15,12 @@ export class ProductsController {
         return products;
     }
 
+    @Get('product/notlock')
+    async findAllProductNotLock(): Promise<ProductResponseDto[]> {
+        const products = await this.productsService.findAllProductNotLock();
+        return products;
+    }
+
     @Get(':id')
     async findOne(@Param('id') id: number): Promise<ProductResponseDto> {
         const product = await this.productsService.findOne(id)  //đã validate
