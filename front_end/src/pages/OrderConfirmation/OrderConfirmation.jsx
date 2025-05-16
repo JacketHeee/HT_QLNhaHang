@@ -218,7 +218,10 @@ const OrderConfirmation = () => {
         }, 1000);
     }
 
-
+    const Reload = () => {
+        setLoading(true);
+        fetchOrders();
+    }
 
     return (
         <div className={styles.container}>
@@ -231,7 +234,7 @@ const OrderConfirmation = () => {
                     <option value="">Pín heo</option>
                     <option value="">Bò ba bể</option>
                 </select> */}
-                <Refresh whenClick={() => {console.log("Lấy các đơn hàng hiện có trong db")}}/>
+                <Refresh whenClick={() =>  Reload()}/>
             </div>
             {loading ? <div>Đang load dữ liệu...</div> :
                 <Table columns={columns} data={sortOrder(ordersDisplay)} actions={actions}/>

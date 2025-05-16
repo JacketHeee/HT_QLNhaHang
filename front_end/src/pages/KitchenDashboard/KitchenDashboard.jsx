@@ -170,6 +170,11 @@ const KitchenDashboard = () => {
         return longestTime;
     }
 
+    const Reload = () => {
+        setLoad(true);
+        fetchOrders();
+    }
+
 
     return (
         <div className={styles.container}>
@@ -244,7 +249,7 @@ const KitchenDashboard = () => {
                     Đăng xuất
                 </button>
                 
-                <Refresh whenClick={() => {console.log("Lấy các đơn hàng hiện có trong db")}}/>
+                <Refresh whenClick={() => {Reload()}}/>
             </div>
 
             {load ? <Loading></Loading> : null}

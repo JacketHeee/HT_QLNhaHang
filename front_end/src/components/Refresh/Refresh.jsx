@@ -5,7 +5,7 @@ export default function Refresh({whenClick}) {
     return (
         <div  className={styles.refresh}>
             <img src={refresh} alt="" onClick={whenClick} />
-            <span onClick={whenClick}>Làm mới</span>
+            <span onClick={() => whenClick()}>Làm mới</span>
         </div>
     )
 }

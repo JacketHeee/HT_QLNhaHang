@@ -15,13 +15,13 @@ const AdminLogin = () => {
     const navigate = useNavigate();
 
     // Kiểm tra token khi component mount
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const firstPage = localStorage.getItem('firstpage');
-        if (token && firstPage) {
-        navigate(`/admin/${firstPage}`);
-        }
-    }, [navigate]);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     const firstPage = localStorage.getItem('firstpage');
+    //     if (token && firstPage) {
+    //     navigate(`/admin/${firstPage}`);
+    //     }
+    // }, [navigate]);
 
     const fetchToken = async (usrname, passwd) => {
         setLoad(true);

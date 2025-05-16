@@ -10,7 +10,10 @@ const acceptForm = ({onAccept, onClose, message="Bạn thật sự muốn xóa ?
                     <img src={warning} />
                     <p>{message}</p>
                 </div>
-                <button onClick={() => {onAccept(); onClose()}}>ok</button>
+                <div className={styles.btnContainer}>
+                    <button onClick={() => {onAccept(); onClose()}}>Ok</button>
+                    <button onClick={() => {onClose()}}>Hủy</button>
+                </div>
             </div>
         </div>
     </div>
