@@ -15,6 +15,9 @@ import { addRole, deleteRole, editRole, getRole, getRoles } from "../../api/serv
 import AddRole from "../../components/RoleForm/AddRole"
 import Loading from "../../components/Loading/Loading"
 import { editFeatureForRole } from "../../api/services/features_rolesService"
+import AcceptForm from "../../components/AcceptForm/AcceptForm"
+import SuccessToast from "../../components/Notification/Notification"
+
 
 export default function PhanQuyen() {
 
@@ -31,6 +34,14 @@ export default function PhanQuyen() {
     const [loadUpdate, setLoadUpdate] = useState(false);
 
     const[updateRole, setUpdateRole] = useState(null);//cho update
+
+    const [accDelete, setAccDelete] = useState(false);
+
+    const [rowForDelete, setRowForDelete] = useState(null);
+
+    const [createSuccess, setCreateSuccess] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
 
 
     const createObject = (id, roleName, listFeature) => {// truyền vào ListFR thô nha
@@ -89,7 +100,10 @@ export default function PhanQuyen() {
             return (
                 <div className={styles.actionBottoms}>
                    <img src={edit} alt="edit" onClick = {() => setOldDataUpdate(row)}/>
-                   <img src={remove} alt="remove" onClick = {() => removeRole(row)}/>
+                   <img src={remove} alt="remove" 
+                //    onClick = {() => removeRole(row)}
+                        onClick = {() => {setAccDelete(true); setRowForDelete(row)}}
+                   />
                 </div>
             );
         };
@@ -117,6 +131,11 @@ export default function PhanQuyen() {
         setRoles(prev => [...prev, displayobj]);
         setRolesDisplay(prev => [...prev, displayobj]);
         setLoadUpdate(false);
+
+        setCreateSuccess(true);
+        setTimeout(() => {
+            setCreateSuccess(false);
+        }, 1000);
     }
 
     const setOldDataUpdate = async (row) => {
@@ -144,6 +163,11 @@ export default function PhanQuyen() {
         setRolesDisplay(prev => prev.map((p) => p.id === id ? roleobj : p));
         
         setLoadUpdate(false);
+
+        setUpdateSuccess(true);
+        setTimeout(() => {
+            setUpdateSuccess(false);
+        }, 1000);
     }
 
     const removeRole = async (obj) => {
@@ -152,6 +176,11 @@ export default function PhanQuyen() {
         setRoles(prev => prev.filter((p) => (p.id != obj.id)));
         setRolesDisplay(prev => prev.filter((p) => (p.id != obj.id)));
         setLoadUpdate(false)
+
+        setDeleteSuccess(true);
+        setTimeout(() => {
+            setDeleteSuccess(false);
+        }, 1000);
     }
 
     const handleSearch = (keyword) => {
@@ -199,6 +228,15 @@ export default function PhanQuyen() {
 
             {/* load cho create */}
             {loadUpdate ? <Loading></Loading> : null}
+
+            {accDelete ? <AcceptForm
+                onClose={() => setAccDelete(false)}
+                onAccept={() => removeRole(rowForDelete)}
+            ></AcceptForm> : null}
+
+            {deleteSuccess? <SuccessToast message="Xóa thành công!"></SuccessToast> : null}
+            {createSuccess? <SuccessToast message="Thêm thành công!"></SuccessToast> : null}
+            {updateSuccess? <SuccessToast message="Sửa thành công!"></SuccessToast> : null}
         </div>
     )
 }

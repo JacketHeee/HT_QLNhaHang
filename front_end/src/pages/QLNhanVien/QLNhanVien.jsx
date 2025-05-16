@@ -14,6 +14,8 @@ import edit from "../../assets/icon/edit.svg"
 import { addEmployee, deleteEmployee, getEmployees, updateEmployee } from "../../api/services/employeeService"
 import AddEmployee from "../../components/AddEmployee/AddEmployee"
 import Loading from "../../components/Loading/Loading";
+import AcceptForm from "../../components/AcceptForm/AcceptForm"
+import SuccessToast from "../../components/Notification/Notification"
 
 
 export default function QLNhanVien() {
@@ -33,6 +35,15 @@ export default function QLNhanVien() {
     const [loadUpdate, setLoadUpdate] = useState(false);
 
     const [displayEmployees, setDisplayEmployees] = useState([]);
+
+    const [accDelete, setAccDelete] = useState(false);
+
+    const [rowForDelete, setRowForDelete] = useState(null);
+
+    const [createSuccess, setCreateSuccess] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
+
     
         // Định nghĩa cột
         const columns = [
@@ -54,11 +65,13 @@ export default function QLNhanVien() {
                     <img
                         src={remove} 
                         alt="remove"
-                        onClick = {() => removeEmployee(row)}
+                        // onClick = {() => removeEmployee(row)}
+                        onClick = {() => {setAccDelete(true); setRowForDelete(row)}}
                     />
                 </div>
             );
         };
+
 
         // const actions = (row) => {
         //         if (row.status !== 'Chờ xác nhận') return null;
@@ -121,6 +134,11 @@ export default function QLNhanVien() {
         setEmployees(prev => [...prev, newEmployee]);
         setDisplayEmployees(prev => [...prev, newEmployee]);
         setLoadUpdate(false);
+
+        setCreateSuccess(true);
+        setTimeout(() => {
+            setCreateSuccess(false);
+        }, 1000);
     }
 
     const updateE = async (id, nhanVien) => {
@@ -129,6 +147,11 @@ export default function QLNhanVien() {
         setEmployees(prev => prev.map((p) => p.id === id ? newEmployee : p));
         setDisplayEmployees(prev => prev.map((p) => p.id === id ? newEmployee : p));
         setLoadUpdate(false);
+
+        setUpdateSuccess(true);
+        setTimeout(() => {
+            setUpdateSuccess(false);
+        }, 1000);
     }
 
 
@@ -145,6 +168,11 @@ export default function QLNhanVien() {
         setEmployees(prev => prev.filter((p) => (p.id != obj.id)));
         setDisplayEmployees(prev => prev.filter((p) => (p.id != obj.id)));
         setLoadUpdate(false)
+
+        setDeleteSuccess(true);
+        setTimeout(() => {
+            setDeleteSuccess(false);
+        }, 1000);
     }
     //đợi employee cũ cập nhật xong
     useEffect(() => {
@@ -191,6 +219,14 @@ export default function QLNhanVien() {
             ></AddEmployee> : null
             }
 
+            {accDelete ? <AcceptForm
+                onClose={() => setAccDelete(false)}
+                onAccept={() => removeEmployee(rowForDelete)}
+            ></AcceptForm> : null}
+
+            {deleteSuccess? <SuccessToast message="Xóa thành công!"></SuccessToast> : null}
+            {createSuccess? <SuccessToast message="Thêm thành công!"></SuccessToast> : null}
+            {updateSuccess? <SuccessToast message="Sửa thành công!"></SuccessToast> : null}
         </div>
     )
 }

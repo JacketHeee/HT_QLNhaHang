@@ -97,7 +97,7 @@ export default function AddEmployee(props) {
                 <Combobox
                     register={register("gioiTinh")}
                     list = {selections}
-                ></Combobox>
+                >Giới tính</Combobox>
                 {/* <h6>Giới tính:</h6>
                 <select
                     value={gioiTinh}

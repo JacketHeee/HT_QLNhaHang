@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.content {
+    padding: 0px 15px 10px 15px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.selection {
+
+}
+
+.title img {
+    width : 50px;
+    margin-right: 15px;
+    background-color: white;
+}
+
+.content button {
+    min-width: 20px;
+    margin-left: auto;
+}
+
+.close {
+    border: 0;
+    min-width: 15px;
+    min-height: 15px;
+    margin-left: auto;
+}
+
+.title p {
+    background-color: white;
+} 

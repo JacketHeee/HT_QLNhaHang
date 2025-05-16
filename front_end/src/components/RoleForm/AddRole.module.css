@@ -17,7 +17,9 @@
 .container {
     display: flex;
     background-color: white;
+    /* background-color: var(--color-bg); */
     gap: 10px;
+    /* padding: 0; */
 }
 
 .container * {
@@ -39,10 +41,15 @@
 .infor {
     width: 400px;
     flex-grow: 1;
-    padding: 10px;
+    /* padding: 10px; */
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+}
+
+.infor>h5 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .infor span, .infor p {
@@ -94,7 +101,7 @@
 }
 
 .checkboxs{
-    padding: 20px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -102,10 +109,15 @@
 .inputField {
     /* padding: 10px; */
     display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .inputField input{
-    margin-left: 30px;
+    /* margin-left: 30px; */
     width:120px;
-    height:25px
+    height:25px;
+    flex: 1;
+    background-color: white;
+    padding: 10px;
 }

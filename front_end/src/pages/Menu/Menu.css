@@ -55,6 +55,8 @@
 
 .areaProductHeader>h5 {
     color: var(--color-primary);
+    /* min-width: 100px; */
+    white-space: nowrap;
 }
 
 .areShowProduct {
@@ -71,6 +73,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* border: 1px solid black; */
+}
+
+.logoContainer>div:first-child{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+
+.logoContainer * {
+    /* border: 1px solid black; */
 }
 
 .logo {
@@ -81,7 +96,7 @@
 
 .logoContainer p{
     background-color: white;
-    margin-top: auto;
+    /* margin-top: auto; */
     margin-bottom: 5%;
     font-weight: 500;
 }

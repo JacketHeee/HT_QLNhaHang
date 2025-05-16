@@ -197,7 +197,7 @@ export default function Menu() {
   if(load){
     return (
       <div className="logoContainer">
-        <img className="logo" src={logo}></img>
+        <div><img className="logo" src={logo}></img></div>
         <p>Vui lòng chờ trong giây lát!</p>
         <Loading></Loading>
       </div>
@@ -228,7 +228,7 @@ export default function Menu() {
         {/* Cái thanh ngang á */}
         <div className="areaProductHeader">
           <h5>{category.find((item) => (item.id == select)).name}</h5>
-          <hr />
+          <hr/>
         </div>
 
         <div className="areShowProduct flex-column">

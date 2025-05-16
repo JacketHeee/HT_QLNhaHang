@@ -61,7 +61,6 @@ function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo m�
     const [quantityOfCTHD, setQuantityOfCTHD] = useState(cTHD.quantity);//theo dõi số lượng từng chi tiết hóa đơn
 
     const handleChangeQuantity = (num) => {
-        // setQuantityOfCTHD(prev => prev + 1);
         setQuantityOfCTHD(num);
     }
 
@@ -87,7 +86,7 @@ function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo m�
                 <div className={style.productNameAndSideDishes}>
                     <h5>{cTHD.product.tenMonAn}</h5>
                     <div>
-                        <SideDishes title="Đồ ăn kèm" des={cTHD.sideDishes} gia={cTHD.giaSideDish}/>
+                        {cTHD.sideDishes !== "" && <SideDishes title="Đồ ăn kèm" des={cTHD.sideDishes} gia={cTHD.giaSideDish}/>}
                     </div>
                 </div>
                 <div className={style.quantityAndPrice}>   
@@ -97,7 +96,7 @@ function ProductItem({cTHD, listCTHD, setListCTHD}) { //listCTHD để tạo m�
                     />
                     <div>
                         <h5>{formatCurrency(tinhGiaBan(cTHD.product.giaBan, quantityOfCTHD))}đ</h5>
-                        <span>(Tip 5%, VAT 10%)</span>
+                        <span>(Tip 5%, VAT 10%) = {formatCurrency(tinhGiaBan(cTHD.product.giaBan, quantityOfCTHD)*0.15/1.15)}đ</span>
                     </div>
                 </div>
             </div>
@@ -173,7 +172,7 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
                 <h4>Tổng tiền:</h4>
                 <div>
                     <h3>{formatCurrency(tinhTongGia())}đ</h3>
-                    <span>(Tip 5%, VAT 10%)</span>
+                    <span>(Tip 5%, VAT 10%) = {formatCurrency(tinhTongGia()*0.15/1.15)}đ </span>
                 </div>
             </div>
 

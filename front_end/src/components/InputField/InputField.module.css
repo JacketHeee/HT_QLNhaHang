@@ -1,0 +1,9 @@
+.inputItem {
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+}
+
+.inputItem>input {
+    min-width: 100%;
+}

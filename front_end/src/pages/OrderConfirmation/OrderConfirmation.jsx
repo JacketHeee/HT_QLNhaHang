@@ -44,6 +44,20 @@ const OrderConfirmation = () => {
     //     { id: '2', table: 'Bàn 2', time: '2025-04-28 10:35', total: 200000, status: 'Chờ xác nhận'},
     //     { id: '2', table: 'Bàn 2', time: '2025-04-28 10:35', total: 200000, status: 'Chờ xác nhận'},
     // ]);
+ 
+    const sortOrderId = (arr) => ( //tham chiếu
+        arr.sort((a, b) => a.id - b.id)   
+    )
+
+    const sortOrder = (listOrder) => {
+        const listStatus = ["Chờ xác nhận","Đã xác nhận","Đã xong"]
+        let arrResult = [];
+        listStatus.forEach((st) => {
+            let temp = listOrder.filter((item) => (item.status === st))
+            arrResult = arrResult.concat(sortOrderId(temp))
+        })
+        return arrResult
+    }
 
     const formatDatetoDateString = (isoDate) => {
         const formatted = format(new Date(isoDate), 'HH:mm:ss dd/MM/yyyy');
@@ -216,7 +230,7 @@ const OrderConfirmation = () => {
                 </select> */}
             </div>
             {loading ? <div>Đang load dữ liệu...</div> :
-                <Table columns={columns} data={ordersDisplay} actions={actions}/>
+                <Table columns={columns} data={sortOrder(ordersDisplay)} actions={actions}/>
             }
 
             {detail && listOPStatus ? 

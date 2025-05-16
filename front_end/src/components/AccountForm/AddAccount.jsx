@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { accountSchema } from "../Validate/AccountSchema/AccountSchema";
 import Combobox from "../Combobox/Combobox";
 import Loading from "../Loading/Loading";
+import AcceptForm from "../../components/AcceptForm/AcceptForm"
+
 
 
 export default function AddAccount(props) {// listEm, listRole
@@ -99,7 +101,8 @@ export default function AddAccount(props) {// listEm, listRole
         setLoad(false);
     }
 
-    const formCreate = () => (
+    const formCreate = () => {
+        return(
         <div className={styles.container}>
             <form className={styles.infor} onSubmit={handleSubmit(onSubmitCreate)}>
                 <h4>Thêm tài khoản</h4>
@@ -124,7 +127,8 @@ export default function AddAccount(props) {// listEm, listRole
                 <button>Thêm</button>
             </form>
         </div>
-    )
+        )
+    }
 
     
 
@@ -145,7 +149,7 @@ export default function AddAccount(props) {// listEm, listRole
                 >Tên đăng nhập</InputField>
 
                 <InputField
-                    readOnly={false}
+                    readOnly={true}
                     register={register("EName")} // chỉ hiện thị bằng textField
                 >Nhân viên</InputField>
 
@@ -165,6 +169,14 @@ export default function AddAccount(props) {// listEm, listRole
                 {load ? <Loading></Loading> : null}
             </form>
         </div>
+    )
+
+    if (listEmName.length === 0 && !props.isUpdate) return (
+        <AcceptForm
+            message="Tất cả nhân viên đã được thêm"
+            onAccept={() => props.onClose()}
+            onClose={() => props.onClose()}
+        ></AcceptForm>
     )
 
     return (

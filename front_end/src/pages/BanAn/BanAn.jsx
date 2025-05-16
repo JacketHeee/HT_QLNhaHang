@@ -131,6 +131,14 @@ export default function BanAn() {
         }
     }
 
+    const sumPrice = (arr) => {
+        let s = 0;
+        arr.forEach((item) => {
+            s += +item.totalPrice;
+        })
+        return s.toLocaleString();
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.search}><Search placeHolder={"Tìm kiếm theo tên bàn..."} onSearch={(keyword) => handleSearch(keyword)}/> </div>
@@ -161,7 +169,7 @@ export default function BanAn() {
                             <div className={styles.infor}>
                                 <div>
                                     <span>{tb.isEmpty ? null : <Timer time={getLongestTimeOD(tb)}/>}</span>
-                                    <h5></h5>
+                                    {tb.isEmpty ? null : <h5>{sumPrice(tb.listOD)}đ</h5>}
                                 </div>
                                 <img src={table} alt="" />
                             </div>

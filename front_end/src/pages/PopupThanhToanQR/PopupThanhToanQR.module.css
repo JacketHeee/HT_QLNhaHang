@@ -69,6 +69,7 @@
 
 .thongtinThanhtoan h3 {
     color: var(--color-text);
+    text-align: left;
 }
 
 .qrThanhtoan {

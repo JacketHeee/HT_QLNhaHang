@@ -18,6 +18,9 @@ import { getRoles } from "../../api/services/roleService"
 import Loading from "../../components/Loading/Loading";
 import AddAccount from "../../components/AccountForm/AddAccount"
 import FilterButton from "../../components/FilterButton/filterbutton"
+import AcceptForm from "../../components/AcceptForm/AcceptForm"
+import SuccessToast from "../../components/Notification/Notification"
+
 
 
 export default function QLTaiKhoan() {
@@ -49,6 +52,16 @@ export default function QLTaiKhoan() {
     const [listRole, setListRole] = useState([]);
 
     const [listAllEm, setLisAllEm] = useState([]); //tất cả em
+
+    const [accDelete, setAccDelete] = useState(false);
+
+    const [rowForDelete, setRowForDelete] = useState(null);
+
+    const [createSuccess, setCreateSuccess] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
+
+
 
     const listStatus = [
         {
@@ -90,7 +103,8 @@ export default function QLTaiKhoan() {
                     <img
                         src={remove} 
                         alt="remove"
-                        onClick = {() => removeAccount(row)}
+                        // onClick = {() => removeAccount(row)}
+                        onClick = {() => {setAccDelete(true); setRowForDelete(row)}}
                     />
                 </div>
             );
@@ -237,6 +251,11 @@ export default function QLTaiKhoan() {
         setAccounts(prev => [...prev, newAccDisplay]);
         setDisplayAccounts(prev => [...prev, newAccDisplay]);
         setLoadUpdate(false);
+
+        setCreateSuccess(true);
+        setTimeout(() => {
+            setCreateSuccess(false);
+        }, 1000);
     }
 
 
@@ -247,6 +266,11 @@ export default function QLTaiKhoan() {
         setAccounts(prev => prev.map((p) => p.id === id ? newAccountDisplay : p));
         setDisplayAccounts(prev => prev.map((p) => p.id === id ? newAccountDisplay : p));
         setLoadUpdate(false);
+
+        setUpdateSuccess(true);
+        setTimeout(() => {
+            setUpdateSuccess(false);
+        }, 1000);
     }
 
     ///update
@@ -273,6 +297,11 @@ export default function QLTaiKhoan() {
         setAccounts(prev => prev.filter((p) => (p.id != obj.id)));
         setDisplayAccounts(prev => prev.filter((p) => (p.id != obj.id)));
         setLoadUpdate(false)
+
+        setDeleteSuccess(true);
+        setTimeout(() => {
+            setDeleteSuccess(false);
+        }, 1000);
     }
 
     const lockAcc = async (id) => {
@@ -354,6 +383,15 @@ export default function QLTaiKhoan() {
                 onUnLock={(id) => unLockAcc(id)}
             ></AddAccount> : null
             }
+
+            {accDelete ? <AcceptForm
+                onClose={() => setAccDelete(false)}
+                onAccept={() => removeAccount(rowForDelete)}
+            ></AcceptForm> : null}
+
+            {deleteSuccess? <SuccessToast message="Xóa thành công!"></SuccessToast> : null}
+            {createSuccess? <SuccessToast message="Thêm thành công!"></SuccessToast> : null}
+            {updateSuccess? <SuccessToast message="Sửa thành công!"></SuccessToast> : null}
         </div>
     )
 }

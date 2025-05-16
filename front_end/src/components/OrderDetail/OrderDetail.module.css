@@ -53,6 +53,11 @@
     max-height: 300px;
 }
 
+.chitiet>span {
+    margin-top: 10px;
+    font-size: 95%;
+}
+
 .chitiet>h6>span {
     font-weight: normal;
 }
