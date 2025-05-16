@@ -2,11 +2,11 @@ import style from  "./Payment.module.css"
 import cart from "../../assets/icon/cart_red.svg"
 import { formatCurrency } from "../../utils/format";
 
-export default function Payment({text,onClick, count = 1, tongTien = ''}) {
+export default function Payment({text,onClickCart, onClick, count = 1, tongTien = ''}) {
     return (
       <div className={style.payment}>
           <div className={style.cart}>
-            <img src={cart} alt="" />
+            <img src={cart} alt="" onClick={onClickCart}/>
             <span>{count}</span>
           </div>
           <div className={style.thanhtoan}>

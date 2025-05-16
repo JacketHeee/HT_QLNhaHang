@@ -246,11 +246,21 @@ export default function Menu() {
       </div>
       <Payment 
         text="Thanh toán" 
+        onClickCart={() => {
+          nav("YourCart", {
+            // state: {
+            //   numberOfProduct: numberOfP,
+            //   listCTHD: dataForCart,
+            // }
+          })
+        }
+
+        }
         onClick={() => { nav("YourCart", {
-          state: {
-            numberOfProduct: numberOfP,
-            listCTHD: dataForCart,
-          }
+          // state: {
+          //   numberOfProduct: numberOfP,
+          //   listCTHD: dataForCart,
+          // }
         })}} 
         count={numberOfP}
         canPay={dataForCart.length !== 0?true:false}//để check xem nút thanh toán được bấm không
