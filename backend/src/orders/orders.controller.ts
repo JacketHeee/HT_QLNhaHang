@@ -26,14 +26,14 @@ export class OrdersController {
 
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+  @Roles('donhang', 'bep')
   findAll() {
     return this.orderService.findAll();
   }
 
   @Get('/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+  @Roles('donhang', 'bep')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
@@ -46,14 +46,14 @@ export class OrdersController {
 
   @Put('/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+  @Roles('donhang', 'bep')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.orderService.update(+id, updateOrderDto);
   }
 
   @Delete('/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+  @Roles('donhang', 'bep')
   delete(@Param('id') id: string) {
     return this.orderService.delete(+id);
   }

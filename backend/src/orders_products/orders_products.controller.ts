@@ -21,14 +21,14 @@ export class OrdersProductsController {
 
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+   @Roles('donhang', 'bep')
   findAll() {
     return this.ordersProductsService.findAll();
   }
 
   @Get(':orderId/:productId')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+   @Roles('donhang', 'bep')
   findOne(
     @Param('orderId') orderId: string,
     @Param('productId') productId: string,
@@ -38,7 +38,7 @@ export class OrdersProductsController {
 
   @Get('get/listOP/:orderId')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+   @Roles('donhang', 'bep')
   getListOPByOrderId(
     @Param('orderId') orderId: string,
   ) {
@@ -54,7 +54,7 @@ export class OrdersProductsController {
   
   @Delete(':orderId/:productId')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Roles('donhang')
+   @Roles('donhang', 'bep')
   delete(
     @Param('orderId') orderId: string,
     @Param('productId') productId: string,
