@@ -191,6 +191,9 @@ export default function ProductDetail(
 
                     <Payment 
                         text="Thêm vào giỏ hàng"
+                        onClickCart={() => {
+                            nav(`../YourCart`)
+                        }}
                         onClick={() => {
                             handleAddToCart();
                         }}

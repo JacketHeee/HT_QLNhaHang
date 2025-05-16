@@ -29,6 +29,7 @@ export default function PopupThanhToanQR() {
     useEffect(() => {
         const timer = setTimeout(() => {
                 //Xóa hết dữ liệu đơn hàng
+            simulateLoading(1500, () => {
                 setListCTHD([]);
                 setNumberOfP(0);
                 setTongGia(0);
@@ -36,6 +37,14 @@ export default function PopupThanhToanQR() {
                 createOrder(getOrderObj(),listCTHD); //thêm order xuống cơ sở dữ liệu
 
                 nav(`/ban/${idTable}/OrderSuccess`); 
+            })
+            // setListCTHD([]);
+            //     setNumberOfP(0);
+            //     setTongGia(0);
+
+            //     createOrder(getOrderObj(),listCTHD); //thêm order xuống cơ sở dữ liệu
+
+            //     nav(`/ban/${idTable}/OrderSuccess`); 
         }, 3000); // 4 giây
     
         return () => clearTimeout(timer);

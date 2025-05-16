@@ -136,20 +136,26 @@ function Payment({idTable, tongGia, listCTHD, setListCTHD, setNumberOfP, setTong
 
     const nav = useNavigate();
 
+    const {simulateLoading} = useLoading();
+
 
     const handleThanhToan = () => {
         
         if (paymentMethod === 'qr') {
-            setThanhToanQR(true);
+            simulateLoading(1500,() => {
+                setThanhToanQR(true);
+            })
         }
         else {
-            //Xóa hết dữ liệu đơn hàng
-            setListCTHD([]);
-            setNumberOfP(0);
-            setTongGia(0);
+            simulateLoading(3000,() => {
+                //Xóa hết dữ liệu đơn hàng
+                setListCTHD([]);
+                setNumberOfP(0);
+                setTongGia(0);
 
-            createOrder(getOrderObj(), listCTHD); //thêm order xuống cơ sở dữ liệu
-            nav(`/ban/${idTable}/OrderSuccess`)
+                createOrder(getOrderObj(), listCTHD); //thêm order xuống cơ sở dữ liệu
+                nav(`/ban/${idTable}/OrderSuccess`)
+            })
         }
            
     }
