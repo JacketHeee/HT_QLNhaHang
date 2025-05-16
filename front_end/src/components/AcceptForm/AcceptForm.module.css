@@ -44,9 +44,9 @@
     background-color: white;
 }
 
-.content button {
+.btnContainer button {
     min-width: 20px;
-    margin-left: auto;
+    margin-left: 5px;
 }
 
 .close {
@@ -59,3 +59,9 @@
 .title p {
     background-color: white;
 } 
+
+.btnContainer {
+    display: flex;
+    background-color: white;
+    justify-content: flex-end;
+}
