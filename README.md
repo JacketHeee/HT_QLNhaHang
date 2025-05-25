@@ -7,3 +7,8 @@
 - Lê Quang Hoàng
 - Lê Hữu Thành Vinh
 - Nguyễn Dương
+
+## Chuyển đường dẫn thành https://ht-ql-nha-hang.vercel.app/admin và sử dụng tài khoản
+- username: admin
+- password: 123456
+## Để đăng nhập vào trang quản lý hệ thống.
