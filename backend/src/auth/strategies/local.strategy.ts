@@ -1,0 +1,21 @@
+import { Strategy } from 'passport-local';
+import { PassportStrategy } from '@nestjs/passport';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { AuthService } from '../auth.service';
+
+@Injectable()
+export class LocalStrategy extends PassportStrategy(Strategy) {
+  constructor(private authService: AuthService) {
+    super({ usernameField: 'username' });
+  }
+
+  async validate(username: string, password: string): Promise<any> {
+    console.log("Tên người dùng nhập: ", username);
+    console.log("Mật khẩu người dùng nhập: ", password);
+    const user = await this.authService.validateUser(username, password);
+    if (!user) {
+      throw new UnauthorizedException('Sai tên đăng nhập hoặc mật khẩu');
+    }
+    return user;
+  }
+} 
