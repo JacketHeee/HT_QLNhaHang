@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Seeder } from 'nestjs-seeder';
 import { Product } from 'src/products/entities/product.entity';
 import { Category } from 'src/categories/entities/category.entity';
+import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
 
 @Injectable()
 export class ProductsSeeder implements Seeder {
@@ -13,6 +14,9 @@ export class ProductsSeeder implements Seeder {
 
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+
+    @InjectRepository(SideDish_Product)
+    private readonly sideDishProductRepository: Repository<SideDish_Product>,
   ) {}
 
   async seed(): Promise<any> {
@@ -27,14 +31,14 @@ export class ProductsSeeder implements Seeder {
       return category.ID;
     };
 
-    // Lấy ID thực tế từ database dựa theo tên nhóm danh mục em đã chèn trước đó
+    // Lấy ID thực tế từ database dựa theo tên nhóm danh mục đã chèn trước đó
     const idHamburger = getCategoryId('Hamburger');
     const idCoffee = getCategoryId('Coffee');
     const idGaRan = getCategoryId('Gà rán');
     const idNuocUong = getCategoryId('Nước uống');
     const idTrangMieng = getCategoryId('Tráng miệng');
 
-    // 2. Chuyển đổi đống dữ liệu SQL INSERT của em thành mảng Object cho TypeORM
+    // 2. Chuyển đổi dữ liệu SQL INSERT thành mảng Object cho TypeORM
     const productsData = [
       // === HAMBURGER (IDLoaiMonAn: 1) ===
       { tenMonAn: 'Burger Bò Phô Mai Đặc Biệt', moTa: 'Burger bò và phô mai', giaBan: 56000, tenHinhAnh: 'cheesedlx_bb.png', IDLoaiMonAn: idHamburger, isDeleted: false },
@@ -98,12 +102,11 @@ export class ProductsSeeder implements Seeder {
       { tenMonAn: 'Kem McSundea Xốt Dâu', moTa: 'Kem tươi sốt dâu', giaBan: 29000, tenHinhAnh: 'xstrawberry-mcsundae.png', IDLoaiMonAn: idTrangMieng, isDeleted: false },
     ];
 
-    // 3. Thực hiện lưu mảng dữ liệu món ăn vào DB
     return this.productRepository.save(productsData);
   }
 
   async drop(): Promise<any> {
-    // Xóa toàn bộ dữ liệu bảng sản phẩm khi reset seeder
+    await this.sideDishProductRepository.delete({});
     return this.productRepository.delete({});
   }
 }
