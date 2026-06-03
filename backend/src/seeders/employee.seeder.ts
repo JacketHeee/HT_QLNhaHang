@@ -17,19 +17,19 @@ export class EmployeesSeeder implements Seeder {
             {
                 name: 'admin',
                 soDT: '0999999999',
-                gioiTinh: 'M',
+                gioiTinh: 'Nam',
                 isDeleted: false,
             },
             {
                 name: 'bep',
                 soDT: '0999999999',
-                gioiTinh: 'M',
+                gioiTinh: 'Nam',
                 isDeleted: false,
             },
             {
                 name: 'nhanvien',
                 soDT: '0999999999',
-                gioiTinh: 'M',
+                gioiTinh: 'Nam',
                 isDeleted: false,
             },
         ];
