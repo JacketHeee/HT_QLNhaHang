@@ -11,7 +11,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main.js",
+    "start:prod": "node dist/src/main.js",
     "seed": "ts-node -r tsconfig-paths/register src/seeders/seeder.ts",
     "seed:refresh": "ts-node -r tsconfig-paths/register src/seeders/seeder.ts --refresh",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
