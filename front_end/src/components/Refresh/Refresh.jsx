@@ -3,7 +3,7 @@ import refresh from "../../assets/icon/refresh.svg"
 
 export default function Refresh({whenClick}) {
     return (
-        <div  className={styles.refresh}>
+        <div  className={styles.refresh} onClick={whenClick}>
             <img src={refresh} alt="" onClick={whenClick} />
             <span onClick={() => whenClick()}>Làm mới</span>
         </div>

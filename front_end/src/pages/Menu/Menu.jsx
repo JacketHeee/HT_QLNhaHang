@@ -263,7 +263,8 @@ export default function Menu() {
           // }
         })}} 
         count={numberOfP}
-        canPay={dataForCart.length !== 0?true:false}//để check xem nút thanh toán được bấm không
+        canPay={numberOfP !== 0?true:false}//để check xem nút thanh toán được bấm không
+        canAdd={numberOfP !== 0?true:false}
       />
 
       {/* {detail && statusListSP ? <ProductDetail

@@ -198,6 +198,8 @@ export default function ProductDetail(
                             handleAddToCart();
                         }}
                         count={numberOfP} // truyền cho thanh toán hiển thị
+                        canPay={numberOfP !== 0?true:false}
+                        canAdd={true}
                     />
                     {addStatus ? <SuccessToast></SuccessToast> : null}
                 </div>
