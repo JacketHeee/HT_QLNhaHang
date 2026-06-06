@@ -1,32 +1,60 @@
-import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Patch,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Order } from './entities/order.entity';
-import { OrderItem } from './entities/order-item.entity';
+import { Order_Product } from '../orders_products/entities/order_product.entity';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('orders')
+// @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class OrdersController {
-    constructor(private readonly ordersService: OrdersService) {}
 
-    @Get()
-    findAll(): Promise<Order[]> {
-        return this.ordersService.findAll();
-    }
+  constructor(private readonly orderService: OrdersService) {}
 
-    @Get(':id')
-    findOne(@Param('id') id: string): Promise<Order> {
-        return this.ordersService.findOne(+id);
-    }
+  @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Roles('donhang', 'bep')
+  findAll() {
+    return this.orderService.findAll();
+  }
 
-    @Post()
-    create(
-        @Body('order') order: Partial<Order>,
-        @Body('items') items: Partial<OrderItem>[],
-    ): Promise<Order> {
-        return this.ordersService.create(order, items);
-    }
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Roles('donhang', 'bep')
+  findOne(@Param('id') id: string) {
+    return this.orderService.findOne(+id);
+  }
 
-    @Put(':id/status')
-    updateStatus(@Param('id') id: string, @Body('status') status: string): Promise<Order> {
-        return this.ordersService.updateStatus(+id, status);
-    }
+  @Post()
+  @UseGuards()
+  create(@Body() createOrderDto: CreateOrderDto) {
+    return this.orderService.create(createOrderDto);
+  }
+
+  @Put('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Roles('donhang', 'bep')
+  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.update(+id, updateOrderDto);
+  }
+
+  @Delete('/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Roles('donhang', 'bep')
+  delete(@Param('id') id: string) {
+    return this.orderService.delete(+id);
+  }
 }

@@ -1,98 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Restaurant Management System - Backend (NestJS)
 
-## Description
+Chào mừng bạn đến với hệ thống Backend của **Hệ thống Quản lý Nhà hàng**. Dự án này được xây dựng trên nền tảng **NestJS**, sử dụng **PostgreSQL** làm cơ sở dữ liệu chính.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Dưới đây là hướng dẫn chi tiết từng bước để thiết lập môi trường và khởi chạy server từ đầu.
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 🛠️ Yêu cầu hệ thống (Prerequisites)
+
+Trước khi bắt đầu, hãy đảm bảo máy của bạn đã cài đặt các công cụ sau:
+
+* **Node.js** (Khuyến nghị phiên bản LTS mới nhất)
+* **npm** hoặc **yarn**
+* **PostgreSQL**
+
+---
+
+## ⚙️ Hướng dẫn cài đặt & Cấu hình
+
+### 1. Tạo Database trên PostgreSQL
+
+Trước khi chạy ứng dụng, bạn cần tạo một database trống trên PostgreSQL.
+
+1. Mở terminal hoặc công cụ quản lý trực quan (pgAdmin, DBeaver,...).
+2. Kết nối tới PostgreSQL server của bạn và chạy câu lệnh SQL sau để tạo database:
+```sql
+CREATE DATABASE quanlynhahang;
+```
+Hoặc có thể tạo trên giao diện trực quan của app (pgAdmin, DBeaver, ...)
+Xem các thông số bạn đã tạo cho server postgres: HOST, PORT, USER, PASS để sang bước thiết lập biến môi trường tiếp theo
+
+### 2. Cấu hình Biến môi trường (Environment Variables)
+1. Tạo một file tên là `.env` tại thư mục gốc của dự án (ngang hàng với `package.json`).
+2. Sao chép và điền đầy đủ thông tin cấu hình database của bạn theo mẫu dưới đây:
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=quanlynhahang
+DATABASE_USER=postgres
+DATABASE_PASSWORD=123456
 ```
 
-## Compile and run the project
-
+Hoặc bạn cũng có thể copy từ file .env.example vào .env
+### 3. Cài đặt các gói phụ thuộc (Dependencies)
+Di chuyển vào thư mục dự án và chạy lệnh sau để cài đặt tất cả các thư viện cần thiết:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+---
 
+## 🚀 Các lệnh khởi chạy ứng dụng (Scripts)
+
+Hệ thống cung cấp sẵn các script trong `package.json` để phục vụ cho việc phát triển, seeding dữ liệu và deploy.
+
+### 1. Quản lý Dữ liệu mẫu (Database Seeding)
+
+Để hệ thống có sẵn các dữ liệu ban đầu (như tài khoản admin, danh mục món ăn mặc định, sơ đồ bàn ăn...), hãy sử dụng các lệnh seed sau:
+
+* **Chạy Seed (Thêm dữ liệu mẫu):**
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run seed
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+* **Làm mới và Chạy lại Seed (Refresh & Seed):**
+Xóa toàn bộ dữ liệu cũ và nạp lại dữ liệu mẫu từ đầu.
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run seed:refresh
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Lệnh chạy Server
 
-## Resources
+* **Chế độ Phát triển (Development - Có Hot Reload):**
+Sử dụng lệnh này khi đang code. Server sẽ tự động restart mỗi khi bạn lưu file.
+```bash
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+* **Chế độ Thông thường (Standard Start):**
+```bash
+npm run start
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 3. Build & Chạy Production
 
-## Support
+* **Biên dịch dự án sang Javascript (Build):**
+```bash
+npm run build
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+* **Chạy server môi trường Production (Sau khi đã build):**
+```bash
+npm run start:prod
+```

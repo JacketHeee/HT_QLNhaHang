@@ -2,79 +2,101 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
+import { ProductResponseDto } from './dto/response-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
 
 @Injectable()
-export class ProductsService implements OnModuleInit {
+export class ProductsService{ //implements OnModuleInit {
     constructor(
         @InjectRepository(Product)
         private productsRepository: Repository<Product>,
     ) {}
 
-    async onModuleInit() {
-        const count = await this.productsRepository.count();
-        if (count === 0) {
-            const sampleProducts = [
-                {
-                    name: 'Hamburger',
-                    description: 'Burger with beef patty, lettuce, tomato, and cheese',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/hamburger.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 122.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 122.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-                {
-                    name: 'Grilled squid satay',
-                    description: 'Grilled squid with satay sauce',
-                    price: 123.00,
-                    imageUrl: 'https://example.com/images/grilled-squid-satay.jpg',
-                    category: 'Sea food',
-                },
-            ];
-            await this.productsRepository.save(sampleProducts);
-        }
+    async findAll(): Promise<ProductResponseDto[]> {
+        const products = await this.productsRepository.find({
+            where: { isDelete: false }, // Lọc sản phẩm chưa bị xóa
+            relations: ['category'],
+            order: { ID: 'ASC' }
+        });
+
+        return products.map(product => {
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
+        });
     }
 
-    async findAll(): Promise<Product[]> {
-        return this.productsRepository.find();
+    async findAllProductNotLock(): Promise<ProductResponseDto[]> {
+        const products = await this.productsRepository.find({
+            where: { isDelete: false, isLocked: false }, // Lọc sản phẩm chưa bị xóa
+            relations: ['category'],
+            order: { ID: 'ASC' }
+        });
+
+        return products.map(product => {
+            const {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product; //phân rã để tạo đối tượng response
+            return {ID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
+        });
     }
 
-    async findOne(id: number): Promise<Product> {
-        const product = await this.productsRepository.findOneBy({ id });
+    async findOne(ID: number): Promise<ProductResponseDto> {
+        const product = await this.productsRepository.findOne({
+            where: { ID },
+            relations: ['category']
+        });
         if (!product) {
             throw new Error('Product not found');
         }
-        return product;
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = product;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
     }
 
-    async create(newProduct: Partial<Product>): Promise<Product> {
+    async create(newProduct: CreateProductDto): Promise<ProductResponseDto> {
         const product = this.productsRepository.create(newProduct);
-        return this.productsRepository.save(product);
+        const savedProduct = await this.productsRepository.save(product);
+
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = savedProduct;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
+    }
+
+    async update(ID: number, updateProductDto: UpdateProductDto): Promise<ProductResponseDto>{
+        const product = await this.productsRepository.findOneBy({ID});
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        Object.assign(product, updateProductDto) // chép các thuộc tính từ nguồn -> đích
+
+        const updatedProductDto = await this.productsRepository.save(product);
+
+        const {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category} = updatedProductDto;
+        return {ID: productID, tenMonAn, moTa, giaBan, tenHinhAnh, isLocked, category};
+    }
+
+    async delete(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isDelete = true;
+        await this.productsRepository.save(product);
+    }
+
+    async lock(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isLocked = true;
+        await this.productsRepository.save(product);
+    }
+
+    async unLock(ID: number): Promise<void> {
+        const product = await this.productsRepository.findOneBy({ ID });
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        product.isLocked = false;
+        await this.productsRepository.save(product);
     }
 }

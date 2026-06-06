@@ -1,22 +1,53 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Category } from 'src/categories/entities/category.entity';
+import { Order_Product } from 'src/orders_products/entities/order_product.entity';
+import { SideDish_Product } from 'src/products_sidedishes/entities/product_sidedishes.entity';
+import { SideDish } from 'src/sidedishes/entities/sidedish.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
-@Entity()
+@Entity() 
 export class Product {
     @PrimaryGeneratedColumn()
-    id: number;
+    ID: number;
 
     @Column()
-    name: string;
+    tenMonAn: string;
 
     @Column()
-    description: string;
+    moTa: string;
+
+    @Column({
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
+    })
+    giaBan: number;
 
     @Column()
-    price: number;
+    tenHinhAnh: string;
 
     @Column()
-    imageUrl: string;
+    IDLoaiMonAn: number;
 
-    @Column()
-    category: string;
+    @Column({
+        type: 'boolean',
+        default: false, // Đặt giá trị mặc định là false
+    })
+    isDelete: boolean;
+
+    @Column({
+        type: 'boolean',
+        default: false
+    })
+    isLocked: boolean;
+
+    @ManyToOne(() => Category, (category)=>category.products)
+    @JoinColumn({name: 'IDLoaiMonAn'})
+    category: Category
+
+    @OneToMany(() => SideDish_Product, (SD)=>SD.product)
+    SDList: SideDish_Product[]
+
+    @OneToMany(() => Order_Product, listOP => listOP.product)
+    listOP: Order_Product[]
+
 }
